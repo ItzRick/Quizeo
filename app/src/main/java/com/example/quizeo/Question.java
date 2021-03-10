@@ -19,6 +19,8 @@ public class Question {
 
     private int globalId;
 
+    private User userCreated;
+
     public Question() {
         question = "";
         answers = new ArrayList<>();
@@ -110,6 +112,10 @@ public class Question {
         this.globalId = globalId;
     }
 
+    public void setUserCreated(User userCreated) {
+        this.userCreated = userCreated;
+    }
+
     public String getQuestion() {
         return question;
     }
@@ -142,7 +148,9 @@ public class Question {
         return correctInt == chosen;
     }
 
-
+    public User getUserCreated() {
+        return userCreated;
+    }
 
 
 

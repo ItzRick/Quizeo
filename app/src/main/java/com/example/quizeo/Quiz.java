@@ -4,24 +4,26 @@ import java.util.ArrayList;
 
 public class Quiz {
 
-    ArrayList<Question> questions;
+    private ArrayList<Question> questions;
 
-    int quizId;
+    private int quizId;
 
-    String quizName;
+    private String quizName;
 
-    double rating;
-    int nrOfRatings;
+    private double rating;
+    private int nrOfRatings;
 
-    float percentageToPass;
-    int scoreToPass;
+    private float percentageToPass;
+    private int scoreToPass;
 
-    int numberOfQuestions;
+    private int numberOfQuestions;
 
     // Keeps track of the currently returned question:
-    int index;
+    private int index;
 
-    Location location;
+    private Location location;
+
+    private User userCreated;
 
     public Quiz() {
         questions = new ArrayList<>();
@@ -99,6 +101,10 @@ public class Quiz {
         return location;
     }
 
+    public User getUserCreated() {
+        return userCreated;
+    }
+
     public void setAdditionalRating(double rating1) throws IllegalArgumentException {
         if (rating1 < 0 || rating1 > 10) {
             throw new IllegalArgumentException();
@@ -133,5 +139,9 @@ public class Quiz {
 
     public void setPercentageToPass(int percentageToPass) {
         this.percentageToPass = percentageToPass;
+    }
+
+    public void setUserCreated(User userCreated) {
+        this.userCreated = userCreated;
     }
 }

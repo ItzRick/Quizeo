@@ -197,4 +197,13 @@ public class QuizTest {
         quiz.addQuestion(question);
         Assert.assertEquals(4, quiz.getScoreToPass());
     }
+
+    @Test
+    public void getUserCreated() {
+        System.out.println("getUserCreated()");
+        User user = new User("user", 12356);
+        quiz.setUserCreated(user);
+        Assert.assertEquals(user.getNickName(), quiz.getUserCreated().getNickName());
+        Assert.assertEquals(user.getUserId(), quiz.getUserCreated().getUserId());
+    }
 }
