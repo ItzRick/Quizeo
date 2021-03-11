@@ -31,29 +31,29 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/buttonStartQuiz"
         android:layout_width="240dp"
         android:layout_height="88dp"
         android:layout_marginTop="85dp"
         android:text="@string/start"
-        app:layout_constraintBottom_toTopOf="@+id/button5"
+        app:layout_constraintBottom_toTopOf="@+id/buttonMakeQuiz"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/buttonMakeQuiz"
         android:layout_width="240dp"
         android:layout_height="88dp"
         android:layout_marginTop="31dp"
         android:text="@string/make"
-        app:layout_constraintBottom_toTopOf="@+id/button6"
+        app:layout_constraintBottom_toTopOf="@+id/buttonOptions"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button4" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonStartQuiz" />
 
     <Button
-        android:id="@+id/button6"
+        android:id="@+id/buttonOptions"
         android:layout_width="240dp"
         android:layout_height="88dp"
         android:layout_marginTop="31dp"
@@ -62,7 +62,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button5" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonMakeQuiz" />
 
     <ImageView
         android:id="@+id/imageView3"
