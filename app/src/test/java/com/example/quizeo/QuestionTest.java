@@ -131,4 +131,13 @@ public class QuestionTest {
         Assert.assertEquals(id, question1.getId());
         Assert.assertEquals(globalId, question1.getGlobalId());
     }
+
+    @Test
+    public void setUserCreated() {
+        System.out.println("setUserCreated()");
+        User user = new User("user", 12356);
+        question.setUserCreated(user);
+        Assert.assertEquals(user.getNickName(), question.getUserCreated().getNickName());
+        Assert.assertEquals(user.getUserId(), question.getUserCreated().getUserId());
+    }
 }
