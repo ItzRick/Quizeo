@@ -318,8 +318,8 @@ public class QuizTest {
         int id = 123;
         String quizName = "This is a quiz";
         Location location = new Location(1, 1);
-        Quiz quiz1 = new Quiz(id, quizName, location);
         int percentageToPass = 50;
+        Quiz quiz1 = new Quiz(id, quizName, location, percentageToPass);
         quiz1.addQuestion(question);
 
         // Check if these values were correctly added to the quiz:
@@ -329,6 +329,6 @@ public class QuizTest {
         Assert.assertEquals((int)location.getX(), (int)location1.getX());
         Assert.assertEquals((int)location.getY(), (int)location1.getY());
         Assert.assertEquals(location, location1);
-        Assert.assertEquals(1, quiz.getScoreToPass());
+        Assert.assertEquals(1, quiz1.getScoreToPass());
     }
 }
