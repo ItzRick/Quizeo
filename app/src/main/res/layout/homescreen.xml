@@ -8,7 +8,7 @@
     tools:context=".MainActivity">
 
     <ImageView
-        android:id="@+id/globeHome"
+        android:id="@+id/imageView4"
         android:layout_width="528dp"
         android:layout_height="528dp"
         android:contentDescription="@string/globe"
@@ -19,7 +19,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
-        android:id="@+id/QuizeoLogo"
+        android:id="@+id/imageView"
         android:layout_width="356dp"
         android:layout_height="273dp"
         android:contentDescription="@string/logo"
@@ -31,42 +31,41 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/startButton"
+        android:id="@+id/buttonStartQuiz"
         android:layout_width="240dp"
         android:layout_height="88dp"
         android:layout_marginTop="85dp"
         android:text="@string/start"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/makeQuizButton"
+        app:layout_constraintBottom_toTopOf="@+id/buttonMakeQuiz"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/QuizeoLogo" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <Button
-        android:id="@+id/makeQuizButton"
+        android:id="@+id/buttonMakeQuiz"
         android:layout_width="240dp"
         android:layout_height="88dp"
         android:layout_marginTop="31dp"
         android:text="@string/make"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/optionsButton"
+        app:layout_constraintBottom_toTopOf="@+id/buttonOptions"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/startButton" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonStartQuiz" />
 
     <Button
-        android:id="@+id/optionsButton"
+        android:id="@+id/buttonOptions"
         android:layout_width="240dp"
         android:layout_height="88dp"
         android:layout_marginTop="31dp"
         android:layout_marginBottom="100dp"
-        android:onClick="openOptions"
         android:text="@string/options"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/makeQuizButton" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonMakeQuiz" />
 
     <ImageView
         android:id="@+id/exitIconHome"

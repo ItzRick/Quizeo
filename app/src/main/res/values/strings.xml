@@ -15,4 +15,13 @@
     <string name="options">Options</string>
     <string name="exit">exit icon</string>
     <string name="globe">background globe</string>
+    <string name="back">Back</string>
+    <string name="your_quizzes">Your Quizzes</string>
+    <string name="new_quiz">New</string>
+    <string name="save_quit">Save and Quit</string>
+    <string name="submit_quiz">Submit Quiz</string>
+    <string name="start_quiz">Start</string>
+    <string name="play_quiz">Play a Quiz</string>
+    <string name="dark_mode">Dark Mode</string>
+
 </resources>

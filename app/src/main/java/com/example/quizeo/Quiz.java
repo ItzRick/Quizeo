@@ -4,39 +4,66 @@ import java.util.ArrayList;
 
 public class Quiz {
 
+    /** ArrayList in which all Questions are saved: */
     private ArrayList<Question> questions;
 
+    /** global quizId of this quiz: */
     private int quizId;
 
+    /** Name of the quiz: */
     private String quizName;
 
+    /** Integer for the current rating and the total number of ratings: */
     private double rating;
     private int nrOfRatings;
 
+    /** Float for the percentage required to pass and integer of the total score
+     * required to pass: */
     private float percentageToPass;
     private int scoreToPass;
 
+    /** The total number of questions: */
     private int numberOfQuestions;
 
-    // Keeps track of the currently returned question:
+    /** Keeps track of the current returned question: */
     private int index;
 
+    /** Location belonging to this quiz: */
     private Location location;
 
+    /** User who created this quiz: */
     private User userCreated;
 
+    /**
+     * Initializes all necessary values.
+     */
     public Quiz() {
+        // Initialize the ArrayList:
         questions = new ArrayList<>();
+
+        // Set some variables to default values:
         numberOfQuestions = 0;
         rating = -1;
         nrOfRatings = 0;
         percentageToPass = 75;
     }
 
+    /**
+     * Initializes the quiz and sets some variables to the correct values.
+     *
+     * @param quizId id of the quiz.
+     * @param quizName name of the quiz.
+     * @param location location belonging to the current quiz.
+     */
     public Quiz(int quizId, String quizName, Location location) {
+        // Set the passed variables to the correct value:
         this.quizId = quizId;
         this.quizName = quizName;
+
+        // Initialize the ArrayList:
         questions = new ArrayList<>();
+
+        // Set default values for the rest of the variables:
         numberOfQuestions = 0;
         rating = -1;
         nrOfRatings = 0;
@@ -44,6 +71,14 @@ public class Quiz {
         percentageToPass = 75;
     }
 
+    /**
+     * Initializes the quiz and sets some variables to the correct values.
+     *
+     * @param quizId id of the quiz.
+     * @param quizName name of the quiz.
+     * @param location location belonging to the current quiz.
+     * @param percentageToPass percentage required to pass the current quiz.
+     */
     public Quiz(int quizId, String quizName, Location location, int percentageToPass) {
         this.quizId = quizId;
         this.quizName = quizName;
@@ -55,14 +90,28 @@ public class Quiz {
         this.percentageToPass = percentageToPass;
     }
 
+    /**
+     * Add a question to the current quiz.
+     *
+     * @param question question to add to the current quiz.
+     */
     public void addQuestion(Question question) {
+        // Put the index to 0:
         index = 0;
+        // Add the question:
         questions.add(question);
+
+        // Increase the total number of questions by 1 and recalculate the score required to pass:
         numberOfQuestions++;
         float temp = (percentageToPass / 100) * numberOfQuestions;
         scoreToPass = (int) Math.ceil(temp);
     }
 
+    /**
+     * Get all the questions in the current quiz.
+     *
+     * @return Array of questions with all questions in the current quiz.
+     */
     public Question[] getQuestions() {
         Question[] toReturn = new Question[questions.size()];
         for (int i = 0; i < questions.size(); i++) {
@@ -71,44 +120,96 @@ public class Quiz {
         return toReturn;
     }
 
+    /**
+     * Get the first question in this quiz.
+     *
+     * @return The first question (on index 0) of this quiz.
+     */
     public Question getFirst() {
         return questions.get(0);
     }
 
+    /**
+     * Get the next question each time, while starting at the first question.
+     *
+     * @return the next question each time.
+     */
     public Question getNext() {
+        // Save the old index and increment the index:
         int oldIndex = index;
         index++;
+
+        // Retrieve the question:
         return questions.get(oldIndex);
     }
 
+    /**
+     * Get the name of the quiz.
+     *
+     * @return the quizName.
+     */
     public String getQuizName() {
         return quizName;
     }
 
+    /**
+     * Set the index back to 0, so start over again with playing this quiz.
+     */
     public void quitQuiz() {
         index = 0;
     }
 
+    /**
+     * Retrieve the quizId.
+     *
+     * @return the quizId.
+     */
     public int getQuizId() {
         return quizId;
     }
 
+    /**
+     * Retrieve the number of questions in this quiz.
+     *
+     * @return the number of Questions in this quiz.
+     */
     public int getNumberOfQuestions() {
         return numberOfQuestions;
     }
 
+    /**
+     * Retrieve the location of this quiz.
+     *
+     * @return the location associated with the quiz.
+     */
     public Location getLocation() {
         return location;
     }
 
+    /**
+     * Retrieve the user who created this quiz.
+     *
+     * @return the user who created the quiz.
+     */
     public User getUserCreated() {
         return userCreated;
     }
 
+    /**
+     * Update the rating, by using an additional rating in this quiz.
+     *
+     * @param rating1 the rating which should be used to update this rating.
+     * @throws IllegalArgumentException if the rating is out of bounds, that is less than 0 or
+     *                                  more than 10.
+     */
     public void setAdditionalRating(double rating1) throws IllegalArgumentException {
+        // If the rating is out of bounds, throw an IllegalArgumentException.
         if (rating1 < 0 || rating1 > 10) {
             throw new IllegalArgumentException();
         }
+
+        // Update the rating, if there is no rating yet, set the rating which was supplied as
+        // the new rating. Otherwise, update with a formula:
         if (nrOfRatings == 0) {
             rating = rating1;
         } else {
@@ -117,30 +218,65 @@ public class Quiz {
         nrOfRatings++;
     }
 
+    /**
+     * Retrieve the rating corresponding to this quiz.
+     *
+     * @return the rating corresponding to this quiz.
+     */
     public double getRating() {
         return  rating;
     }
 
+    /**
+     * Retrieve the score required to pass this quiz.
+     *
+     * @return the score required to pass the quiz.
+     */
     public int getScoreToPass() {
         return scoreToPass;
     }
 
+    /**
+     * Set the name of this quiz.
+     *
+     * @param quizName the name of this quiz.
+     */
     public void setQuizName(String quizName) {
         this.quizName = quizName;
     }
 
+    /**
+     * Set the quiz id of this quiz.
+     *
+     * @param quizId the id of the quiz.
+     */
     public void setQuizId(int quizId) {
         this.quizId = quizId;
     }
 
+    /**
+     * Set the location corresponding to this quiz.
+     *
+     * @param location belonging to this quiz.
+     */
     public void setLocation(Location location) {
         this.location = location;
     }
 
+    /**
+     * Set the percentage required to pass this quiz.
+     *
+     * @param percentageToPass percentage required to pass this quiz (from 0 to 100).
+     */
     public void setPercentageToPass(int percentageToPass) {
         this.percentageToPass = percentageToPass;
     }
 
+    /**
+     * Set the user who created this quiz.
+     *
+     * @param userCreated the user who created this quiz.
+     */
     public void setUserCreated(User userCreated) {
         this.userCreated = userCreated;
     }
