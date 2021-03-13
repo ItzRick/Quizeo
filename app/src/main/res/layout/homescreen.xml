@@ -8,7 +8,7 @@
     tools:context=".MainActivity">
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/globeHome"
         android:layout_width="528dp"
         android:layout_height="528dp"
         android:contentDescription="@string/globe"
@@ -19,7 +19,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/QuizeoLogo"
         android:layout_width="356dp"
         android:layout_height="273dp"
         android:contentDescription="@string/logo"
@@ -31,41 +31,45 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/startButton"
         android:layout_width="240dp"
         android:layout_height="88dp"
         android:layout_marginTop="85dp"
         android:text="@string/start"
-        app:layout_constraintBottom_toTopOf="@+id/button5"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/makeQuizButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/QuizeoLogo" />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/makeQuizButton"
         android:layout_width="240dp"
         android:layout_height="88dp"
         android:layout_marginTop="31dp"
         android:text="@string/make"
-        app:layout_constraintBottom_toTopOf="@+id/button6"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/optionsButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button4" />
+        app:layout_constraintTop_toBottomOf="@+id/startButton" />
 
     <Button
-        android:id="@+id/button6"
+        android:id="@+id/optionsButton"
         android:layout_width="240dp"
         android:layout_height="88dp"
         android:layout_marginTop="31dp"
         android:layout_marginBottom="100dp"
+        android:onClick="openOptions"
         android:text="@string/options"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button5" />
+        app:layout_constraintTop_toBottomOf="@+id/makeQuizButton" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/exitIconHome"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:contentDescription="@string/exit"
