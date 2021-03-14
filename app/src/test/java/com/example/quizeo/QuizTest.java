@@ -164,8 +164,8 @@ public class QuizTest {
 
         // Retrieve this location and confirm this is the same location:
         Location location1 = quiz.getLocation();
-        Assert.assertEquals((int)location.getX(), (int)location1.getX());
-        Assert.assertEquals((int)location.getY(), (int)location1.getY());
+        Assert.assertEquals((int)location.getLatitude(), (int)location1.getLatitude());
+        Assert.assertEquals((int)location.getLongitude(), (int)location1.getLongitude());
         Assert.assertEquals(location, location1);
     }
 
@@ -305,8 +305,8 @@ public class QuizTest {
         Assert.assertEquals(id, quiz1.getQuizId());
         Assert.assertEquals(quizName, quiz1.getQuizName());
         Location location1 = quiz1.getLocation();
-        Assert.assertEquals((int)location.getX(), (int)location1.getX());
-        Assert.assertEquals((int)location.getY(), (int)location1.getY());
+        Assert.assertEquals((int)location.getLatitude(), (int)location1.getLatitude());
+        Assert.assertEquals((int)location.getLongitude(), (int)location1.getLongitude());
         Assert.assertEquals(location, location1);
 
     }
@@ -328,8 +328,8 @@ public class QuizTest {
         Assert.assertEquals(id, quiz1.getQuizId());
         Assert.assertEquals(quizName, quiz1.getQuizName());
         Location location1 = quiz1.getLocation();
-        Assert.assertEquals((int)location.getX(), (int)location1.getX());
-        Assert.assertEquals((int)location.getY(), (int)location1.getY());
+        Assert.assertEquals((int)location.getLatitude(), (int)location1.getLatitude());
+        Assert.assertEquals((int)location.getLongitude(), (int)location1.getLongitude());
         Assert.assertEquals(location, location1);
         Assert.assertEquals(1, quiz1.getScoreToPass());
     }

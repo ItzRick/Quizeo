@@ -2,25 +2,25 @@ package com.example.quizeo;
 
 public class Location {
 
-    private float x;
+    private double latitude;
 
-    private float y;
+    private double longitude;
 
-    public Location(float x, float y) {
-        this.x = x;
-        this.y = y;
+    public Location(double x, double y) {
+        latitude = x;
+        longitude = y;
     }
 
-    public void changeLocation(float x, float y) {
-        this.x = x;
-        this.y = y;
+    public void changeLocation(double x, double y) {
+        latitude = x;
+        longitude = y;
     }
 
-    public float getX() {
-        return x;
+    public double getLatitude() {
+        return latitude;
     }
 
-    public float getY() {
-        return y;
+    public double getLongitude() {
+        return longitude;
     }
 }
