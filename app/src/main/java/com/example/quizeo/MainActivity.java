@@ -1,9 +1,11 @@
 package com.example.quizeo;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.util.Log;
 import android.view.View;
 
 import android.view.Menu;
@@ -61,7 +63,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void openOptionsActivity(){
         Intent intent = new Intent(this, OptionsActivity.class);
+        intent.putExtra("Sign", true);
         startActivity(intent);
+    }
+
+    public void test(View v) {
+        int resID=getResources().getIdentifier("test", "raw", getPackageName());
+        MediaPlayer mp =MediaPlayer.create(this, resID);
+        mp.start();
     }
 
     public void exitClick(View v) {
