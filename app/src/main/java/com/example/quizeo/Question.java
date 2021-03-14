@@ -2,6 +2,7 @@ package com.example.quizeo;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.UUID;
 
 public class Question {
 
@@ -24,7 +25,7 @@ public class Question {
     private String explanation;
 
     /** Global ID for this question: */
-    private int globalId;
+    private UUID globalId;
 
     /** The user who created this question. */
     private User userCreated;
@@ -48,7 +49,7 @@ public class Question {
      * @param globalId The globalID of this question tgo save.
      */
     public Question(String question, String[] answers1, String correct, String explanation,
-                    int id, int globalId) {
+                    int id, UUID globalId) {
         // Initialize the answers ArrayList:
         answers = new ArrayList<>();
         // Add the question:
@@ -87,7 +88,7 @@ public class Question {
      * @param globalId The globalID of this question tgo save.
      */
     public Question(String question, String[] answers1, int correctInt, String explanation,
-                    int id, int globalId) {
+                    int id, UUID globalId) {
         answers = new ArrayList<>();
         // Add the question:
         this.question = question;
@@ -182,7 +183,7 @@ public class Question {
      *
      * @param globalId that should be set for this question.
      */
-    public void setGlobalId(int globalId) {
+    public void setGlobalId(UUID globalId) {
         this.globalId = globalId;
     }
 
@@ -240,7 +241,7 @@ public class Question {
      *
      * @return globalId.
      */
-    public int getGlobalId() {
+    public UUID getGlobalId() {
         return globalId;
     }
 

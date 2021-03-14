@@ -1,6 +1,7 @@
 package com.example.quizeo;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class Quiz {
 
@@ -8,7 +9,7 @@ public class Quiz {
     private ArrayList<Question> questions;
 
     /** global quizId of this quiz: */
-    private int quizId;
+    private UUID quizId;
 
     /** Name of the quiz: */
     private String quizName;
@@ -55,7 +56,7 @@ public class Quiz {
      * @param quizName name of the quiz.
      * @param location location belonging to the current quiz.
      */
-    public Quiz(int quizId, String quizName, Location location) {
+    public Quiz(UUID quizId, String quizName, Location location) {
         // Set the passed variables to the correct value:
         this.quizId = quizId;
         this.quizName = quizName;
@@ -79,7 +80,7 @@ public class Quiz {
      * @param location location belonging to the current quiz.
      * @param percentageToPass percentage required to pass the current quiz.
      */
-    public Quiz(int quizId, String quizName, Location location, int percentageToPass) {
+    public Quiz(UUID quizId, String quizName, Location location, int percentageToPass) {
         this.quizId = quizId;
         this.quizName = quizName;
         questions = new ArrayList<>();
@@ -164,7 +165,7 @@ public class Quiz {
      *
      * @return the quizId.
      */
-    public int getQuizId() {
+    public UUID getQuizId() {
         return quizId;
     }
 
@@ -259,7 +260,7 @@ public class Quiz {
      *
      * @param quizId the id of the quiz.
      */
-    public void setQuizId(int quizId) {
+    public void setQuizId(UUID quizId) {
         this.quizId = quizId;
     }
 
