@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient">
+
+    <ImageView
+        android:id="@+id/globeOptions"
+        android:layout_width="528dp"
+        android:layout_height="528dp"
+        android:alpha="0.7"
+        android:contentDescription="@string/globe"
+        android:src="@drawable/globe2_removebg_preview"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/exitIconOptions"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="25dp"
+        android:alpha="0.5"
+        android:clickable="true"
+        android:contentDescription="@string/exit"
+        android:focusable="true"
+        android:onClick="exitClick"
+        android:src="@drawable/exit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/optionsText"
+        android:layout_width="308dp"
+        android:layout_height="108dp"
+        android:layout_marginTop="65dp"
+        android:text="Options"
+        android:textSize="85sp"
+        android:textColor="@color/gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/saveSettingsButton"
+        android:layout_width="161dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginBottom="20dp"
+        android:onClick="saveOptions"
+        android:text="Save Settings"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/cancelButton"
+        android:layout_width="161dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="20dp"
+        android:onClick="cancelOptions"
+        android:text="Cancel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/saveSettingsButton" />
+
+    <Button
+        android:id="@+id/muteButton"
+        android:layout_width="204dp"
+        android:layout_height="67dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="160dp"
+        android:onClick="alterSound"
+        android:text="Mute Sounds"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/optionsText" />
+
+    <Button
+        android:id="@+id/verifiedButton"
+        android:layout_width="204dp"
+        android:layout_height="67dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="5dp"
+        android:onClick="toggleVerified"
+        android:text="Only play verified quizzes"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/muteButton" />
+
+    <Button
+        android:id="@+id/darkModeButton"
+        android:layout_width="204dp"
+        android:layout_height="67dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="5dp"
+        android:onClick="toggleDarkMode"
+        android:text="Dark Mode"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/verifiedButton" />
+
+    <Button
+        android:id="@+id/friendRequestButton"
+        android:layout_width="204dp"
+        android:layout_height="67dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="5dp"
+        android:onClick="toggleFriendRequests"
+        android:text="Allow friend requests"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/darkModeButton" />
+
+    <ImageView
+        android:id="@+id/verifiedBox"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="12dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="toggleVerified"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/verifiedButton"
+        app:layout_constraintTop_toBottomOf="@+id/muteIcon"
+        app:srcCompat="@drawable/image_removebg_preview" />
+
+    <ImageView
+        android:id="@+id/darkModeBox"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="16dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="toggleDarkMode"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/darkModeButton"
+        app:layout_constraintTop_toBottomOf="@+id/verifiedBox"
+        app:srcCompat="@drawable/image_removebg_preview"/>
+
+    <ImageView
+        android:id="@+id/friendRequestBox"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="16dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="toggleFriendRequests"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/friendRequestButton"
+        app:layout_constraintTop_toBottomOf="@+id/darkModeBox"
+        app:srcCompat="@drawable/image_removebg_preview"/>
+
+    <ImageView
+        android:id="@+id/muteIcon"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="156dp"
+        android:clickable="false"
+        android:focusable="false"
+        android:onClick="unmute"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.474"
+        app:layout_constraintStart_toEndOf="@+id/muteButton"
+        app:layout_constraintTop_toBottomOf="@+id/optionsText"
+        app:srcCompat="@drawable/sound_off"
+        tools:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/soundIcon"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="160dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="mute"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.48"
+        app:layout_constraintStart_toEndOf="@+id/muteButton"
+        app:layout_constraintTop_toBottomOf="@+id/optionsText"
+        app:srcCompat="@drawable/sound_removebg_preview__2_" />
+
+    <ImageView
+        android:id="@+id/verifiedCheck"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="11dp"
+        android:layout_marginBottom="11dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/verifiedBox"
+        app:layout_constraintStart_toStartOf="@+id/verifiedBox"
+        app:srcCompat="@drawable/vinkje" />
+
+    <ImageView
+        android:id="@+id/darkModeCheck"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="11dp"
+        android:layout_marginBottom="11dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/darkModeBox"
+        app:layout_constraintEnd_toEndOf="@+id/darkModeBox"
+        app:layout_constraintHorizontal_bias="0.549"
+        app:layout_constraintStart_toStartOf="@+id/darkModeBox"
+        app:layout_constraintTop_toTopOf="@+id/darkModeBox"
+        app:srcCompat="@drawable/vinkje" />
+
+    <ImageView
+        android:id="@+id/friendRequestCheck"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="11dp"
+        android:layout_marginBottom="11dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/friendRequestBox"
+        app:layout_constraintEnd_toEndOf="@+id/friendRequestBox"
+        app:layout_constraintHorizontal_bias="0.549"
+        app:layout_constraintStart_toStartOf="@+id/friendRequestBox"
+        app:layout_constraintTop_toTopOf="@+id/friendRequestBox"
+        app:srcCompat="@drawable/vinkje" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
