@@ -23,10 +23,12 @@ public class PlayQuizActivity extends AppCompatActivity {
         setContentView(R.layout.fragment_play_quiz);
         buttonBack = (Button) findViewById(R.id.buttonBack);
 
+
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openMainActivity();}
+                openMainActivity();
+            }
         });
     }
         public void openMainActivity() {
