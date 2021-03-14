@@ -1,0 +1,379 @@
+package com.example.quizeo;
+
+import android.util.Log;
+
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.UUID;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+/* TODO:
+    -Upload Questions
+    -Upload Quiz
+        (Check for Duplicates)
+    Remove Questions
+    Remove Quiz
+    Edit Questions
+    Edit Quiz
+    Get New ID
+    Query for quiz with location
+    Query for quiz with user
+    Find Questions of the quiz
+    ~IsTaken method handling of failures
+    ~Login
+*/
+
+//Database Interface Singleton
+public final class Database {
+
+    private static final String TAG = "";
+    static private Database instance;
+
+    final private FirebaseFirestore firestore;
+    final private CollectionReference questionRef;
+    final private CollectionReference quizRef;
+
+    private Database() {
+        firestore = FirebaseFirestore.getInstance();
+        questionRef = firestore.collection("Questions");
+        quizRef = firestore.collection("Quizzes");
+    }
+
+    public static Database getInstance() {
+        if (instance == null) {
+            instance = new Database();
+        }
+        return instance;
+    }
+
+    /**
+     * WIP
+     *
+     * @param quizID
+     * @return
+     */
+    public ArrayList<Question> getQuestions(UUID quizID) {
+        return new ArrayList<>();
+    }
+
+    /**
+     * Returns question object from the database
+     *
+     * @param questionID the id you want to retrieve from the database
+     * @return question object
+     * @throws NoSuchElementException if question with questionId is not found
+     */
+    public Question getQuestion(UUID questionID)
+            throws NoSuchElementException {
+
+        //int sizeOfQuery = 0;
+        final Question[] result = new Question[1];
+
+        DocumentReference docRef = firestore.collection("Questions").document(questionID.toString());
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                        System.out.println("Download success");
+                        result[0] = docToQuestion(document);
+                    } else {
+                        Log.d(TAG, "No such document");
+                        throw new NoSuchElementException("Question with UUID " +questionID + "not found");
+                    }
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
+                }
+            }
+        });
+
+
+        return result[0];
+    }
+
+    //Returns a list of quizzes that are close to location
+    public ArrayList<Object> getQuizzes(Location location) {
+        return new ArrayList<>();
+    }
+
+    /**
+     * Converts DocumentSnapshot to Question object
+     *
+     * @param doc document to be converted
+     * @return Question object
+     */
+    private Question docToQuestion(DocumentSnapshot doc) {
+        doc.get("GlobalID");
+
+        UUID GlobalID = (UUID) UUID.fromString((String) doc.get("GlobalID"));
+        String question = (String) doc.get("Question");
+        String explanation = (String) doc.get("Explanation");
+        ArrayList<String> answers = (ArrayList<String>) doc.get("Answers");
+        String correct = (String) doc.get("Correct");
+        Long IDasLong = (Long) doc.get("Question Number");
+        int ID = IDasLong.intValue();
+
+        String[] ans = new String[answers.size()];
+        for (int i = 0; i < answers.size(); i++) {
+            ans[i] = answers.get(i);
+        }
+
+        Question quest = new Question(question, ans, correct, explanation, ID, GlobalID);
+
+        return quest;
+    }
+
+
+    //------------------------- Upload -----------------------
+    /**
+     * Uploads a quiz and all its questions to the database
+     *
+     * @param quiz Quiz to uploaded
+     * @return wether the upload was successful
+     */
+    public boolean uploadQuiz(Quiz quiz) {
+        // ----- Preparing for upload ------
+        Location loc = quiz.getLocation(); //location of the quiz
+
+        Map<String, Object> data = new HashMap<>();
+        ArrayList<String> listOfQuestions = new ArrayList<>();
+
+        for (Question question: quiz.getQuestions()) {
+            listOfQuestions.add(question.getGlobalId().toString());
+            uploadQuestion(question, quiz);
+        }
+
+        data.put("GlobalID", quiz.getQuizId().toString());
+        data.put("Name", quiz.getQuizName());
+        data.put("Rating", quiz.getRating());
+        data.put("Number of Ratings", quiz.getNumberOfRatings());
+        data.put("Number of Questions", quiz.getNumberOfQuestions());
+        data.put("Score to Pass", quiz.getScoreToPass());
+        data.put("User created", quiz.getUserCreated());
+        data.put("Latitude", loc.getLatitude());
+        data.put("Longitude", loc.getLongitude());
+        data.put("Questions", listOfQuestions);
+
+        // ------ upload quiz ------
+        final boolean[] successfulUpload = new boolean[1];
+
+        firestore.collection("Quizzes").document(quiz.getQuizId().toString())
+                .set(data)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        System.out.println("Upload Success");
+                        successfulUpload[0] = true;
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        System.out.println("Upload failure");
+                        successfulUpload[0] = false;
+                    }
+                });
+        return successfulUpload[0];
+    }
+
+    /**
+     * Upload a question to the database, question is part of multiple quizzes
+     *
+     * @param question question to be uploaded
+     * @return whether the upload was successful
+     */
+    public boolean uploadQuestion(Question question, Quiz quiz)  {
+        if (uuidIsTaken(question.getGlobalId(), questionRef) &&
+                uuidIsTaken(question.getGlobalId(), quizRef)) {
+            updateQuestion(question, quiz);
+        }
+        //Question is not already in the database
+
+        final boolean[] successfulUpload = new boolean[1];
+
+        HashMap<String, Object> data = questionToMap(question, quiz);
+
+        System.out.println("Starting upload");
+        //upload to FireStore
+        firestore.collection("Questions").document(question.getGlobalId().toString())
+                .set(data)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        System.out.println("Upload Success");
+                        successfulUpload[0] = true;
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        System.out.println("Upload failure");
+                        successfulUpload[0] = false;
+                    }
+                });
+        return successfulUpload[0];
+    }
+
+    /**
+     * Converts a Question object into a Hash map
+     *
+     * @param question question object to be converted
+     * @param quiz quiz the question is part of
+     * @return question object as hash map
+     */
+    private HashMap<String, Object> questionToMap(Question question, Quiz quiz) {
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("GlobalID", question.getGlobalId().toString());
+        data.put("Question", question.getQuestion());
+        data.put("Correct", question.getCorrect());
+        data.put("Explanation", question.getExplanation());
+        data.put("Part of", quiz.getQuizId().toString());
+        data.put("Question Number", question.getId());
+
+        ArrayList<String> ans = new ArrayList<String>(Arrays.asList(question.getAnswers()));
+        data.put("Answers", ans);
+
+        return data;
+    }
+
+//    private HashMap<String, Object> questionToMap(Question question, List<Quiz> quizzes) {
+//        ArrayList<UUID> list = new ArrayList<>();
+//        for (Quiz quiz: quizzes) {
+//            list.add(quiz.getQuizId());
+//        }
+//        return questionToMap(question, list);
+//    }
+//
+//    private HashMap<String, Object> questionToMap(Question question, UUID quiz) {
+//        ArrayList<UUID> list = new ArrayList<>();
+//        list.add(quiz);
+//        return questionToMap(question, list);
+//    }
+//
+//    private HashMap<String, Object> questionToMap(Question question, Quiz quiz) {
+//        return questionToMap(question, quiz.getQuizId());
+//    }
+
+    //------------------------- Edit -----------------------
+    private boolean updateQuestion(Question question, Quiz quiz) {
+        return true;
+    }
+
+    private boolean updateQuiz() {
+        return true;
+    }
+
+    //------------------------- Delete -----------------------
+
+    /**
+     *  Removes a question from a quiz,
+     *  if the questions is part of no quizzes after it will deleted from the database
+     *
+     * @param question question to be removed
+     * @param quiz quiz the question will be removed from
+     */
+    public void removeQuestionFromQuiz(Question question, Quiz quiz) {
+        removeQuestionFromQuiz(question.getGlobalId(), quiz.getQuizId());
+    }
+
+    /**
+     *  Removes a question from a quiz,
+     *  if the questions is part of no quizzes after it will deleted from the database
+     *
+     * @param uuidOfQuestion uuid of the question to be removed
+     * @param uuidOfQuiz uuid of the quiz the question will be removed from
+     */
+    public void removeQuestionFromQuiz(UUID uuidOfQuestion, UUID uuidOfQuiz) {
+        //Map<String, Object> map = firestore.collection("Quizzes").
+        //                          document(uuidOfQuiz.toString()).get().getResult().getData();
+        //ArrayList<Object> list = (ArrayList<Object>) map.get("Questions");
+        firestore.collection("Quizzes").document(uuidOfQuiz.toString()).
+                update("Questions", FieldValue.arrayRemove(uuidOfQuestion));
+
+    }
+
+
+
+    /**
+     * Generates a new UUID for a question and makes sure it is not already used
+     *
+     * @return new unused UUID
+     */
+    public UUID getNewQuestionId() {
+        return getNewID(questionRef);
+    }
+
+    /**
+     * Generates a new UUID for a quiz and makes sure it is not already used
+     *
+     * @return new unused UUID
+     */
+    public UUID getNewQuizId() {
+        return getNewID(quizRef);
+    }
+
+    /**
+     * Helper method for getNewQuestionId() and getNewQuizId()
+     *
+     * @param cr which collection to search: quiz or question
+     * @return new unused UUID
+     */
+    private UUID getNewID(CollectionReference cr) {
+        UUID newID;
+        Query hasID;
+        AtomicBoolean isEmpty = new AtomicBoolean(false);
+        do {
+            newID = UUID.randomUUID();
+            hasID = cr.whereEqualTo("GlobalID", newID);
+            hasID.get().addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    isEmpty.set(task.getResult().isEmpty());
+                }
+            });
+        } while (!isEmpty.get());
+        return newID;
+    }
+
+    /**
+     * Checks whether a given UUID is already taken in a certain collection
+     *
+     * @param uuid the id we want c=to check
+     * @param cr the collection that we want to check
+     * @return whether the UUID is already in the database
+     */
+    private boolean uuidIsTaken(UUID uuid, CollectionReference cr) {
+        AtomicBoolean isTaken = new AtomicBoolean(true);
+
+        Query hasID = cr.whereEqualTo("GlobalID", uuid);
+        hasID.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                isTaken.set(task.getResult().isEmpty());
+            } else { //Not a nice way of handling failure
+                System.out.println("uuidIsTaken() failed");
+            }
+        });
+
+        return isTaken.get();
+    }
+}

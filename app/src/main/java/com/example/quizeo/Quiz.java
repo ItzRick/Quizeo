@@ -229,6 +229,15 @@ public class Quiz {
     }
 
     /**
+     * Retrieve the number of ratings corresponding to this quiz.
+     *
+     * @return the number of ratings corresponding to this quiz.
+     */
+    public double getNumberOfRatings() {
+        return nrOfRatings;
+    }
+
+    /**
      * Retrieve the score required to pass this quiz.
      *
      * @return the score required to pass the quiz.
