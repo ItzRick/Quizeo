@@ -4,6 +4,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.UUID;
+
 import static org.junit.Assert.*;
 
 public class UserTest {
@@ -32,7 +34,7 @@ public class UserTest {
     public void setUserId() {
         System.out.println("setUserId()");
         // Create a new userId and set this userId:
-        int id = 12345;
+        UUID id = UUID.randomUUID();
         user.setUserId(id);
         // Check if the userId was correctly set:
         Assert.assertEquals(id, user.getUserId());
@@ -44,7 +46,7 @@ public class UserTest {
         System.out.println("Initialization()");
         // Create a nickName and userId and pass this while initializing:
         String nickName = "test";
-        int id = 12345;
+        UUID id = UUID.randomUUID();
         User user1 = new User(nickName, id);
         // Check if both the userId and nickName were correctly passed:
         Assert.assertEquals(nickName, user1.getNickName());

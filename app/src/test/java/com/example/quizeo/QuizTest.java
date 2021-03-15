@@ -6,6 +6,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.UUID;
+
 import static org.junit.Assert.*;
 
 public class QuizTest {
@@ -26,7 +28,7 @@ public class QuizTest {
         String correct = "first";
         String explanation = "this is an explanation!";
         int id = 1;
-        int globalId = 123;
+        UUID globalId = UUID.randomUUID();
         question = new Question(string, array, correct, explanation, id, globalId);
         quiz.addQuestion(question);
     }
@@ -117,7 +119,7 @@ public class QuizTest {
         System.out.println("getQuizId()");
 
         // Create an Id and add this to the quiz:
-        int id = 123;
+        UUID id = UUID.randomUUID();
         quiz.setQuizId(id);
 
         // Retrieve this Id and make sure this is equal to the Id that was added:
@@ -162,8 +164,8 @@ public class QuizTest {
 
         // Retrieve this location and confirm this is the same location:
         Location location1 = quiz.getLocation();
-        Assert.assertEquals((int)location.getX(), (int)location1.getX());
-        Assert.assertEquals((int)location.getY(), (int)location1.getY());
+        Assert.assertEquals((int)location.getLatitude(), (int)location1.getLatitude());
+        Assert.assertEquals((int)location.getLongitude(), (int)location1.getLongitude());
         Assert.assertEquals(location, location1);
     }
 
@@ -280,7 +282,7 @@ public class QuizTest {
         System.out.println("getUserCreated()");
 
         // Create a new user and add this to the quiz:
-        User user = new User("user", 12356);
+        User user = new User("user", UUID.randomUUID());
         quiz.setUserCreated(user);
 
         // Check that the getUserCreated() method returns the correct user:
@@ -294,7 +296,7 @@ public class QuizTest {
         System.out.println("Initialization() 1");
 
         // Create an Id, quizName and location and initialize the quiz:
-        int id = 123;
+        UUID id = UUID.randomUUID();
         String quizName = "This is a quiz";
         Location location = new Location(1, 1);
         Quiz quiz1 = new Quiz(id, quizName, location);
@@ -303,8 +305,8 @@ public class QuizTest {
         Assert.assertEquals(id, quiz1.getQuizId());
         Assert.assertEquals(quizName, quiz1.getQuizName());
         Location location1 = quiz1.getLocation();
-        Assert.assertEquals((int)location.getX(), (int)location1.getX());
-        Assert.assertEquals((int)location.getY(), (int)location1.getY());
+        Assert.assertEquals((int)location.getLatitude(), (int)location1.getLatitude());
+        Assert.assertEquals((int)location.getLongitude(), (int)location1.getLongitude());
         Assert.assertEquals(location, location1);
 
     }
@@ -315,7 +317,7 @@ public class QuizTest {
         System.out.println("Initialization() 1");
 
         // Create an Id, quizName, location and percentageToPass and initialize the quiz:
-        int id = 123;
+        UUID id = UUID.randomUUID();
         String quizName = "This is a quiz";
         Location location = new Location(1, 1);
         int percentageToPass = 50;
@@ -326,8 +328,8 @@ public class QuizTest {
         Assert.assertEquals(id, quiz1.getQuizId());
         Assert.assertEquals(quizName, quiz1.getQuizName());
         Location location1 = quiz1.getLocation();
-        Assert.assertEquals((int)location.getX(), (int)location1.getX());
-        Assert.assertEquals((int)location.getY(), (int)location1.getY());
+        Assert.assertEquals((int)location.getLatitude(), (int)location1.getLatitude());
+        Assert.assertEquals((int)location.getLongitude(), (int)location1.getLongitude());
         Assert.assertEquals(location, location1);
         Assert.assertEquals(1, quiz1.getScoreToPass());
     }

@@ -4,6 +4,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.UUID;
+
 import static org.junit.Assert.*;
 
 public class AnswerQuizTest {
@@ -20,7 +22,7 @@ public class AnswerQuizTest {
     public void setUserAnswered() {
         System.out.println("setUserAnswered()");
         // Add a new user to this answerQuiz instance:
-        User user = new User("user", 12356);
+        User user = new User("user", UUID.randomUUID());
         answerQuiz.setUserAnswered(user);
 
         // Check if the user was indeed correctly passed:
@@ -66,7 +68,7 @@ public class AnswerQuizTest {
     public void initialization() {
         System.out.println("Initialization()");
         // Create a new User:
-        User user = new User("user", 12356);
+        User user = new User("user", UUID.randomUUID());
         AnswerQuiz answerQuiz1 = new AnswerQuiz(user);
         // See if the initialization has been done correctly:
         Assert.assertEquals(user.getUserId(), answerQuiz1.getUserAnswered().getUserId());

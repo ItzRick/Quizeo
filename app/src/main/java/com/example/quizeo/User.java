@@ -1,12 +1,14 @@
 package com.example.quizeo;
 
+import java.util.UUID;
+
 public class User {
 
     /** nickName associated with this user: */
     private String nickName;
 
     /** userId associated with this user: */
-    private int userId;
+    private UUID userId;
 
     /** I
      * Initialization which directly passes a nickname and userId.
@@ -14,7 +16,7 @@ public class User {
      * @param nickName nickName associated with this user.
      * @param userId userId associated with this user.
      */
-    public User(String nickName, int userId) {
+    public User(String nickName, UUID userId) {
         this.nickName = nickName;
         this.userId = userId;
     }
@@ -39,7 +41,7 @@ public class User {
      *
      * @param userId Id to which the userId of this user should be set.
      */
-    public void setUserId(int userId) {
+    public void setUserId(UUID userId) {
         this.userId = userId;
     }
 
@@ -57,7 +59,7 @@ public class User {
      *
      * @return userId of the current user.
      */
-    public int getUserId() {
+    public UUID getUserId() {
         return userId;
     }
 }

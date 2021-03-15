@@ -4,6 +4,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.UUID;
+
 import static org.junit.Assert.*;
 
 public class QuestionTest {
@@ -133,7 +135,7 @@ public class QuestionTest {
         System.out.println("setGlobalId()");
 
         // Set a globalId and save this with the question:
-        int globalId = 123;
+        UUID globalId = UUID.randomUUID();
         question.setGlobalId(globalId);
 
         // Check if this globalId indeed is returned:
@@ -154,7 +156,7 @@ public class QuestionTest {
         String correct = "first";
         String explanation = "this is an explanation!";
         int id = 1;
-        int globalId = 123;
+        UUID globalId = UUID.randomUUID();
         Question question1 = new Question(string, array, correct, explanation, id, globalId);
 
         // Check if all values where correctly passed:
@@ -183,7 +185,7 @@ public class QuestionTest {
         String correct = "first";
         String explanation = "this is an explanation!";
         int id = 1;
-        int globalId = 123;
+        UUID globalId = UUID.randomUUID();
         Question question1 = new Question(string, array, 1, explanation, id, globalId);
 
         // Check if all values where correctly passed:
@@ -204,7 +206,7 @@ public class QuestionTest {
         System.out.println("setUserCreated()");
 
         // Create a new user and set this user for this question:
-        User user = new User("user", 12356);
+        User user = new User("user", UUID.randomUUID());
         question.setUserCreated(user);
 
         // Check if the user was correctly saved to this question:
