@@ -83,8 +83,8 @@ public class OptionsActivity extends AppCompatActivity {
             toggleDarkMode(findViewById(R.id.darkModeButton));
             //changeDarkModeThenExit();
         }
-        i.putExtra("options", true);
-        startActivity(i);
+
+        openHome(sound, verified, darkmode, request);
     }
 
     public void changeDarkModeThenExit() {
@@ -99,17 +99,20 @@ public class OptionsActivity extends AppCompatActivity {
 
     public void saveOptions(View v) {
         // save current options
-        Intent i = new Intent(this, MainActivity.class);
-        i.putExtra("sound", findViewById(R.id.soundIcon).getVisibility() == View.VISIBLE);
-        i.putExtra("verified", findViewById(R.id.verifiedCheck).getVisibility() == View.VISIBLE);
-        i.putExtra("darkmode", findViewById(R.id.darkModeCheck).getVisibility() == View.VISIBLE);
-        i.putExtra("request", findViewById(R.id.friendRequestCheck).getVisibility() == View.VISIBLE);
+        boolean newSound = findViewById(R.id.soundIcon).getVisibility() == View.VISIBLE;
+        boolean newVerified = findViewById(R.id.verifiedCheck).getVisibility() == View.VISIBLE;
+        boolean newDarkmode = findViewById(R.id.darkModeCheck).getVisibility() == View.VISIBLE;
+        boolean newRequest = findViewById(R.id.friendRequestCheck).getVisibility() == View.VISIBLE;
         // return to home screen
-        startActivity(i);
+        openHome(newSound, newVerified, newDarkmode, newRequest);
     }
 
-    public void openHome() {
+    public void openHome(boolean sound, boolean verified, boolean darkmode, boolean request) {
         Intent i = new Intent(this, MainActivity.class);
+        i.putExtra("sound", sound);
+        i.putExtra("verified", verified);
+        i.putExtra("darkmode", darkmode);
+        i.putExtra("request", request);
         startActivity(i);
     }
 

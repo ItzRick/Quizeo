@@ -31,6 +31,11 @@ public class MainActivity extends AppCompatActivity {
     Button buttonStartQuiz;
     Button buttonOptions;
 
+    boolean sound;
+    boolean verified;
+    boolean darkmode;
+    boolean request;
+
     private LocationManager locationManager;
     private LocationListener locationListener = new MyLocationListener();
     private boolean gpsEnabled = false;
