@@ -31,6 +31,11 @@ public class MainActivity extends AppCompatActivity {
     Button buttonStartQuiz;
     Button buttonOptions;
 
+    boolean sound;
+    boolean verified;
+    boolean darkmode;
+    boolean request;
+
     private LocationManager locationManager;
     private LocationListener locationListener = new MyLocationListener();
     private boolean gpsEnabled = false;
@@ -44,6 +49,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.homescreen);
+
+        Intent intent = getIntent();
+        getOptions(intent);
+
         buttonMakeQuiz = (Button) findViewById(R.id.buttonMakeQuiz);
         buttonStartQuiz = (Button) findViewById(R.id.buttonStartQuiz);
         buttonOptions = (Button) findViewById(R.id.buttonOptions);
@@ -87,6 +96,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void getOptions(Intent i) {
+        sound = i.getBooleanExtra("sound", true);
+        verified = i.getBooleanExtra("verified", true);
+        darkmode = i.getBooleanExtra("darkmode", false);
+        request = i.getBooleanExtra("request", false);
+    }
+
     public void openCreateQuizActivity(){
         Intent intent = new Intent(this, CreateQuizActivity.class);
         startActivity(intent);
@@ -99,7 +115,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void openOptionsActivity(){
         Intent intent = new Intent(this, OptionsActivity.class);
-        intent.putExtra("Sign", true);
+        intent.putExtra("sound", sound);
+        intent.putExtra("verified", verified);
+        intent.putExtra("darkmode", darkmode);
+        intent.putExtra("request", request);
         startActivity(intent);
     }
 
