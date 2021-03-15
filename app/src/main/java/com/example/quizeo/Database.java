@@ -15,6 +15,7 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -58,6 +59,11 @@ public final class Database {
         quizRef = firestore.collection("Quizzes");
     }
 
+    /**
+     * Returns database singleton object
+     *
+     * @return database singleton object
+     */
     public static Database getInstance() {
         if (instance == null) {
             instance = new Database();
@@ -74,6 +80,7 @@ public final class Database {
     public ArrayList<Question> getQuestions(UUID quizID) {
         return new ArrayList<>();
     }
+
 
     /**
      * Returns question object from the database
@@ -108,11 +115,16 @@ public final class Database {
             }
         });
 
-
         return result[0];
     }
 
-    //Returns a list of quizzes that are close to location
+
+    /**
+     * Returns a list of quizzes that are close to location
+     *
+     * @param location
+     * @return
+     */
     public ArrayList<Object> getQuizzes(Location location) {
         return new ArrayList<>();
     }
@@ -145,12 +157,12 @@ public final class Database {
     }
 
 
-    //------------------------- Upload -----------------------
+    //------------------------- UPLOAD -----------------------
     /**
      * Uploads a quiz and all its questions to the database
      *
      * @param quiz Quiz to uploaded
-     * @return wether the upload was successful
+     * @return whether the upload was successful
      */
     public boolean uploadQuiz(Quiz quiz) {
         // ----- Preparing for upload ------
@@ -257,34 +269,30 @@ public final class Database {
         return data;
     }
 
-//    private HashMap<String, Object> questionToMap(Question question, List<Quiz> quizzes) {
-//        ArrayList<UUID> list = new ArrayList<>();
-//        for (Quiz quiz: quizzes) {
-//            list.add(quiz.getQuizId());
-//        }
-//        return questionToMap(question, list);
-//    }
-//
-//    private HashMap<String, Object> questionToMap(Question question, UUID quiz) {
-//        ArrayList<UUID> list = new ArrayList<>();
-//        list.add(quiz);
-//        return questionToMap(question, list);
-//    }
-//
-//    private HashMap<String, Object> questionToMap(Question question, Quiz quiz) {
-//        return questionToMap(question, quiz.getQuizId());
-//    }
+    //------------------------- EDIT -----------------------
 
-    //------------------------- Edit -----------------------
+    /**
+     *
+     * @param question
+     * @param quiz
+     * @return
+     */
     private boolean updateQuestion(Question question, Quiz quiz) {
         return true;
     }
 
+
+    /**
+     *
+     * @return
+     */
     private boolean updateQuiz() {
         return true;
     }
 
-    //------------------------- Delete -----------------------
+
+
+    //------------------------- DELETE -----------------------
 
     /**
      *  Removes a question from a quiz,
@@ -313,45 +321,20 @@ public final class Database {
 
     }
 
-
+    //------------------------- NEW ID -----------------------
+    /** A variable to transfer data from listener to uuidIsTaken method */
+    private boolean isTaken;
 
     /**
-     * Generates a new UUID for a question and makes sure it is not already used
+     * Generates an new ID until it finds an unused ID
      *
      * @return new unused UUID
      */
-    public UUID getNewQuestionId() {
-        return getNewID(questionRef);
-    }
-
-    /**
-     * Generates a new UUID for a quiz and makes sure it is not already used
-     *
-     * @return new unused UUID
-     */
-    public UUID getNewQuizId() {
-        return getNewID(quizRef);
-    }
-
-    /**
-     * Helper method for getNewQuestionId() and getNewQuizId()
-     *
-     * @param cr which collection to search: quiz or question
-     * @return new unused UUID
-     */
-    private UUID getNewID(CollectionReference cr) {
+    public UUID getNewID() {
         UUID newID;
-        Query hasID;
-        AtomicBoolean isEmpty = new AtomicBoolean(false);
         do {
             newID = UUID.randomUUID();
-            hasID = cr.whereEqualTo("GlobalID", newID);
-            hasID.get().addOnCompleteListener(task -> {
-                if (task.isSuccessful()) {
-                    isEmpty.set(task.getResult().isEmpty());
-                }
-            });
-        } while (!isEmpty.get());
+        } while (uuidIsTaken(newID, questionRef) || uuidIsTaken(newID, quizRef));
         return newID;
     }
 
@@ -363,17 +346,33 @@ public final class Database {
      * @return whether the UUID is already in the database
      */
     private boolean uuidIsTaken(UUID uuid, CollectionReference cr) {
-        AtomicBoolean isTaken = new AtomicBoolean(true);
+        Query hasID = cr.whereEqualTo("GlobalID", uuid.toString());
+        hasID.get().addOnCompleteListener(new newIdOnCompleteListener());
+        return isTaken;
+    }
 
-        Query hasID = cr.whereEqualTo("GlobalID", uuid);
-        hasID.get().addOnCompleteListener(task -> {
+    /**
+     *  Set new value of isTaken boolean
+     *
+     * @param value the new value
+     */
+    public void setIsTaken(boolean value) {
+        isTaken = value;
+    }
+
+    /**
+     * OnCompletionListener for get new ID task
+     */
+    private class newIdOnCompleteListener implements OnCompleteListener<QuerySnapshot> {
+
+        @Override
+        public void onComplete(@NonNull  Task<QuerySnapshot> task) {
             if (task.isSuccessful()) {
-                isTaken.set(task.getResult().isEmpty());
+                Database.getInstance().setIsTaken(!task.getResult().isEmpty());
             } else { //Not a nice way of handling failure
                 System.out.println("uuidIsTaken() failed");
             }
-        });
-
-        return isTaken.get();
+        }
     }
+
 }
