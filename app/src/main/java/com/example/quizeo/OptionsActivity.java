@@ -23,47 +23,39 @@ public class OptionsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.options);
-        Intent intent = new Intent(this, OptionsActivity.class);
         Intent i = getIntent();
 
-        if (i.getBooleanExtra("exit", false)) {
-            Intent intent2 = new Intent(this, MainActivity.class);
-            startActivity(intent2);
-        }
-
         getOptions(i);
-
-        ImageView darkModeCheck = findViewById(R.id.darkModeCheck);
-        /*if (i.getBooleanExtra("Sign", false)) {
-            darkmode = darkModeCheck.getVisibility() == View.VISIBLE;
-            intent.putExtra("darkmode", darkmode);
-            intent.putExtra("Sign", false);
+        if (!i.getBooleanExtra("darkmodeChange", false)) {
+            if (sound) {
+                unmute(findViewById(R.id.muteIcon));
+            } else {
+                mute(findViewById(R.id.soundIcon));
+            }
+            verifiedQuizzes(verified);
+            friendRequests(request);
+            darkMode(darkmode);
         } else {
-            darkmode = i.getBooleanExtra("darkmode", false);
-        }*/
+            if (i.getBooleanExtra("soundNow", true)) {
+                unmute(findViewById(R.id.muteIcon));
+            } else {
+                mute(findViewById(R.id.soundIcon));
+            }
+            verifiedQuizzes(i.getBooleanExtra("verifiedNow", true));
+            friendRequests(i.getBooleanExtra("requestNow", false));
+            darkMode(i.getBooleanExtra("darkmodeNow", false));
 
-        /*if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
-            Log.d("lol", "HEY");
-            darkModeCheck.setVisibility(View.VISIBLE);
-        } else {
-            darkModeCheck.setVisibility(View.INVISIBLE);
-        }*/
-
+        }
     }
 
     public void getOptions(Intent i) {
         sound = i.getBooleanExtra("sound", true);
-        if (sound) {
-            unmute(findViewById(R.id.muteIcon));
-        } else {
-            mute(findViewById(R.id.soundIcon));
-        }
+
         verified = i.getBooleanExtra("verified", true);
-        verifiedQuizzes(verified);
+
         request = i.getBooleanExtra("request", false);
-        friendRequests(request);
+
         darkmode = i.getBooleanExtra("darkmode", false);
-        darkMode(darkmode);
     }
 
     public void cancelOptions(View v) {
@@ -72,29 +64,21 @@ public class OptionsActivity extends AppCompatActivity {
         boolean change = false;
         if ((findViewById(R.id.soundIcon).getVisibility() == View.VISIBLE) != sound) {
             alterSound(findViewById(R.id.muteButton));
+            change = true;
         }
         if ((findViewById(R.id.verifiedCheck).getVisibility() == View.VISIBLE) != verified) {
             toggleVerified(findViewById(R.id.verifiedButton));
+            change = true;
         }
         if ((findViewById(R.id.friendRequestCheck).getVisibility() == View.VISIBLE) != request) {
             toggleFriendRequests(findViewById(R.id.friendRequestButton));
+            change = true;
         }
         if ((findViewById(R.id.darkModeCheck).getVisibility() == View.VISIBLE) != darkmode) {
             toggleDarkMode(findViewById(R.id.darkModeButton));
-            //changeDarkModeThenExit();
+            change = true;
         }
-
         openHome(sound, verified, darkmode, request);
-    }
-
-    public void changeDarkModeThenExit() {
-        Intent i = new Intent(this, OptionsActivity.class);
-        i.putExtra("exit", true);
-        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
-            //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        } else {
-            //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        }
     }
 
     public void saveOptions(View v) {
@@ -140,7 +124,7 @@ public class OptionsActivity extends AppCompatActivity {
         mute.setFocusable(true);
         // change button text
         ((Button) this.findViewById(R.id.muteButton)).setText("Play Sounds");
-        // add code to actually mutez the app
+        // add code to actually mutes the app
 
     }
 
@@ -192,14 +176,25 @@ public class OptionsActivity extends AppCompatActivity {
 
     public void darkMode(boolean enable) {
         ImageView i = this.findViewById(R.id.darkModeCheck);
+        Intent in = getIntent();
+        in.putExtra("darkmodeChange", true);
+        in.putExtra("soundNow", findViewById(R.id.soundIcon).getVisibility() == View.VISIBLE);
+        in.putExtra("verifiedNow", findViewById(R.id.verifiedCheck).getVisibility() == View.VISIBLE);
+        in.putExtra("requestNow", findViewById(R.id.friendRequestCheck).getVisibility() == View.VISIBLE);
         if (enable) {
             i.setVisibility(View.VISIBLE);
             //add code to enable
-            //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            in.putExtra("darkmodeNow", true);
+            if (AppCompatDelegate.getDefaultNightMode() != AppCompatDelegate.MODE_NIGHT_YES) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            }
         } else {
             i.setVisibility(View.INVISIBLE);
             // add code to disable
-            //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            in.putExtra("darkmodeNow", false);
+            if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            }
         }
     }
 

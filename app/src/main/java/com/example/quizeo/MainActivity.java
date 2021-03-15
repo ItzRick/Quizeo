@@ -115,7 +115,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void openOptionsActivity(){
         Intent intent = new Intent(this, OptionsActivity.class);
-        intent.putExtra("Sign", "BRUH");
         intent.putExtra("sound", sound);
         intent.putExtra("verified", verified);
         intent.putExtra("darkmode", darkmode);
