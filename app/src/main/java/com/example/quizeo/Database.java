@@ -14,18 +14,14 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.UUID;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 /* TODO:
     -Upload Questions
@@ -35,11 +31,11 @@ import java.util.concurrent.atomic.AtomicBoolean;
     Remove Quiz
     Edit Questions
     Edit Quiz
-    Get New ID
+    -Get New ID
     Query for quiz with location
     Query for quiz with user
     Find Questions of the quiz
-    ~IsTaken method handling of failures
+    -IsTaken method handling of failures
     ~Login
 */
 
@@ -71,6 +67,11 @@ public final class Database {
         return instance;
     }
 
+    //------------------------- DOWNLOAD -----------------------
+
+    /** Variable to transfer data from listener to method */
+    private Question tempQuestion;
+
     /**
      * WIP
      *
@@ -89,11 +90,9 @@ public final class Database {
      * @return question object
      * @throws NoSuchElementException if question with questionId is not found
      */
-    public Question getQuestion(UUID questionID)
-            throws NoSuchElementException {
+    public synchronized Question getQuestion(UUID questionID, DownloadQuestionCallback callback) throws NoSuchElementException {
 
-        //int sizeOfQuery = 0;
-        final Question[] result = new Question[1];
+        tempQuestion = null;
 
         DocumentReference docRef = firestore.collection("Questions").document(questionID.toString());
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -104,10 +103,12 @@ public final class Database {
                     if (document.exists()) {
                         Log.d(TAG, "DocumentSnapshot data: " + document.getData());
                         System.out.println("Download success");
-                        result[0] = docToQuestion(document);
+                        Question result = new Question();
+                        docToQuestion(document, result);
+                        callback.onCallback(result);
                     } else {
                         Log.d(TAG, "No such document");
-                        throw new NoSuchElementException("Question with UUID " +questionID + "not found");
+                        throw new NoSuchElementException("Question not found");
                     }
                 } else {
                     Log.d(TAG, "get failed with ", task.getException());
@@ -115,8 +116,14 @@ public final class Database {
             }
         });
 
-        return result[0];
+        return tempQuestion;
     }
+
+    /** Callback interface for downloading questions */
+    public interface DownloadQuestionCallback {
+        void onCallback(Question question);
+    }
+
 
 
     /**
@@ -133,11 +140,11 @@ public final class Database {
      * Converts DocumentSnapshot to Question object
      *
      * @param doc document to be converted
-     * @return Question object
+     * @param q question object to which will hold the new values
      */
-    private Question docToQuestion(DocumentSnapshot doc) {
-        doc.get("GlobalID");
+    private void docToQuestion(DocumentSnapshot doc, Question q) {
 
+        //getting the values
         UUID GlobalID = (UUID) UUID.fromString((String) doc.get("GlobalID"));
         String question = (String) doc.get("Question");
         String explanation = (String) doc.get("Explanation");
@@ -151,10 +158,16 @@ public final class Database {
             ans[i] = answers.get(i);
         }
 
-        Question quest = new Question(question, ans, correct, explanation, ID, GlobalID);
-
-        return quest;
+        //setting in Question object
+        q.setAnswers(ans);
+        q.setCorrect(correct);
+        q.setGlobalId(GlobalID);
+        q.setId(ID);
+        q.setQuestion(question);
+        q.setExplanation(explanation);
     }
+
+
 
 
     //------------------------- UPLOAD -----------------------
