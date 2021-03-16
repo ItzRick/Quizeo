@@ -32,7 +32,7 @@ import java.util.UUID;
     Edit Questions
     Edit Quiz
     -Get New ID
-    Query for quiz with location
+    -Query for quiz with location
     Query for quiz with user
     Find Questions of the quiz
     -IsTaken method handling of failures
@@ -41,6 +41,10 @@ import java.util.UUID;
 
 //Database Interface Singleton
 public final class Database {
+
+    /** Range we want to query for nearby quizzes in kilometer and degrees */
+    private final int RANGE = 5;
+    private final double RANGE_IN_DEGREES = (RANGE / 110.574) % 360;
 
     private static final String TAG = "";
     static private Database instance;
@@ -69,30 +73,96 @@ public final class Database {
 
     //------------------------- DOWNLOAD -----------------------
 
-    /** Variable to transfer data from listener to method */
-    private Question tempQuestion;
-
     /**
-     * WIP
+     * Returns a list of quizzes that are close to location
      *
-     * @param quizID
-     * @return
+     * @param location the location you want to query
+     * @param callback the callback object
      */
-    public ArrayList<Question> getQuestions(UUID quizID) {
-        return new ArrayList<>();
+    public void getQuizzes(Location location, DownloadQuizzesCallback callback) {
+        double longitude = location.getLongitude();
+        double latitude = location.getLatitude();
+
+        double minLong = (longitude - (RANGE_IN_DEGREES / 2)) % 360;
+        double maxLong = (longitude + (RANGE_IN_DEGREES / 2)) % 360;
+
+        double minLat = (latitude - (RANGE_IN_DEGREES / 2)) % 360;
+        double maxLat = (latitude + (RANGE_IN_DEGREES / 2)) % 360;
+
+        quizRef.whereGreaterThanOrEqualTo("Latitude", minLat).whereLessThanOrEqualTo("Latitude", maxLat)
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    QuerySnapshot snapshot = task.getResult();
+                    ArrayList<Quiz> list = new ArrayList<>();
+                    for (DocumentSnapshot doc: snapshot.getDocuments()) {
+                        double longitude = (double) doc.get("Longitude");
+                        if (longitude >= minLong && longitude <= maxLong) {
+                            list.add(new Quiz());
+                            docToQuiz(doc, list.get(list.size()-1));
+                        }
+                    }
+                    callback.onCallback(list);
+                } else {
+                    Log.d(TAG, "getting quizzes failed");
+                }
+            }
+        });
+    }
+
+    /** Callback interface for downloading quizzes */
+    public interface DownloadQuizzesCallback {
+        void onCallback(ArrayList<Quiz> list);
     }
 
 
     /**
+     * get list of questions that belong to a quiz
+     *
+     * @param quizID the question you want to get the questions from
+     * @param callback the callback object
+     */
+    public void getQuestions(UUID quizID, DownloadQuestionListCallback callback) {
+
+        questionRef.whereEqualTo("Part of", quizID.toString()).
+                get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    QuerySnapshot snapshot = task.getResult();
+                    if (snapshot.isEmpty()) {
+                        System.out.println("snapshot is empty");
+                    }
+
+                    ArrayList<Question> list = new ArrayList<>();
+
+                    for (DocumentSnapshot doc: snapshot.getDocuments()) {
+                        list.add(new Question());
+                        docToQuestion(doc, list.get(list.size()-1));
+                    }
+                    callback.onCallback(list);
+                } else {
+                    Log.d(TAG, "getting question failed");
+                }
+            }
+        });
+    }
+
+    /** Callback interface for downloading questions */
+    public interface DownloadQuestionListCallback {
+        void onCallback(ArrayList<Question> list);
+    }
+
+    //I think this method is redundant now, but I will keep it here for now
+    /**
      * Returns question object from the database
      *
      * @param questionID the id you want to retrieve from the database
-     * @return question object
+     * @param callback callback object to which the question object will be send
      * @throws NoSuchElementException if question with questionId is not found
      */
-    public synchronized Question getQuestion(UUID questionID, DownloadQuestionCallback callback) throws NoSuchElementException {
-
-        tempQuestion = null;
+    private void getQuestion(UUID questionID, DownloadQuestionCallback callback) throws NoSuchElementException {
 
         DocumentReference docRef = firestore.collection("Questions").document(questionID.toString());
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -116,7 +186,6 @@ public final class Database {
             }
         });
 
-        return tempQuestion;
     }
 
     /** Callback interface for downloading questions */
@@ -124,17 +193,6 @@ public final class Database {
         void onCallback(Question question);
     }
 
-
-
-    /**
-     * Returns a list of quizzes that are close to location
-     *
-     * @param location
-     * @return
-     */
-    public ArrayList<Object> getQuizzes(Location location) {
-        return new ArrayList<>();
-    }
 
     /**
      * Converts DocumentSnapshot to Question object
@@ -150,8 +208,7 @@ public final class Database {
         String explanation = (String) doc.get("Explanation");
         ArrayList<String> answers = (ArrayList<String>) doc.get("Answers");
         String correct = (String) doc.get("Correct");
-        Long IDasLong = (Long) doc.get("Question Number");
-        int ID = IDasLong.intValue();
+        int ID = ((Long) doc.get("Question Number")).intValue();
 
         String[] ans = new String[answers.size()];
         for (int i = 0; i < answers.size(); i++) {
@@ -167,7 +224,30 @@ public final class Database {
         q.setExplanation(explanation);
     }
 
+    /**
+     * ----IMPORTANT: SOME VARIABLES HAVE NOT BEEN SET CORRECTLY --------
+     * @param doc the document to convert
+     * @param q the quiz object which will hold the new values
+     */
+    private void docToQuiz(DocumentSnapshot doc, Quiz q) {
+        UUID GlobalID = (UUID) UUID.fromString((String) doc.get("GlobalID"));
+        Location location = new Location((double) doc.get("Latitude"), (double) doc.get("Longitude"));
+        String name = (String) doc.get("Name");
+        int nrOfQuestions = ((Long) doc.get("Number of Questions")).intValue();
+        if (doc.get("Number of Ratings") instanceof Double) {
+            int nrOfRatings = ((Double) doc.get("Number of Ratings")).intValue();
+        } else {
+            int nrOfRatings = ((Long) doc.get("Number of Ratings")).intValue();
+        }
+        double rating = (double) doc.get("Rating");
+        int scoreToPass = ((Long) doc.get("Score to Pass")).intValue();
+        UUID user = (UUID) doc.get("User");
 
+        q.setLocation(location);
+        q.setQuizId(GlobalID);
+        q.setQuizName(name);
+
+    }
 
 
     //------------------------- UPLOAD -----------------------
@@ -175,9 +255,8 @@ public final class Database {
      * Uploads a quiz and all its questions to the database
      *
      * @param quiz Quiz to uploaded
-     * @return whether the upload was successful
      */
-    public boolean uploadQuiz(Quiz quiz) {
+    public void uploadQuiz(Quiz quiz) {
         // ----- Preparing for upload ------
         Location loc = quiz.getLocation(); //location of the quiz
 
@@ -201,7 +280,6 @@ public final class Database {
         data.put("Questions", listOfQuestions);
 
         // ------ upload quiz ------
-        final boolean[] successfulUpload = new boolean[1];
 
         firestore.collection("Quizzes").document(quiz.getQuizId().toString())
                 .set(data)
@@ -209,17 +287,14 @@ public final class Database {
                     @Override
                     public void onSuccess(Void aVoid) {
                         System.out.println("Upload Success");
-                        successfulUpload[0] = true;
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         System.out.println("Upload failure");
-                        successfulUpload[0] = false;
                     }
                 });
-        return successfulUpload[0];
     }
 
     /**
@@ -228,14 +303,7 @@ public final class Database {
      * @param question question to be uploaded
      * @return whether the upload was successful
      */
-    public boolean uploadQuestion(Question question, Quiz quiz)  {
-        if (uuidIsTaken(question.getGlobalId(), questionRef) &&
-                uuidIsTaken(question.getGlobalId(), quizRef)) {
-            updateQuestion(question, quiz);
-        }
-        //Question is not already in the database
-
-        final boolean[] successfulUpload = new boolean[1];
+    public void uploadQuestion(Question question, Quiz quiz) {
 
         HashMap<String, Object> data = questionToMap(question, quiz);
 
@@ -247,17 +315,14 @@ public final class Database {
                     @Override
                     public void onSuccess(Void aVoid) {
                         System.out.println("Upload Success");
-                        successfulUpload[0] = true;
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         System.out.println("Upload failure");
-                        successfulUpload[0] = false;
                     }
                 });
-        return successfulUpload[0];
     }
 
     /**
@@ -288,19 +353,15 @@ public final class Database {
      *
      * @param question
      * @param quiz
-     * @return
      */
-    private boolean updateQuestion(Question question, Quiz quiz) {
-        return true;
+    private void updateQuestion(Question question, Quiz quiz) {
     }
 
 
     /**
      *
-     * @return
      */
-    private boolean updateQuiz() {
-        return true;
+    private void updateQuiz() {
     }
 
 
