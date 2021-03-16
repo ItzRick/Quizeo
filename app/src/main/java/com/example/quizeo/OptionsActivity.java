@@ -1,11 +1,14 @@
 package com.example.quizeo;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -50,6 +53,11 @@ public class OptionsActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+   public void onBackPressed() {
+        cancelOptions(findViewById(R.id.cancelButton));
+    }
+
     public void getOptions(Intent i) {
         sound = i.getBooleanExtra("sound", true);
 
@@ -62,26 +70,56 @@ public class OptionsActivity extends AppCompatActivity {
 
     public void cancelOptions(View v) {
         // check if any options changed
-        Intent i = new Intent(this, MainActivity.class);
-        boolean change = false;
+        boolean soundchange = (findViewById(R.id.soundIcon).getVisibility() == View.VISIBLE) != sound;
+        boolean verifiedchange = (findViewById(R.id.verifiedCheck).getVisibility() == View.VISIBLE) != verified;
+        boolean requestchange = (findViewById(R.id.friendRequestCheck).getVisibility() == View.VISIBLE) != request;
+        boolean darkmodechange = (findViewById(R.id.darkModeCheck).getVisibility() == View.VISIBLE) != darkmode;
+        // if any option changed
+        if (soundchange || verifiedchange || requestchange || darkmodechange) {
+            // warn user that changes are not saved
+            alertUser(v);
+        } else {    // if no options changed, return to home
+            openHome(sound, verified, darkmode, request);
+        }
+    }
+
+    public void changeOptionsExit() {
+        // change options back
         if ((findViewById(R.id.soundIcon).getVisibility() == View.VISIBLE) != sound) {
             alterSound(findViewById(R.id.muteButton));
-            change = true;
         }
         if ((findViewById(R.id.verifiedCheck).getVisibility() == View.VISIBLE) != verified) {
             toggleVerified(findViewById(R.id.verifiedButton));
-            change = true;
         }
         if ((findViewById(R.id.friendRequestCheck).getVisibility() == View.VISIBLE) != request) {
             toggleFriendRequests(findViewById(R.id.friendRequestButton));
-            change = true;
         }
         if ((findViewById(R.id.darkModeCheck).getVisibility() == View.VISIBLE) != darkmode) {
             toggleDarkMode(findViewById(R.id.darkModeButton));
-            change = true;
         }
         openHome(sound, verified, darkmode, request);
     }
+
+    public void alertUser (View v) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+        builder.setMessage("Changes are not saved").setPositiveButton("Quit anyway", dialogClickListener2)
+                .setNegativeButton("Return to options", dialogClickListener2).show();
+    }
+
+    DialogInterface.OnClickListener dialogClickListener2 = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            switch (which){
+                case DialogInterface.BUTTON_POSITIVE:
+                    // Yes button clicked
+                    changeOptionsExit();
+
+                case DialogInterface.BUTTON_NEGATIVE:
+                    // No button clicked
+                    break;
+            }
+        }
+    };
 
     public void saveOptions(View v) {
         // save current options
@@ -242,17 +280,25 @@ public class OptionsActivity extends AppCompatActivity {
     }
 
     public void exitClick(View v) {
-        System.exit(0);
+        AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+        builder.setMessage("Do you want to quit?").setPositiveButton("Quit", dialogClickListener)
+                .setNegativeButton("Cancel", dialogClickListener).show();
     }
 
-    public void test(View v) {
-        if (findViewById(R.id.globeOptions).getVisibility() == View.VISIBLE) {
-            findViewById(R.id.globeOptions).setVisibility(View.INVISIBLE);
-            findViewById(R.id.globeOptionsDark).setVisibility(View.VISIBLE);
-        } else {
-            findViewById(R.id.globeOptionsDark).setVisibility(View.INVISIBLE);
-            findViewById(R.id.globeOptions).setVisibility(View.VISIBLE);
+    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            switch (which){
+                case DialogInterface.BUTTON_POSITIVE:
+                    // Yes button clicked
+                    finishAffinity();
+                    break;
+
+                case DialogInterface.BUTTON_NEGATIVE:
+                    // No button clicked
+                    break;
+            }
         }
-    }
+    };
 
 }

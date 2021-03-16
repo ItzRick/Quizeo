@@ -3,6 +3,7 @@ package com.example.quizeo;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -113,6 +114,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        exitClick(findViewById(R.id.exitIconHome));
+    }
+
     public void getOptions(Intent i) {
         sound = i.getBooleanExtra("sound", true);
         verified = i.getBooleanExtra("verified", true);
@@ -146,8 +152,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void exitClick(View v) {
-        System.exit(0);
+        AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+        builder.setMessage("Do you want to quit?").setPositiveButton("Quit", dialogClickListener)
+                .setNegativeButton("Cancel", dialogClickListener).show();
     }
+
+    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            switch (which){
+                case DialogInterface.BUTTON_POSITIVE:
+                    // Yes button clicked
+                    finishAffinity();
+                    break;
+
+                case DialogInterface.BUTTON_NEGATIVE:
+                    // No button clicked
+                    break;
+            }
+        }
+    };
 
     class MyLocationListener implements LocationListener {
 
