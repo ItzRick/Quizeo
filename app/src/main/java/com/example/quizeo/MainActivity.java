@@ -23,6 +23,7 @@ import android.view.MenuItem;
 
 import android.widget.Button;
 import android.content.Intent;
+import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -52,6 +53,15 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         getOptions(intent);
+        ImageView lightGlobe = findViewById(R.id.imageView4);
+        ImageView darkGlobe = findViewById(R.id.imageView5);
+        if (darkmode) {
+            lightGlobe.setVisibility(View.INVISIBLE);
+            darkGlobe.setVisibility(View.VISIBLE);
+        } else {
+            darkGlobe.setVisibility(View.INVISIBLE);
+            lightGlobe.setVisibility(View.VISIBLE);
+        }
 
         buttonMakeQuiz = (Button) findViewById(R.id.buttonMakeQuiz);
         buttonStartQuiz = (Button) findViewById(R.id.buttonStartQuiz);

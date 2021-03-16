@@ -14,6 +14,19 @@
         android:alpha="0.7"
         android:contentDescription="@string/globe"
         android:src="@drawable/globe2_removebg_preview"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/globeOptionsDark"
+        android:layout_width="528dp"
+        android:layout_height="528dp"
+        android:alpha="0.7"
+        android:contentDescription="@string/globe"
+        android:src="@drawable/darker_globe"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -37,11 +50,12 @@
         android:id="@+id/optionsText"
         android:layout_width="308dp"
         android:layout_height="108dp"
-        android:layout_marginTop="65dp"
+        android:layout_marginTop="56dp"
         android:text="Options"
+        android:textColor="?attr/colorSecondary"
         android:textSize="85sp"
-        android:textColor="@color/gray"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -222,5 +236,15 @@
         app:layout_constraintStart_toStartOf="@+id/friendRequestBox"
         app:layout_constraintTop_toTopOf="@+id/friendRequestBox"
         app:srcCompat="@drawable/vinkje" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:onClick="test"
+        android:text="Button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

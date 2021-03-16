@@ -1,6 +1,8 @@
 package com.example.quizeo;
 
+import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
@@ -125,7 +127,11 @@ public class OptionsActivity extends AppCompatActivity {
         // change button text
         ((Button) this.findViewById(R.id.muteButton)).setText("Play Sounds");
         // add code to actually mutes the app
-
+        AudioManager audioManager = (AudioManager)OptionsActivity.this.getSystemService(Context.AUDIO_SERVICE);
+        //audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+        while (audioManager.getStreamVolume(AudioManager.STREAM_MUSIC) > 0) {
+            audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_LOWER, 1);
+        }
     }
 
     public void unmute(View v) {
@@ -142,7 +148,11 @@ public class OptionsActivity extends AppCompatActivity {
         // change button text
         ((Button) this.findViewById(R.id.muteButton)).setText("Mute Sounds");
         // add code to actually unmutes the app
-
+        AudioManager audioManager = (AudioManager)OptionsActivity.this.getSystemService(Context.AUDIO_SERVICE);
+        //audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+        while (audioManager.getStreamVolume(AudioManager.STREAM_MUSIC) < audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)) {
+            audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_RAISE, 1);
+        }
     }
 
     public void toggleVerified(View v) {
@@ -185,6 +195,8 @@ public class OptionsActivity extends AppCompatActivity {
             i.setVisibility(View.VISIBLE);
             //add code to enable
             in.putExtra("darkmodeNow", true);
+            findViewById(R.id.globeOptions).setVisibility(View.INVISIBLE);
+            findViewById(R.id.globeOptionsDark).setVisibility(View.VISIBLE);
             if (AppCompatDelegate.getDefaultNightMode() != AppCompatDelegate.MODE_NIGHT_YES) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             }
@@ -192,6 +204,8 @@ public class OptionsActivity extends AppCompatActivity {
             i.setVisibility(View.INVISIBLE);
             // add code to disable
             in.putExtra("darkmodeNow", false);
+            findViewById(R.id.globeOptionsDark).setVisibility(View.INVISIBLE);
+            findViewById(R.id.globeOptions).setVisibility(View.VISIBLE);
             if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             }
@@ -231,6 +245,16 @@ public class OptionsActivity extends AppCompatActivity {
 
     public void exitClick(View v) {
         System.exit(0);
+    }
+
+    public void test(View v) {
+        if (findViewById(R.id.globeOptions).getVisibility() == View.VISIBLE) {
+            findViewById(R.id.globeOptions).setVisibility(View.INVISIBLE);
+            findViewById(R.id.globeOptionsDark).setVisibility(View.VISIBLE);
+        } else {
+            findViewById(R.id.globeOptionsDark).setVisibility(View.INVISIBLE);
+            findViewById(R.id.globeOptions).setVisibility(View.VISIBLE);
+        }
     }
 
 }
