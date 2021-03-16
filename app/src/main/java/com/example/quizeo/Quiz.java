@@ -233,7 +233,7 @@ public class Quiz {
      *
      * @return the number of ratings corresponding to this quiz.
      */
-    public double getNumberOfRatings() {
+    public int getNumberOfRatings() {
         return nrOfRatings;
     }
 
