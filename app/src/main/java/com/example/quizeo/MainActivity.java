@@ -12,6 +12,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -58,9 +59,15 @@ public class MainActivity extends AppCompatActivity {
         if (darkmode) {
             lightGlobe.setVisibility(View.INVISIBLE);
             darkGlobe.setVisibility(View.VISIBLE);
+            if (AppCompatDelegate.getDefaultNightMode() != AppCompatDelegate.MODE_NIGHT_YES) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            }
         } else {
             darkGlobe.setVisibility(View.INVISIBLE);
             lightGlobe.setVisibility(View.VISIBLE);
+            if (AppCompatDelegate.getDefaultNightMode() != AppCompatDelegate.MODE_NIGHT_NO) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            }
         }
 
         buttonMakeQuiz = (Button) findViewById(R.id.buttonMakeQuiz);
