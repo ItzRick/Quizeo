@@ -127,11 +127,10 @@ public class OptionsActivity extends AppCompatActivity {
         // change button text
         ((Button) this.findViewById(R.id.muteButton)).setText("Play Sounds");
         // add code to actually mutes the app
-        AudioManager audioManager = (AudioManager)OptionsActivity.this.getSystemService(Context.AUDIO_SERVICE);
-        //audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+        /*AudioManager audioManager = (AudioManager)OptionsActivity.this.getSystemService(Context.AUDIO_SERVICE);
         while (audioManager.getStreamVolume(AudioManager.STREAM_MUSIC) > 0) {
             audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_LOWER, 1);
-        }
+        }*/
     }
 
     public void unmute(View v) {
@@ -148,11 +147,10 @@ public class OptionsActivity extends AppCompatActivity {
         // change button text
         ((Button) this.findViewById(R.id.muteButton)).setText("Mute Sounds");
         // add code to actually unmutes the app
-        AudioManager audioManager = (AudioManager)OptionsActivity.this.getSystemService(Context.AUDIO_SERVICE);
-        //audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+        /*AudioManager audioManager = (AudioManager)OptionsActivity.this.getSystemService(Context.AUDIO_SERVICE);
         while (audioManager.getStreamVolume(AudioManager.STREAM_MUSIC) < audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)) {
             audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_RAISE, 1);
-        }
+        }*/
     }
 
     public void toggleVerified(View v) {
