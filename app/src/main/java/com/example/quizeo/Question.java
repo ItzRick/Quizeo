@@ -1,10 +1,13 @@
 package com.example.quizeo;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.UUID;
 
-public class Question {
+public class Question implements Parcelable {
 
     /** Id of the question inside the quiz, that is which number in the quiz it is: */
     private int id;
@@ -107,6 +110,27 @@ public class Question {
         //set the global id:
         this.globalId = globalId;
     }
+
+    protected Question(Parcel in) {
+        id = in.readInt();
+        question = in.readString();
+        answers = in.createStringArrayList();
+        correct = in.readString();
+        correctInt = in.readInt();
+        explanation = in.readString();
+    }
+
+    public static final Creator<Question> CREATOR = new Creator<Question>() {
+        @Override
+        public Question createFromParcel(Parcel in) {
+            return new Question(in);
+        }
+
+        @Override
+        public Question[] newArray(int size) {
+            return new Question[size];
+        }
+    };
 
     /**
      * Sets the question String of this question.
@@ -284,5 +308,18 @@ public class Question {
     }
 
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(question);
+        dest.writeStringList(answers);
+        dest.writeString(correct);
+        dest.writeInt(correctInt);
+        dest.writeString(explanation);
+    }
 }

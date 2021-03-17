@@ -1,9 +1,12 @@
 package com.example.quizeo;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class Quiz {
+public class Quiz implements Parcelable {
 
     /** ArrayList in which all Questions are saved: */
     private ArrayList<Question> questions;
@@ -90,6 +93,44 @@ public class Quiz {
         this.location = location;
         this.percentageToPass = percentageToPass;
     }
+
+    protected Quiz(Parcel in) {
+        quizName = in.readString();
+        rating = in.readDouble();
+        nrOfRatings = in.readInt();
+        percentageToPass = in.readFloat();
+        scoreToPass = in.readInt();
+        numberOfQuestions = in.readInt();
+        index = in.readInt();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(quizName);
+        dest.writeDouble(rating);
+        dest.writeInt(nrOfRatings);
+        dest.writeFloat(percentageToPass);
+        dest.writeInt(scoreToPass);
+        dest.writeInt(numberOfQuestions);
+        dest.writeInt(index);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Quiz> CREATOR = new Creator<Quiz>() {
+        @Override
+        public Quiz createFromParcel(Parcel in) {
+            return new Quiz(in);
+        }
+
+        @Override
+        public Quiz[] newArray(int size) {
+            return new Quiz[size];
+        }
+    };
 
     /**
      * Add a question to the current quiz.

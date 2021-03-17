@@ -27,7 +27,7 @@ public class AddQuestionActivity extends AppCompatActivity implements View.OnCli
         setContentView(R.layout.fragment_add_question);
 
         imageUpload = (ImageView) findViewById(R.id.imageUpload);
-        buttonUploadImage = (Button) findViewById(R.id.buttonUploadImage);
+        buttonUploadImage = (Button) findViewById(R.id.buttonUpload);
         textQuestion = (EditText) findViewById(R.id.textQuestion);
 
         imageUpload.setOnClickListener(this);
@@ -41,7 +41,7 @@ public class AddQuestionActivity extends AppCompatActivity implements View.OnCli
                 Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
                 break;
-            case R.id.buttonUploadImage:
+            case R.id.buttonUpload:
                 break;
         }
     }

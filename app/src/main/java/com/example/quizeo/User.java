@@ -1,8 +1,11 @@
 package com.example.quizeo;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.UUID;
 
-public class User {
+public class User implements Parcelable {
 
     /** nickName associated with this user: */
     private String nickName;
@@ -26,6 +29,32 @@ public class User {
      */
     public User() {
     }
+
+    protected User(Parcel in) {
+        nickName = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(nickName);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 
     /**
      * Set the nickname of this user to an(other) value.

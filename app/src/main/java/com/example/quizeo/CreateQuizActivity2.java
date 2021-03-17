@@ -8,11 +8,14 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.UUID;
+
 public class CreateQuizActivity2 extends AppCompatActivity {
 
     //local variables
     Button buttonSaveQuit;
     Button buttonSaveName;
+    Button buttonAddQuestion;
 
     EditText quizName;
     Quiz quiz;
@@ -24,7 +27,10 @@ public class CreateQuizActivity2 extends AppCompatActivity {
         buttonSaveQuit = (Button) findViewById(R.id.buttonSaveQuit);
         buttonSaveName = (Button) findViewById(R.id.buttonSelectName);
         quizName = (EditText) findViewById(R.id.YourQuizName);
+        buttonAddQuestion = (Button) findViewById(R.id.buttonAddQuestion);
+
         quiz = new Quiz();
+        quiz.setQuizId(UUID.randomUUID());
 
         buttonSaveQuit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,13 +44,25 @@ public class CreateQuizActivity2 extends AppCompatActivity {
             public void onClick(View v) {
                 quiz.setQuizName(quizName.getText().toString());
 
-                // Only for testing purposes: 
+                // Only for testing purposes:
                 System.out.println(quiz.getQuizName());
             }
         });
+
+        buttonAddQuestion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openAddQuestion();
+            }
+        });
     }
-        public void openMainActivity() {
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
+    public void openMainActivity() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    public void openAddQuestion() {
+        Intent intent = new Intent(this, AddQuestionActivity.class);
+        startActivity(intent);
     }
 }
