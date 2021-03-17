@@ -27,8 +27,8 @@ import java.util.UUID;
     -Upload Questions
     -Upload Quiz
         (Check for Duplicates)
-    Remove Questions
-    Remove Quiz
+    -Remove Questions
+    -Remove Quiz
     -Edit Questions
     -Edit Quiz
     -Get New ID
@@ -226,7 +226,8 @@ public final class Database {
     }
 
     /**
-     * ----IMPORTANT: SOME VARIABLES HAVE NOT BEEN SET CORRECTLY --------
+     * Converts documentSnapshot object to a quiz object
+     *
      * @param doc the document to convert
      * @param q the quiz object which will hold the new values
      */
@@ -235,19 +236,19 @@ public final class Database {
         Location location = new Location((double) doc.get("Latitude"), (double) doc.get("Longitude"));
         String name = (String) doc.get("Name");
         int nrOfQuestions = ((Long) doc.get("Number of Questions")).intValue();
+        int nrOfRatings = ((Long) doc.get("Number of Ratings")).intValue();
 
-        if (doc.get("Number of Ratings") instanceof Double) {
-            int nrOfRatings = ((Double) doc.get("Number of Ratings")).intValue();
-        } else {
-            int nrOfRatings = ((Long) doc.get("Number of Ratings")).intValue();
-        }
         double rating = (double) doc.get("Rating");
-        int scoreToPass = ((Long) doc.get("Score to Pass")).intValue();
+        int percentageToPass = ((Long) doc.get("Percentage to pass")).intValue();
         UUID user = (UUID) doc.get("User");
 
         q.setLocation(location);
         q.setQuizId(GlobalID);
         q.setQuizName(name);
+        q.setNrOfRatings(nrOfRatings);
+        q.setNumberOfQuestions(nrOfQuestions);
+        q.setRating(rating);
+        q.setPercentageToPass(percentageToPass);
 
     }
     //endregion
@@ -275,7 +276,7 @@ public final class Database {
         data.put("Rating", quiz.getRating());
         data.put("Number of Ratings", quiz.getNumberOfRatings());
         data.put("Number of Questions", quiz.getNumberOfQuestions());
-        data.put("Score to Pass", quiz.getScoreToPass());
+        data.put("Percentage to pass", quiz.getPercentageToPass());
         data.put("User created", quiz.getUserCreated());
         data.put("Latitude", loc.getLatitude());
         data.put("Longitude", loc.getLongitude());

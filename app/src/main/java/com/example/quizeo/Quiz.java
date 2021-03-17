@@ -288,6 +288,15 @@ public class Quiz implements Parcelable {
     }
 
     /**
+     * Retrieve the percentage required to pass this quiz.
+     *
+     * @return the percentage required to pass the quiz.
+     */
+    public float getPercentageToPass() {
+        return percentageToPass;
+    }
+
+    /**
      * Set the name of this quiz.
      *
      * @param quizName the name of this quiz.
@@ -331,4 +340,32 @@ public class Quiz implements Parcelable {
     public void setUserCreated(User userCreated) {
         this.userCreated = userCreated;
     }
+
+    /**
+     * Set the number of questions of this quiz
+     *
+     * @param value the number of questions
+     */
+    public void setNumberOfQuestions(int value) {
+        this.numberOfQuestions = value;
+    }
+
+    /**
+     * Set the number of ratings of this quiz
+     *
+     * @param value number of ratings
+     */
+    public void setNrOfRatings(int value) {
+        this.numberOfQuestions = value;
+    }
+
+    /**
+     * Set the rating of this quiz
+     *
+     * @param rating the new rating
+     */
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+
 }
