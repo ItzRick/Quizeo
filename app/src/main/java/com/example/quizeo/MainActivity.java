@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     Button buttonStartQuiz;
     Button buttonOptions;
 
+    // default values for the options
     boolean sound;
     boolean verified;
     boolean darkmode;
@@ -55,21 +56,29 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.homescreen);
-
         Intent intent = getIntent();
+
+        // get options from options activity
         getOptions(intent);
+        // find the globes in the background
         ImageView lightGlobe = findViewById(R.id.imageView4);
         ImageView darkGlobe = findViewById(R.id.imageView5);
-        if (darkmode) {
+        if (darkmode) {     // if dark mode is turned on
+            // show the dark globe
             lightGlobe.setVisibility(View.INVISIBLE);
             darkGlobe.setVisibility(View.VISIBLE);
+            // check whether dark mode is actually on
             if (AppCompatDelegate.getDefaultNightMode() != AppCompatDelegate.MODE_NIGHT_YES) {
+                // turn dark mode on if it was not on yet
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             }
-        } else {
+        } else {            // if dark mode is turned off
+            // show the light globe
             darkGlobe.setVisibility(View.INVISIBLE);
             lightGlobe.setVisibility(View.VISIBLE);
+            // check whether dark mode is actually off
             if (AppCompatDelegate.getDefaultNightMode() != AppCompatDelegate.MODE_NIGHT_NO) {
+                // turn dark mode off if it was not off yet
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             }
         }
@@ -126,10 +135,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    // Back button on device acts the same as the exit icon
     public void onBackPressed() {
         exitClick(findViewById(R.id.exitIconHome));
     }
 
+    // Get the options sent by the options activity
     public void getOptions(Intent i) {
         sound = i.getBooleanExtra("sound", true);
         verified = i.getBooleanExtra("verified", true);
@@ -147,8 +158,10 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    // Opens the options activity
     public void openOptionsActivity(){
         Intent intent = new Intent(this, OptionsActivity.class);
+        // put the values for options in the intent
         intent.putExtra("sound", sound);
         intent.putExtra("verified", verified);
         intent.putExtra("darkmode", darkmode);
@@ -162,6 +175,7 @@ public class MainActivity extends AppCompatActivity {
         mp.start();
     }
 
+    // Asks the user if they want to quit the application
     public void exitClick(View v) {
         AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
         builder.setMessage("Do you want to quit?").setPositiveButton("Quit", dialogClickListener)
@@ -172,13 +186,13 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onClick(DialogInterface dialog, int which) {
             switch (which){
-                case DialogInterface.BUTTON_POSITIVE:
-                    // Yes button clicked
+                case DialogInterface.BUTTON_POSITIVE:       // quit button clicked
+                    // close the application
                     finishAffinity();
                     break;
 
-                case DialogInterface.BUTTON_NEGATIVE:
-                    // No button clicked
+                case DialogInterface.BUTTON_NEGATIVE:       // cancel button clicked
+                    // return to home activity
                     break;
             }
         }

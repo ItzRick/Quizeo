@@ -35,4 +35,5 @@
     <string name="upload_image_here">Upload Image Here</string>
     <string name="done">Done</string>
     <string name="add_a_question">Add a Question…</string>
+    <string name="upload">Upload</string>
 </resources>

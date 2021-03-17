@@ -35,7 +35,7 @@ public class CreateQuizActivity2 extends AppCompatActivity {
         buttonSaveQuit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openMainActivity();
+                openCreateQuizActivity();
             }
         });
 
@@ -58,6 +58,11 @@ public class CreateQuizActivity2 extends AppCompatActivity {
     }
     public void openMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    public void openCreateQuizActivity() {
+        Intent intent = new Intent(this, CreateQuizActivity.class);
         startActivity(intent);
     }
 
