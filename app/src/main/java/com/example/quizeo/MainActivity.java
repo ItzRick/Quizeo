@@ -48,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
     private double longitude;
     private double latitude;
 
+    /** Holds the Authentication instance */
+    private Authentication authentication;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,6 +115,14 @@ public class MainActivity extends AppCompatActivity {
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
             }
         }
+
+        authentication = Authentication.getInstance();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        authentication.loginAnonymously(MainActivity.this);
     }
 
     @Override

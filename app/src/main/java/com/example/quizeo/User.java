@@ -11,7 +11,7 @@ public class User implements Parcelable {
     private String nickName;
 
     /** userId associated with this user: */
-    private UUID userId;
+    private String userId;
 
     /** I
      * Initialization which directly passes a nickname and userId.
@@ -19,7 +19,7 @@ public class User implements Parcelable {
      * @param nickName nickName associated with this user.
      * @param userId userId associated with this user.
      */
-    public User(String nickName, UUID userId) {
+    public User(String nickName, String userId) {
         this.nickName = nickName;
         this.userId = userId;
     }
@@ -70,7 +70,7 @@ public class User implements Parcelable {
      *
      * @param userId Id to which the userId of this user should be set.
      */
-    public void setUserId(UUID userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
@@ -88,7 +88,7 @@ public class User implements Parcelable {
      *
      * @return userId of the current user.
      */
-    public UUID getUserId() {
+    public String getUserId() {
         return userId;
     }
 }

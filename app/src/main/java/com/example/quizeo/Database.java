@@ -8,6 +8,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -277,10 +278,10 @@ public final class Database {
         data.put("Number of Ratings", quiz.getNumberOfRatings());
         data.put("Number of Questions", quiz.getNumberOfQuestions());
         data.put("Percentage to pass", quiz.getPercentageToPass());
-        data.put("User created", quiz.getUserCreated());
         data.put("Latitude", loc.getLatitude());
         data.put("Longitude", loc.getLongitude());
         data.put("Questions", listOfQuestions);
+        data.put("UserId", FirebaseAuth.getInstance().getCurrentUser().getUid());
 
         // ------ upload quiz ------
 
@@ -289,13 +290,13 @@ public final class Database {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        System.out.println("Upload Success");
+                        Log.d("","Upload Success");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        System.out.println("Upload failure");
+                        Log.d("","Upload failure");
                     }
                 });
     }
@@ -317,13 +318,13 @@ public final class Database {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        System.out.println("Upload Success");
+                        Log.d("","Upload Success");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        System.out.println("Upload failure");
+                        Log.d("", "Upload failure");
                     }
                 });
     }
@@ -452,10 +453,12 @@ public final class Database {
             if (task.isSuccessful()) {
                 Database.getInstance().setIsTaken(!task.getResult().isEmpty());
             } else { //Not a nice way of handling failure
-                System.out.println("uuidIsTaken() failed");
+                Log.d("", "Query failed");
             }
         }
     }
     //endregion
+
+
 
 }
