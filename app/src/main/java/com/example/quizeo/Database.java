@@ -352,8 +352,36 @@ public final class Database {
 
     //region -- DELETE --
     /**
-     *  Removes a question from a quiz,
-     *  if the questions is part of no quizzes after it will deleted from the database
+     * Deletes quiz and all its questions from the database
+     *
+     * @param quiz quiz object you want to delete
+     */
+    public void removeQuiz(Quiz quiz) {
+        Question[] questions = quiz.getQuestions();
+
+        ArrayList<UUID> list = new ArrayList<>();
+        for (Question q: questions) {
+            list.add(q.getGlobalId());
+        }
+        removeQuiz(quiz.getQuizId(), list);
+    }
+
+    /**
+     * Deletes quiz and all its questions from the database
+     *
+     * @param quizID The uuid of the quiz that you want to remove
+     * @param questionIDs the uuids of the question belonging to that quiz
+     */
+    public void removeQuiz(UUID quizID, ArrayList<UUID> questionIDs) {
+        for (UUID questID: questionIDs) {
+            questionRef.document(questionIDs.toString()).delete();
+        }
+        quizRef.document(quizID.toString()).delete();
+    }
+
+
+    /**
+     * Removes a question reference from a quiz and deletes question object from the database
      *
      * @param question question to be removed
      * @param quiz quiz the question will be removed from
@@ -363,20 +391,17 @@ public final class Database {
     }
 
     /**
-     *  Removes a question from a quiz,
-     *  if the questions is part of no quizzes after it will deleted from the database
+     *  Removes a question reference from a quiz and deletes question object from the database
      *
      * @param uuidOfQuestion uuid of the question to be removed
      * @param uuidOfQuiz uuid of the quiz the question will be removed from
      */
     public void removeQuestionFromQuiz(UUID uuidOfQuestion, UUID uuidOfQuiz) {
-        //Map<String, Object> map = firestore.collection("Quizzes").
-        //                          document(uuidOfQuiz.toString()).get().getResult().getData();
-        //ArrayList<Object> list = (ArrayList<Object>) map.get("Questions");
-        firestore.collection("Quizzes").document(uuidOfQuiz.toString()).
+        quizRef.document(uuidOfQuiz.toString()).
                 update("Questions", FieldValue.arrayRemove(uuidOfQuestion));
-
+        questionRef.document(uuidOfQuestion.toString()).delete();
     }
+
     //endregion
 
     //region -- NEW ID --
