@@ -65,19 +65,18 @@
 
     <EditText
         android:id="@+id/YourQuizName"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="80dp"
+        android:layout_width="314dp"
+        android:layout_height="68dp"
         android:autofillHints=""
+        android:gravity="center"
+        android:hint="@string/title_your_quiz"
         android:inputType="textShortMessage"
         android:textSize="40sp"
         app:layout_constraintBottom_toTopOf="@+id/imageView4"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintVertical_bias="0.7"
         tools:ignore="LabelFor" />
 
     <Button
@@ -97,5 +96,112 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageView4"
         app:layout_constraintVertical_bias="0.086" />
+
+    <EditText
+        android:id="@+id/YourUsername"
+        android:layout_width="121dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="135dp"
+        android:layout_marginEnd="134dp"
+        android:layout_marginBottom="3dp"
+        android:autofillHints=""
+        android:gravity="center"
+        android:hint="@string/your_username"
+        android:inputType="textShortMessage"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@+id/imageView4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.476"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/YourQuizName"
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="LabelFor" />
+
+    <TextView
+        android:id="@+id/YourQuizInfo"
+        android:layout_width="361dp"
+        android:layout_height="265dp"
+        android:layout_marginStart="54dp"
+        android:layout_marginTop="76dp"
+        android:autofillHints=""
+        android:background="@drawable/edittext_background"
+        android:ems="10"
+        android:gravity="center_horizontal"
+        android:inputType="textPersonName"
+        android:text="@string/your_quiz_info"
+        android:textColor="@color/white"
+        android:textSize="40sp"
+        app:layout_constraintBottom_toTopOf="@+id/toolbar2"
+        app:layout_constraintEnd_toEndOf="@+id/buttonSubmitQuiz"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/buttonSaveQuit"
+        app:layout_constraintTop_toBottomOf="@+id/YourUsername"
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="TextViewEdits" />
+
+    <TextView
+        android:id="@+id/NumberOfQuestions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="23dp"
+        android:layout_marginEnd="23dp"
+        android:layout_marginBottom="77dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="@string/number_of_questions"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/YourQuizInfo"
+        app:layout_constraintHorizontal_bias="0.144"
+        app:layout_constraintStart_toStartOf="@id/YourQuizInfo"
+        app:layout_constraintTop_toBottomOf="@+id/YourQuizInfo"
+        app:layout_constraintVertical_bias="0.346"
+        tools:ignore="TextViewEdits" />
+
+    <Button
+        android:id="@+id/buttonAddQuestion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="26dp"
+        android:layout_marginBottom="104dp"
+        android:text="@string/add_question"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.45"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/NumberOfQuestions"
+        app:layout_constraintVertical_bias="0.045" />
+
+    <TextView
+        android:id="@+id/textLocation"
+        android:layout_width="240dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="27dp"
+        android:layout_marginBottom="92dp"
+        android:text="@string/location"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/NumberOfQuestions"
+        app:layout_constraintTop_toBottomOf="@+id/buttonAddQuestion"
+        app:layout_constraintVertical_bias="0.013"
+        android:textColor="@color/white"
+        android:textSize="20sp"/>
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="81dp"
+        android:text="@string/add_location"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/buttonAddQuestion"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/buttonAddQuestion"
+        app:layout_constraintTop_toBottomOf="@+id/textLocation"
+        app:layout_constraintVertical_bias="0.015" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

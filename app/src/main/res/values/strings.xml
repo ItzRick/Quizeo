@@ -24,6 +24,15 @@
     <string name="play_quiz">Play a Quiz</string>
     <string name="dark_mode">Dark Mode</string>
     <string name="select_Name">Confirm quiz name</string>
+    <string name="title_your_quiz">Title of your quiz</string>
+    <string name="your_username">Your username</string>
+    <string name="your_quiz_info">Quiz Information</string>
+    <string name="number_of_questions">Number of questions:</string>
     <string name="add_question">Add Question</string>
-
+    <string name="location">Location:</string>
+    <string name="add_location">Add Location</string>
+    <string name="upload_image">Upload Image</string>
+    <string name="upload_image_here">Upload Image Here</string>
+    <string name="done">Done</string>
+    <string name="add_a_question">Add a Question…</string>
 </resources>
