@@ -1,5 +1,6 @@
 package com.example.quizeo;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -33,7 +34,7 @@ public class OptionsActivity extends AppCompatActivity {
 
         // get options from home activity
         getOptions(i);
-        // if darkmode has no changed
+        // if darkmode has not changed
         if (!i.getBooleanExtra("darkmodeChange", false)) {
             // set all options to the right state
             if (sound) {
@@ -176,7 +177,7 @@ public class OptionsActivity extends AppCompatActivity {
         mute.setClickable(true);
         mute.setFocusable(true);
         // change button text
-        ((Button) this.findViewById(R.id.muteButton)).setText("Play Sounds");
+        ((Button) this.findViewById(R.id.muteButton)).setText(R.string.play_sounds);
         // add code to actually mutes the app
         /*AudioManager audioManager = (AudioManager)OptionsActivity.this.getSystemService(Context.AUDIO_SERVICE);
         while (audioManager.getStreamVolume(AudioManager.STREAM_MUSIC) > 0) {
@@ -197,7 +198,7 @@ public class OptionsActivity extends AppCompatActivity {
         sound.setClickable(true);
         sound.setFocusable(true);
         // change button text
-        ((Button) this.findViewById(R.id.muteButton)).setText("Mute Sounds");
+        ((Button) this.findViewById(R.id.muteButton)).setText(R.string.mute_sounds);
         // add code to actually unmutes the app
         /*AudioManager audioManager = (AudioManager)OptionsActivity.this.getSystemService(Context.AUDIO_SERVICE);
         while (audioManager.getStreamVolume(AudioManager.STREAM_MUSIC) < audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)) {

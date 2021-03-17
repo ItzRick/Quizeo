@@ -51,7 +51,7 @@
         android:layout_width="308dp"
         android:layout_height="108dp"
         android:layout_marginTop="56dp"
-        android:text="Options"
+        android:text="@string/options"
         android:textColor="?attr/colorSecondary"
         android:textSize="85sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -63,23 +63,24 @@
         android:id="@+id/saveSettingsButton"
         android:layout_width="161dp"
         android:layout_height="52dp"
-        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
         android:onClick="saveOptions"
-        android:text="Save Settings"
+        android:text="@string/save_options"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/cancelButton"
         android:layout_width="161dp"
         android:layout_height="52dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
         android:layout_marginBottom="20dp"
         android:onClick="cancelOptions"
-        android:text="Cancel"
+        android:text="@string/cancel"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/muteButton"
@@ -88,7 +89,7 @@
         android:layout_marginStart="40dp"
         android:layout_marginTop="160dp"
         android:onClick="alterSound"
-        android:text="Mute Sounds"
+        android:text="@string/mute_sounds"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/optionsText" />
 
@@ -99,7 +100,7 @@
         android:layout_marginStart="40dp"
         android:layout_marginTop="5dp"
         android:onClick="toggleVerified"
-        android:text="Only play verified quizzes"
+        android:text="@string/only_verified"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/muteButton" />
 
@@ -110,7 +111,7 @@
         android:layout_marginStart="40dp"
         android:layout_marginTop="5dp"
         android:onClick="toggleDarkMode"
-        android:text="Dark Mode"
+        android:text="@string/dark_mode"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/verifiedButton" />
 
@@ -121,7 +122,7 @@
         android:layout_marginStart="40dp"
         android:layout_marginTop="5dp"
         android:onClick="toggleFriendRequests"
-        android:text="Allow friend requests"
+        android:text="@string/friend_requests"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/darkModeButton" />
 
@@ -133,6 +134,7 @@
         android:clickable="true"
         android:focusable="true"
         android:onClick="toggleVerified"
+        android:contentDescription="@string/box"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/verifiedButton"
         app:layout_constraintTop_toBottomOf="@+id/muteIcon"
@@ -146,6 +148,7 @@
         android:clickable="true"
         android:focusable="true"
         android:onClick="toggleDarkMode"
+        android:contentDescription="@string/box"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/darkModeButton"
         app:layout_constraintTop_toBottomOf="@+id/verifiedBox"
@@ -159,6 +162,7 @@
         android:clickable="true"
         android:focusable="true"
         android:onClick="toggleFriendRequests"
+        android:contentDescription="@string/box"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/friendRequestButton"
         app:layout_constraintTop_toBottomOf="@+id/darkModeBox"
@@ -174,6 +178,7 @@
         android:focusable="false"
         android:onClick="unmute"
         android:visibility="invisible"
+        android:contentDescription="@string/mute_icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.474"
         app:layout_constraintStart_toEndOf="@+id/muteButton"
@@ -190,6 +195,7 @@
         android:focusable="true"
         android:onClick="mute"
         android:visibility="visible"
+        android:contentDescription="@string/sound_icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.48"
         app:layout_constraintStart_toEndOf="@+id/muteButton"
@@ -203,6 +209,7 @@
         android:layout_marginStart="11dp"
         android:layout_marginBottom="11dp"
         android:visibility="visible"
+        android:contentDescription="@string/check_mark"
         app:layout_constraintBottom_toBottomOf="@+id/verifiedBox"
         app:layout_constraintStart_toStartOf="@+id/verifiedBox"
         app:srcCompat="@drawable/vinkje" />
@@ -214,6 +221,7 @@
         android:layout_marginStart="11dp"
         android:layout_marginBottom="11dp"
         android:visibility="invisible"
+        android:contentDescription="@string/check_mark"
         app:layout_constraintBottom_toBottomOf="@+id/darkModeBox"
         app:layout_constraintEnd_toEndOf="@+id/darkModeBox"
         app:layout_constraintHorizontal_bias="0.549"
@@ -228,21 +236,12 @@
         android:layout_marginStart="11dp"
         android:layout_marginBottom="11dp"
         android:visibility="invisible"
+        android:contentDescription="@string/check_mark"
         app:layout_constraintBottom_toBottomOf="@+id/friendRequestBox"
         app:layout_constraintEnd_toEndOf="@+id/friendRequestBox"
         app:layout_constraintHorizontal_bias="0.549"
         app:layout_constraintStart_toStartOf="@+id/friendRequestBox"
         app:layout_constraintTop_toTopOf="@+id/friendRequestBox"
         app:srcCompat="@drawable/vinkje" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:onClick="test"
-        android:text="Button"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
