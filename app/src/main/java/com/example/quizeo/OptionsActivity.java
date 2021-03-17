@@ -115,18 +115,15 @@ public class OptionsActivity extends AppCompatActivity {
                 .setNegativeButton("Return to options", dialogClickListener2).show();
     }
 
-    DialogInterface.OnClickListener dialogClickListener2 = new DialogInterface.OnClickListener() {
-        @Override
-        public void onClick(DialogInterface dialog, int which) {
-            switch (which){
-                case DialogInterface.BUTTON_POSITIVE:   // quit anyway button clicked
-                    // change options back and return to home activity
-                    changeOptionsExit();
+    DialogInterface.OnClickListener dialogClickListener2 = (dialog, which) -> {
+        switch (which){
+            case DialogInterface.BUTTON_POSITIVE:   // quit anyway button clicked
+                // change options back and return to home activity
+                changeOptionsExit();
 
-                case DialogInterface.BUTTON_NEGATIVE:   // return to option button clicked
-                    // return to options activity
-                    break;
-            }
+            case DialogInterface.BUTTON_NEGATIVE:   // return to option button clicked
+                // return to options activity
+                break;
         }
     };
 
@@ -306,19 +303,16 @@ public class OptionsActivity extends AppCompatActivity {
                 .setNegativeButton("Cancel", dialogClickListener).show();
     }
 
-    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-        @Override
-        public void onClick(DialogInterface dialog, int which) {
-            switch (which){
-                case DialogInterface.BUTTON_POSITIVE:       // Quit button clicked
-                    // close the application
-                    finishAffinity();
-                    break;
+    DialogInterface.OnClickListener dialogClickListener = (dialog, which) -> {
+        switch (which){
+            case DialogInterface.BUTTON_POSITIVE:       // Quit button clicked
+                // close the application
+                finishAffinity();
+                break;
 
-                case DialogInterface.BUTTON_NEGATIVE:       // Cancel button clicked
-                    // Return to options activity
-                    break;
-            }
+            case DialogInterface.BUTTON_NEGATIVE:       // Cancel button clicked
+                // Return to options activity
+                break;
         }
     };
 
