@@ -29,8 +29,8 @@ import java.util.UUID;
         (Check for Duplicates)
     Remove Questions
     Remove Quiz
-    Edit Questions
-    Edit Quiz
+    -Edit Questions
+    -Edit Quiz
     -Get New ID
     -Query for quiz with location
     Query for quiz with user
@@ -46,13 +46,20 @@ public final class Database {
     private final int RANGE = 5;
     private final double RANGE_IN_DEGREES = (RANGE / 110.574) % 360;
 
+    /** Tag used for logs */
     private static final String TAG = "";
+
+    /** Holds the database singleton instance */
     static private Database instance;
 
+    /** FireStore instance */
     final private FirebaseFirestore firestore;
+
+    /** The collection references for questions and quizzes */
     final private CollectionReference questionRef;
     final private CollectionReference quizRef;
 
+    /** Constructor, should only be called by getInstance method */
     private Database() {
         firestore = FirebaseFirestore.getInstance();
         questionRef = firestore.collection("Questions");
@@ -71,8 +78,7 @@ public final class Database {
         return instance;
     }
 
-    //------------------------- DOWNLOAD -----------------------
-
+    //region -- DOWNLOAD --
     /**
      * Returns a list of quizzes that are close to location
      *
@@ -89,7 +95,7 @@ public final class Database {
         double minLat = (latitude - (RANGE_IN_DEGREES / 2)) % 360;
         double maxLat = (latitude + (RANGE_IN_DEGREES / 2)) % 360;
 
-        quizRef.whereGreaterThanOrEqualTo("Latitude", minLat).whereLessThanOrEqualTo("Latitude", maxLat)
+        quizRef.whereGreaterThanOrEqualTo("Longitude", minLong).whereLessThanOrEqualTo("Longitude", maxLong)
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -97,8 +103,8 @@ public final class Database {
                     QuerySnapshot snapshot = task.getResult();
                     ArrayList<Quiz> list = new ArrayList<>();
                     for (DocumentSnapshot doc: snapshot.getDocuments()) {
-                        double longitude = (double) doc.get("Longitude");
-                        if (longitude >= minLong && longitude <= maxLong) {
+                        double longitude = (double) doc.get("Latitude");
+                        if (longitude >= minLat && longitude <= maxLat) {
                             list.add(new Quiz());
                             docToQuiz(doc, list.get(list.size()-1));
                         }
@@ -131,10 +137,6 @@ public final class Database {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     QuerySnapshot snapshot = task.getResult();
-                    if (snapshot.isEmpty()) {
-                        System.out.println("snapshot is empty");
-                    }
-
                     ArrayList<Question> list = new ArrayList<>();
 
                     for (DocumentSnapshot doc: snapshot.getDocuments()) {
@@ -172,7 +174,6 @@ public final class Database {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         Log.d(TAG, "DocumentSnapshot data: " + document.getData());
-                        System.out.println("Download success");
                         Question result = new Question();
                         docToQuestion(document, result);
                         callback.onCallback(result);
@@ -234,6 +235,7 @@ public final class Database {
         Location location = new Location((double) doc.get("Latitude"), (double) doc.get("Longitude"));
         String name = (String) doc.get("Name");
         int nrOfQuestions = ((Long) doc.get("Number of Questions")).intValue();
+
         if (doc.get("Number of Ratings") instanceof Double) {
             int nrOfRatings = ((Double) doc.get("Number of Ratings")).intValue();
         } else {
@@ -248,9 +250,9 @@ public final class Database {
         q.setQuizName(name);
 
     }
+    //endregion
 
-
-    //------------------------- UPLOAD -----------------------
+    //region -- UPLOAD --
     /**
      * Uploads a quiz and all its questions to the database
      *
@@ -346,28 +348,9 @@ public final class Database {
 
         return data;
     }
+    //endregion
 
-    //------------------------- EDIT -----------------------
-
-    /**
-     *
-     * @param question
-     * @param quiz
-     */
-    private void updateQuestion(Question question, Quiz quiz) {
-    }
-
-
-    /**
-     *
-     */
-    private void updateQuiz() {
-    }
-
-
-
-    //------------------------- DELETE -----------------------
-
+    //region -- DELETE --
     /**
      *  Removes a question from a quiz,
      *  if the questions is part of no quizzes after it will deleted from the database
@@ -394,8 +377,9 @@ public final class Database {
                 update("Questions", FieldValue.arrayRemove(uuidOfQuestion));
 
     }
+    //endregion
 
-    //------------------------- NEW ID -----------------------
+    //region -- NEW ID --
     /** A variable to transfer data from listener to uuidIsTaken method */
     private boolean isTaken;
 
@@ -434,9 +418,7 @@ public final class Database {
         isTaken = value;
     }
 
-    /**
-     * OnCompletionListener for get new ID task
-     */
+    /** OnCompletionListener for get new ID task */
     private class newIdOnCompleteListener implements OnCompleteListener<QuerySnapshot> {
 
         @Override
@@ -448,5 +430,6 @@ public final class Database {
             }
         }
     }
+    //endregion
 
 }
