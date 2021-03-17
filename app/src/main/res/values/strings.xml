@@ -23,5 +23,7 @@
     <string name="start_quiz">Start</string>
     <string name="play_quiz">Play a Quiz</string>
     <string name="dark_mode">Dark Mode</string>
+    <string name="select_Name">Confirm quiz name</string>
+    <string name="add_question">Add Question</string>
 
 </resources>
