@@ -4,8 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -84,10 +90,29 @@ public class AnswerQuizActivity4 extends AppCompatActivity {
                     }
                     isAnswered = true;
                 } else {
-                    Context context = getApplicationContext();
-                    CharSequence text = "The question is already answered!";
-                    int duration = Toast.LENGTH_LONG;
-                    Toast.makeText(context, text, duration).show();
+                    // inflate the layout of the popup window
+                    LayoutInflater inflater = (LayoutInflater)
+                            getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+                    ViewGroup container = (ViewGroup) inflater.inflate(R.layout.popup_already_answered, null);
+
+                    // create the popup window
+                    int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+                    int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+                    boolean focusable = true; // lets taps outside the popup also dismiss it
+                    PopupWindow popupWindow = new PopupWindow(container, width, height, focusable);
+
+                    // show the popup window
+                    // which view you pass in doesn't matter, it is only used for the window token
+                    popupWindow.showAtLocation(container, Gravity.CENTER, 0, 0);
+
+                    // dismiss the popup window when touched
+                    container.setOnTouchListener(new View.OnTouchListener() {
+                        @Override
+                        public boolean onTouch(View v, MotionEvent event) {
+                            popupWindow.dismiss();
+                            return true;
+                        }
+                    });
                 }
             }
         });
@@ -105,10 +130,29 @@ public class AnswerQuizActivity4 extends AppCompatActivity {
                     }
                     isAnswered = true;
                 } else {
-                    Context context = getApplicationContext();
-                    CharSequence text = "The question is already answered!";
-                    int duration = Toast.LENGTH_LONG;
-                    Toast.makeText(context, text, duration).show();
+                    // inflate the layout of the popup window
+                    LayoutInflater inflater = (LayoutInflater)
+                            getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+                    ViewGroup container = (ViewGroup) inflater.inflate(R.layout.popup_already_answered, null);
+
+                    // create the popup window
+                    int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+                    int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+                    boolean focusable = true; // lets taps outside the popup also dismiss it
+                    PopupWindow popupWindow = new PopupWindow(container, width, height, focusable);
+
+                    // show the popup window
+                    // which view you pass in doesn't matter, it is only used for the window token
+                    popupWindow.showAtLocation(container, Gravity.CENTER, 0, 0);
+
+                    // dismiss the popup window when touched
+                    container.setOnTouchListener(new View.OnTouchListener() {
+                        @Override
+                        public boolean onTouch(View v, MotionEvent event) {
+                            popupWindow.dismiss();
+                            return true;
+                        }
+                    });
                 }
             }
         });
@@ -126,10 +170,29 @@ public class AnswerQuizActivity4 extends AppCompatActivity {
                     }
                     isAnswered = true;
                 } else {
-                    Context context = getApplicationContext();
-                    CharSequence text = "The question is already answered!";
-                    int duration = Toast.LENGTH_LONG;
-                    Toast.makeText(context, text, duration).show();
+                    // inflate the layout of the popup window
+                    LayoutInflater inflater = (LayoutInflater)
+                            getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+                    ViewGroup container = (ViewGroup) inflater.inflate(R.layout.popup_already_answered, null);
+
+                    // create the popup window
+                    int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+                    int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+                    boolean focusable = true; // lets taps outside the popup also dismiss it
+                    PopupWindow popupWindow = new PopupWindow(container, width, height, focusable);
+
+                    // show the popup window
+                    // which view you pass in doesn't matter, it is only used for the window token
+                    popupWindow.showAtLocation(container, Gravity.CENTER, 0, 0);
+
+                    // dismiss the popup window when touched
+                    container.setOnTouchListener(new View.OnTouchListener() {
+                        @Override
+                        public boolean onTouch(View v, MotionEvent event) {
+                            popupWindow.dismiss();
+                            return true;
+                        }
+                    });
                 }
 
             }
@@ -148,10 +211,29 @@ public class AnswerQuizActivity4 extends AppCompatActivity {
                     }
                     isAnswered = true;
                 } else {
-                    Context context = getApplicationContext();
-                    CharSequence text = "The question is already answered!";
-                    int duration = Toast.LENGTH_LONG;
-                    Toast.makeText(context, text, duration).show();
+                    // inflate the layout of the popup window
+                    LayoutInflater inflater = (LayoutInflater)
+                            getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+                    ViewGroup container = (ViewGroup) inflater.inflate(R.layout.popup_already_answered, null);
+
+                    // create the popup window
+                    int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+                    int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+                    boolean focusable = true; // lets taps outside the popup also dismiss it
+                    PopupWindow popupWindow = new PopupWindow(container, width, height, focusable);
+
+                    // show the popup window
+                    // which view you pass in doesn't matter, it is only used for the window token
+                    popupWindow.showAtLocation(container, Gravity.CENTER, 0, 0);
+
+                    // dismiss the popup window when touched
+                    container.setOnTouchListener(new View.OnTouchListener() {
+                        @Override
+                        public boolean onTouch(View v, MotionEvent event) {
+                            popupWindow.dismiss();
+                            return true;
+                        }
+                    });
                 }
 
             }
@@ -171,10 +253,29 @@ public class AnswerQuizActivity4 extends AppCompatActivity {
                         answerNext5();
                     }
                 } else {
-                    Context context = getApplicationContext();
-                    CharSequence text = "Answer the question first!";
-                    int duration = Toast.LENGTH_LONG;
-                    Toast.makeText(context, text, duration).show();
+                    // inflate the layout of the popup window
+                    LayoutInflater inflater = (LayoutInflater)
+                            getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+                    ViewGroup container = (ViewGroup) inflater.inflate(R.layout.popup_not_answered, null);
+
+                    // create the popup window
+                    int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+                    int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+                    boolean focusable = true; // lets taps outside the popup also dismiss it
+                    PopupWindow popupWindow = new PopupWindow(container, width, height, focusable);
+
+                    // show the popup window
+                    // which view you pass in doesn't matter, it is only used for the window token
+                    popupWindow.showAtLocation(container, Gravity.CENTER, 0, 0);
+
+                    // dismiss the popup window when touched
+                    container.setOnTouchListener(new View.OnTouchListener() {
+                        @Override
+                        public boolean onTouch(View v, MotionEvent event) {
+                            popupWindow.dismiss();
+                            return true;
+                        }
+                    });
                 }
             }
         });

@@ -41,4 +41,6 @@
     <string name="check_mark">Check mark</string>
     <string name="sound_icon">Sound icon</string>
     <string name="mute_icon">Mute icon</string>
+    <string name="already_answered">"The question is already answered!"</string>
+    <string name="not_answered">"Answer the question first!"</string>
 </resources>
