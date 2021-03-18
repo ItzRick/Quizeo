@@ -103,10 +103,25 @@
             android:inputType="textMultiLine"
             android:textColorHint="@color/black"
             android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/buttonAddOption"
+            app:layout_constraintBottom_toTopOf="@+id/textAddAnswer3"
             app:layout_constraintStart_toStartOf="@+id/textAddAnswer1"
             app:layout_constraintEnd_toEndOf="@+id/textAddAnswer1"
             app:layout_constraintTop_toBottomOf="@id/textAddAnswer1"
+            android:autofillHints="" />
+
+        <EditText
+            android:id="@+id/textAddAnswer3"
+            android:layout_width="371dp"
+            android:layout_height="50dp"
+            android:background="@drawable/edittext_background_white"
+            android:gravity="center_horizontal"
+            android:hint="@string/add_an_answer"
+            android:inputType="textMultiLine"
+            android:textColorHint="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/buttonAddOption"
+            app:layout_constraintStart_toStartOf="@+id/textAddAnswer1"
+            app:layout_constraintEnd_toEndOf="@+id/textAddAnswer1"
             android:autofillHints="" />
 
         <Button
@@ -122,6 +137,19 @@
             app:layout_constraintStart_toStartOf="@id/buttonSaveQuit"
             app:layout_constraintTop_toBottomOf="@id/textQuestion" />
 
+        <Button
+            android:id="@+id/buttonRemoveOption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="67dp"
+            android:layout_marginEnd="10dp"
+            android:text="@string/remove_option"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/buttonDeleteQuestion"
+            app:layout_constraintStart_toStartOf="@id/buttonDeleteQuestion"
+            app:layout_constraintTop_toBottomOf="@id/textQuestion"
+            />
 
         <Button
             android:id="@+id/buttonSaveQuit"

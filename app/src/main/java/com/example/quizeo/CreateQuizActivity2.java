@@ -23,7 +23,7 @@ public class CreateQuizActivity2 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_create_quiz2);
+        setContentView(R.layout.fragment_create_quiz_2);
         buttonSaveQuit = (Button) findViewById(R.id.buttonSaveQuit);
         buttonSaveName = (Button) findViewById(R.id.buttonSelectName);
         quizName = (EditText) findViewById(R.id.YourQuizName);
@@ -55,10 +55,6 @@ public class CreateQuizActivity2 extends AppCompatActivity {
                 openAddQuestion();
             }
         });
-    }
-    public void openMainActivity() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
     }
 
     public void openCreateQuizActivity() {

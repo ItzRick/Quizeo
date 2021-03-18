@@ -38,4 +38,8 @@
     <string name="check_mark">Check mark</string>
     <string name="sound_icon">Sound icon</string>
     <string name="mute_icon">Mute icon</string>
+    <string name="add_an_answer">Add an Answer…</string>
+    <string name="delete_question">Delete Question</string>
+    <string name="add_option">Add Option</string>
+    <string name="remove_option">Remove Option</string>
 </resources>

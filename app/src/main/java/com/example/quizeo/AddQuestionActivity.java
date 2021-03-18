@@ -11,6 +11,7 @@ import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 public class AddQuestionActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -18,7 +19,12 @@ public class AddQuestionActivity extends AppCompatActivity implements View.OnCli
 
     //local variables
     ImageView imageUpload;
-    Button buttonUploadImage;
+
+    Button buttonSaveQuit;
+    Button buttonDeleteQuestion;
+
+    Button buttonAddOption;
+
     EditText textQuestion;
 
     @Override
@@ -27,11 +33,46 @@ public class AddQuestionActivity extends AppCompatActivity implements View.OnCli
         setContentView(R.layout.fragment_add_question);
 
         imageUpload = (ImageView) findViewById(R.id.imageUpload);
-        buttonUploadImage = (Button) findViewById(R.id.buttonUpload);
+
+        buttonSaveQuit = (Button) findViewById(R.id.buttonSaveQuit);
+        buttonDeleteQuestion = (Button) findViewById(R.id.buttonDeleteQuestion);
+        buttonAddOption = (Button) findViewById(R.id.buttonAddOption);
+
         textQuestion = (EditText) findViewById(R.id.textQuestion);
 
         imageUpload.setOnClickListener(this);
-        buttonUploadImage.setOnClickListener(this);
+        buttonSaveQuit.setOnClickListener(this);
+
+        buttonAddOption.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openAddQuestionActivity2();
+            }
+        });
+
+        buttonSaveQuit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openCreateQuizActivity2();
+            }
+        });
+
+        buttonDeleteQuestion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openCreateQuizActivity2();
+            }
+        });
+    }
+
+    public void openAddQuestionActivity2() {
+        Intent intent = new Intent(this, AddQuestionActivity2.class);
+        startActivity(intent);
+    }
+
+    public void openCreateQuizActivity2() {
+        Intent intent = new Intent(this, CreateQuizActivity2.class);
+        startActivity(intent);
     }
 
     @Override
@@ -41,7 +82,7 @@ public class AddQuestionActivity extends AppCompatActivity implements View.OnCli
                 Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
                 break;
-            case R.id.buttonUpload:
+            case R.id.buttonSaveQuit:
                 break;
         }
     }
