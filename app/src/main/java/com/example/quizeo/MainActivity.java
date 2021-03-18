@@ -46,8 +46,8 @@ public class MainActivity extends AppCompatActivity {
     private boolean connectionEnabled = false;
 
     // variables for latitude and longitude
-    private double longitude;
-    private double latitude;
+    public double longitude;
+    public double latitude;
 
     /** Holds the Authentication instance */
     private Authentication authentication;
@@ -112,14 +112,14 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-            // check if needed permissions for location are granted
+        // check if needed permissions for location are granted
         if (ContextCompat.checkSelfPermission(MainActivity.this,
                 Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
             if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this,
                     Manifest.permission.ACCESS_FINE_LOCATION)){
                 ActivityCompat.requestPermissions(MainActivity.this,
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-            } else{
+            } else {
                 ActivityCompat.requestPermissions(MainActivity.this,
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
             }
@@ -198,6 +198,7 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    // class where the location is found and assigned
     class MyLocationListener implements LocationListener {
 
         @Override
@@ -211,19 +212,24 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    // method to fetch the location
     public void getLocation() {
+
+        //check if the gps is present and turned on
         try {
             gpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
         } catch (Exception ex) {
 
         }
 
+        //check if internet connection is present and turned on
         try {
             connectionEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
         } catch (Exception ex) {
 
         }
 
+        // if they aren't, print a message
         if (!gpsEnabled && !connectionEnabled) {
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             builder.setTitle("Error");
@@ -234,6 +240,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
+        // fetch the location if everything is fine
         if (gpsEnabled) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 // TODO: Consider calling
