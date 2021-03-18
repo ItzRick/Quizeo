@@ -12,14 +12,13 @@
         android:id="@+id/imageView4"
         android:layout_width="528dp"
         android:layout_height="528dp"
-        android:layout_marginBottom="100dp"
+        android:layout_marginTop="50dp"
         android:alpha="0.7"
         android:contentDescription="@string/globe"
         android:src="@drawable/globe2_removebg_preview"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar2"
@@ -63,34 +62,30 @@
         android:id="@+id/YourQuizName"
         android:layout_width="314dp"
         android:layout_height="68dp"
+        android:layout_marginBottom="68dp"
         android:autofillHints=""
         android:gravity="center"
         android:hint="@string/title_your_quiz"
         android:inputType="textShortMessage"
         android:textSize="40sp"
-        app:layout_constraintBottom_toTopOf="@+id/imageView4"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/toolbar2"
+        app:layout_constraintEnd_toStartOf="@+id/YourQuizInfo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.7"
         tools:ignore="LabelFor" />
 
     <EditText
         android:id="@+id/YourUsername"
         android:layout_width="121dp"
         android:layout_height="41dp"
-        android:layout_marginBottom="3dp"
         android:autofillHints=""
         android:gravity="center"
         android:hint="@string/your_username"
         android:inputType="textShortMessage"
         android:textSize="15sp"
-        app:layout_constraintBottom_toTopOf="@+id/imageView4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.476"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/YourQuizName"
+        app:layout_constraintStart_toStartOf="@+id/YourQuizName"
         app:layout_constraintTop_toBottomOf="@+id/YourQuizName"
-        app:layout_constraintVertical_bias="0.0"
         tools:ignore="LabelFor" />
 
     <TextView
@@ -107,8 +102,7 @@
         android:textSize="40sp"
         app:layout_constraintBottom_toTopOf="@+id/toolbar2"
         app:layout_constraintEnd_toEndOf="@+id/buttonSubmitQuiz"
-        app:layout_constraintStart_toStartOf="@+id/buttonSaveQuit"
-        app:layout_constraintTop_toBottomOf="@+id/YourUsername"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="TextViewEdits" />
 
     <TextView
