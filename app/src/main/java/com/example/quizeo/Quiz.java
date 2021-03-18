@@ -177,6 +177,9 @@ public class Quiz implements Parcelable {
      * @return the next question each time.
      */
     public Question getNext() {
+        if (index > questions.size()) {
+            throw new IndexOutOfBoundsException();
+        }
         // Save the old index and increment the index:
         int oldIndex = index;
         index++;
@@ -288,15 +291,6 @@ public class Quiz implements Parcelable {
     }
 
     /**
-     * Retrieve the percentage required to pass this quiz.
-     *
-     * @return the percentage required to pass the quiz.
-     */
-    public float getPercentageToPass() {
-        return percentageToPass;
-    }
-
-    /**
      * Set the name of this quiz.
      *
      * @param quizName the name of this quiz.
@@ -341,6 +335,14 @@ public class Quiz implements Parcelable {
         this.userCreated = userCreated;
     }
 
+    public Boolean nextQuestionExists() {
+        return (index < questions.size());
+    }
+
+    public Question getCurrent() {
+        return questions.get(index);
+    }
+
     /**
      * Set the number of questions of this quiz
      *
@@ -366,6 +368,15 @@ public class Quiz implements Parcelable {
      */
     public void setRating(double rating) {
         this.rating = rating;
+    }
+
+    /**
+     * Retrieve the percentage required to pass this quiz.
+     *
+     * @return the percentage required to pass the quiz.
+     */
+    public float getPercentageToPass() {
+        return percentageToPass;
     }
 
 }

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -17,37 +18,48 @@ public class CreateQuizActivity2 extends AppCompatActivity {
     Button buttonSaveName;
     Button buttonAddQuestion;
 
+    TextView numberOfQuestions;
+
     EditText quizName;
     Quiz quiz;
+    Question questionToAdd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_create_quiz2);
         buttonSaveQuit = (Button) findViewById(R.id.buttonSaveQuit);
-        buttonSaveName = (Button) findViewById(R.id.buttonSelectName);
         quizName = (EditText) findViewById(R.id.YourQuizName);
         buttonAddQuestion = (Button) findViewById(R.id.buttonAddQuestion);
+        numberOfQuestions = (TextView) findViewById(R.id.NumberOfQuestions);
 
-        quiz = new Quiz();
-        quiz.setQuizId(UUID.randomUUID());
+        // Retrieve passed quiz element if it exists:
+        quiz = getIntent().getParcelableExtra("quiz");
+        // Set new if it does not exist:
+        if (quiz == null) {
+            System.out.println("test");
+            quiz = new Quiz();
+            quiz.setQuizId(UUID.randomUUID());
+        } else {
+            quizName.setText(quiz.getQuizName());
+        }
+
+        questionToAdd = getIntent().getParcelableExtra("question");
+        if (questionToAdd != null) {
+            quiz.addQuestion(questionToAdd);
+        }
+
+
+        String textToSet = "Number of questions: " + quiz.getNumberOfQuestions();
+        numberOfQuestions.setText(textToSet);
 
         buttonSaveQuit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openCreateQuizActivity();
+                openMainActivity();
             }
         });
 
-        buttonSaveName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                quiz.setQuizName(quizName.getText().toString());
-
-                // Only for testing purposes:
-                System.out.println(quiz.getQuizName());
-            }
-        });
 
         buttonAddQuestion.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,6 +80,8 @@ public class CreateQuizActivity2 extends AppCompatActivity {
 
     public void openAddQuestion() {
         Intent intent = new Intent(this, AddQuestionActivity.class);
+        intent.putExtra("quiz", quiz);
         startActivity(intent);
     }
+
 }

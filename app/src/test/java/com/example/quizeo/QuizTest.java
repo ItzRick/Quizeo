@@ -47,6 +47,17 @@ public class QuizTest {
         Assert.assertNotNull(question2);
     }
 
+    /** Test the addQuestion() and getNext() exception. */
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void getNextException() {
+        System.out.println("getNextException()");
+        // Add the question another time to the quiz:
+
+        // Retrieve the questions and check if they actually exist.
+        quiz.getNext();
+        quiz.getNext();
+    }
+
     /** Test the getQuestions() method. */
     @Test
     public void getQuestions() {
@@ -282,7 +293,7 @@ public class QuizTest {
         System.out.println("getUserCreated()");
 
         // Create a new user and add this to the quiz:
-        User user = new User("user", UUID.randomUUID());
+        User user = new User("user", UUID.randomUUID().toString());
         quiz.setUserCreated(user);
 
         // Check that the getUserCreated() method returns the correct user:
@@ -332,5 +343,18 @@ public class QuizTest {
         Assert.assertEquals((int)location.getLongitude(), (int)location1.getLongitude());
         Assert.assertEquals(location, location1);
         Assert.assertEquals(1, quiz1.getScoreToPass());
+    }
+
+    @Test
+    public void nextQuestionExists() {
+        System.out.println("nextQuestionExists() 1");
+        Assert.assertTrue(quiz.nextQuestionExists());
+    }
+
+    @Test
+    public void nextQuestionExists1() {
+        System.out.println("nextQuestionExists() 2");
+        quiz.getNext();
+        Assert.assertFalse(quiz.nextQuestionExists());
     }
 }

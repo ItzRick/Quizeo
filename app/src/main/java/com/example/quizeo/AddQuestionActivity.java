@@ -20,6 +20,7 @@ public class AddQuestionActivity extends AppCompatActivity implements View.OnCli
     ImageView imageUpload;
     Button buttonUploadImage;
     EditText textQuestion;
+    Quiz quiz;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +33,8 @@ public class AddQuestionActivity extends AppCompatActivity implements View.OnCli
 
         imageUpload.setOnClickListener(this);
         buttonUploadImage.setOnClickListener(this);
+
+        Quiz quiz = getIntent().getParcelableExtra("quiz");
     }
 
     @Override

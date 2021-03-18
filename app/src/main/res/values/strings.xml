@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Quizeo</string>
 
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="logo">logo of the app</string>
     <string name="start">Start</string>
     <string name="make">Make a Quiz</string>
@@ -27,6 +29,7 @@
     <string name="upload_image_here">Upload Image Here</string>
     <string name="done">Done</string>
     <string name="add_a_question">Add a Question…</string>
+    <string name="next_question">Next Question</string>
     <string name="upload">Upload</string>
     <string name="save_options">Save Options</string>
     <string name="cancel">Cancel</string>

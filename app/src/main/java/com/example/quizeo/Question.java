@@ -307,6 +307,10 @@ public class Question implements Parcelable {
         return userCreated;
     }
 
+    public int getNumberOfAnswers() {
+        return answers.size();
+    }
+
 
     @Override
     public int describeContents() {
