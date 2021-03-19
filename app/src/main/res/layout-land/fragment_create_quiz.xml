@@ -15,7 +15,8 @@
         android:alpha="0.7"
         android:contentDescription="@string/globe"
         android:src="@drawable/globe2_removebg_preview"
-        app:layout_constraintBottom_toTopOf="@+id/toolbar2"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -36,12 +37,12 @@
         android:id="@+id/yourQuiz"
         android:layout_width="396dp"
         android:layout_height="63dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="30dp"
         android:gravity="center"
         android:text="@string/your_quizzes"
         android:textAllCaps="false"
-        android:textSize="55sp"
         android:textColor="?attr/colorSecondary"
+        android:textSize="55sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

@@ -103,6 +103,7 @@
         android:layout_marginTop="8dp"
         android:onClick="test"
         android:text="Button"
+        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

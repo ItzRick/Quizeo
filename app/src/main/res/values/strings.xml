@@ -42,4 +42,6 @@
     <string name="delete_question">Delete Question</string>
     <string name="add_option">Add Option</string>
     <string name="remove_option">Remove Option</string>
+    <string name="already_answered">"The question is already answered!"</string>
+    <string name="not_answered">"Answer the question first!"</string>
 </resources>

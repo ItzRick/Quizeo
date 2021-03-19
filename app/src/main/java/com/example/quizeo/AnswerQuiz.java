@@ -1,6 +1,9 @@
 package com.example.quizeo;
 
-public class AnswerQuiz {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class AnswerQuiz implements Parcelable {
 
     /** Variable to keep track of the score: */
     private int score;
@@ -27,6 +30,23 @@ public class AnswerQuiz {
         // Set the correct user who answered this quiz:
         this.userAnswered = userAnswered;
     }
+
+    protected AnswerQuiz(Parcel in) {
+        score = in.readInt();
+        userAnswered = in.readParcelable(User.class.getClassLoader());
+    }
+
+    public static final Creator<AnswerQuiz> CREATOR = new Creator<AnswerQuiz>() {
+        @Override
+        public AnswerQuiz createFromParcel(Parcel in) {
+            return new AnswerQuiz(in);
+        }
+
+        @Override
+        public AnswerQuiz[] newArray(int size) {
+            return new AnswerQuiz[size];
+        }
+    };
 
     /**
      * Set the user who answered this quiz.
@@ -64,5 +84,16 @@ public class AnswerQuiz {
      */
     public int getScore() {
         return score;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(score);
+        dest.writeParcelable(userAnswered, flags);
     }
 }

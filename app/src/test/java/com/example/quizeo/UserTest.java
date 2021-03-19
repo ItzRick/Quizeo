@@ -34,7 +34,7 @@ public class UserTest {
     public void setUserId() {
         System.out.println("setUserId()");
         // Create a new userId and set this userId:
-        UUID id = UUID.randomUUID();
+        String id = UUID.randomUUID().toString();
         user.setUserId(id);
         // Check if the userId was correctly set:
         Assert.assertEquals(id, user.getUserId());
@@ -46,7 +46,7 @@ public class UserTest {
         System.out.println("Initialization()");
         // Create a nickName and userId and pass this while initializing:
         String nickName = "test";
-        UUID id = UUID.randomUUID();
+        String id = UUID.randomUUID().toString();
         User user1 = new User(nickName, id);
         // Check if both the userId and nickName were correctly passed:
         Assert.assertEquals(nickName, user1.getNickName());

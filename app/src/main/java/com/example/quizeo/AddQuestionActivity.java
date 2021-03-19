@@ -26,6 +26,7 @@ public class AddQuestionActivity extends AppCompatActivity implements View.OnCli
     Button buttonAddOption;
 
     EditText textQuestion;
+    Quiz quiz;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

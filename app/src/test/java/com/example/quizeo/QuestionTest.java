@@ -206,7 +206,7 @@ public class QuestionTest {
         System.out.println("setUserCreated()");
 
         // Create a new user and set this user for this question:
-        User user = new User("user", UUID.randomUUID());
+        User user = new User("user", UUID.randomUUID().toString());
         question.setUserCreated(user);
 
         // Check if the user was correctly saved to this question:
