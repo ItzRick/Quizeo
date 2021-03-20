@@ -93,7 +93,7 @@
         android:layout_width="361dp"
         android:layout_height="265dp"
         android:autofillHints=""
-        android:background="@drawable/edittext_background"
+        android:background="@drawable/edittext_background_blue"
         android:ems="10"
         android:gravity="center_horizontal"
         android:inputType="textPersonName"

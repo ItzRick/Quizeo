@@ -69,8 +69,8 @@ public class CreateQuizActivity2 extends AppCompatActivity {
         });
     }
 
-    public void openCreateQuizActivity() {
-        Intent intent = new Intent(this, CreateQuizActivity.class);
+    public void openMainActivity() {
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
