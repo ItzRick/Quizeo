@@ -12,7 +12,7 @@
         android:id="@+id/imageView4"
         android:layout_width="528dp"
         android:layout_height="528dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="130dp"
         android:alpha="0.7"
         android:contentDescription="@string/globe"
         android:src="@drawable/globe2_removebg_preview"

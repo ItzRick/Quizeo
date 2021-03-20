@@ -21,7 +21,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 public class OptionsActivity extends AppCompatActivity {
 
-    // default values for the options
+    // The default values for the options will be stored in these variables
     boolean sound;
     boolean verified;
     boolean darkmode;
@@ -306,7 +306,8 @@ public class OptionsActivity extends AppCompatActivity {
     // Asks the user if they want to quit the application
     public void exitClick(View v) {
         AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-        builder.setMessage("Do you want to quit?").setPositiveButton("Quit", dialogClickListener)
+        builder.setMessage("Do you want to quit?")
+                .setPositiveButton("Quit", dialogClickListener)
                 .setNegativeButton("Cancel", dialogClickListener).show();
     }
 
