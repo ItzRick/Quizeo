@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.media.AudioManager;
 import android.media.Image;
 import android.os.Bundle;
@@ -20,7 +21,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 public class OptionsActivity extends AppCompatActivity {
 
-    // default values for the options
+    // The default values for the options will be stored in these variables
     boolean sound;
     boolean verified;
     boolean darkmode;
@@ -29,14 +30,13 @@ public class OptionsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.options);
         Intent i = getIntent();
-
+        setContentView(R.layout.options);
         // get options from home activity
         getOptions(i);
-        // if darkmode has not changed
-        if (!i.getBooleanExtra("darkmodeChange", false)) {
-            // set all options to the right state
+
+        if (savedInstanceState == null) {       // if the activity is opened for the first time
+            // set the options to the default options
             if (sound) {
                 unmute(findViewById(R.id.muteIcon));
             } else {
@@ -45,17 +45,16 @@ public class OptionsActivity extends AppCompatActivity {
             verifiedQuizzes(verified);
             friendRequests(request);
             darkMode(darkmode);
-        } else {    // if darkmode has changed
-            // get new options and set all options to the right state
-            if (i.getBooleanExtra("soundNow", true)) {
+        } else {                                // if the activity is reopened
+            // set the options to the stored options
+            if (i.getBooleanExtra("soundNow", sound)) {
                 unmute(findViewById(R.id.muteIcon));
             } else {
                 mute(findViewById(R.id.soundIcon));
             }
-            verifiedQuizzes(i.getBooleanExtra("verifiedNow", true));
-            friendRequests(i.getBooleanExtra("requestNow", false));
-            darkMode(i.getBooleanExtra("darkmodeNow", false));
-
+            verifiedQuizzes(i.getBooleanExtra("verifiedNow", verified));
+            friendRequests(i.getBooleanExtra("requestNow", request));
+            darkMode(i.getBooleanExtra("darkmodeNow", darkmode));
         }
     }
 
@@ -138,7 +137,7 @@ public class OptionsActivity extends AppCompatActivity {
         openHome(newSound, newVerified, newDarkmode, newRequest);
     }
 
-    // Reads the input options and send them to the home activity
+    // Reads the input options and sends them to the home activity
     public void openHome(boolean sound, boolean verified, boolean darkmode, boolean request) {
         Intent i = new Intent(this, MainActivity.class);
         i.putExtra("sound", sound);
@@ -180,6 +179,8 @@ public class OptionsActivity extends AppCompatActivity {
         while (audioManager.getStreamVolume(AudioManager.STREAM_MUSIC) > 0) {
             audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_LOWER, 1);
         }*/
+        // Store this option
+        tempOptionSave("soundNow", false);
     }
 
     // Unmutes the application and shows the right text and image
@@ -201,6 +202,8 @@ public class OptionsActivity extends AppCompatActivity {
         while (audioManager.getStreamVolume(AudioManager.STREAM_MUSIC) < audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)) {
             audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_RAISE, 1);
         }*/
+        // Store this option
+        tempOptionSave("soundNow", true);
     }
 
     // Toggles whether only verified quizzes is on or off
@@ -226,6 +229,8 @@ public class OptionsActivity extends AppCompatActivity {
             // add code to disable
 
         }
+        // Store this option
+        tempOptionSave("verifiedNow", enable);
     }
 
     // Toggles whether dark mode is on or off
@@ -240,14 +245,8 @@ public class OptionsActivity extends AppCompatActivity {
     public void darkMode(boolean enable) {
         // find the right check mark
         ImageView i = this.findViewById(R.id.darkModeCheck);
-        // get the intent for this activity
-        Intent in = getIntent();
-        // add the current options to the intent
-        in.putExtra("darkmodeChange", true);
-        in.putExtra("soundNow", findViewById(R.id.soundIcon).getVisibility() == View.VISIBLE);
-        in.putExtra("verifiedNow", findViewById(R.id.verifiedCheck).getVisibility() == View.VISIBLE);
-        in.putExtra("requestNow", findViewById(R.id.friendRequestCheck).getVisibility() == View.VISIBLE);
-        in.putExtra("darkmodeNow", enable);
+        // store this option
+        tempOptionSave("darkmodeNow", enable);
         if (enable) {       // if the options should be turned on
             // make the check mark visible
             i.setVisibility(View.VISIBLE);
@@ -294,12 +293,21 @@ public class OptionsActivity extends AppCompatActivity {
             // add code to disable
 
         }
+        // Store this option
+        tempOptionSave("requestNow", enable);
+    }
+
+    // Stores an option that has been changed in the intent
+    public void tempOptionSave(String string, boolean enabled) {
+        Intent i = getIntent();
+        i.putExtra(string, enabled);
     }
 
     // Asks the user if they want to quit the application
     public void exitClick(View v) {
         AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-        builder.setMessage("Do you want to quit?").setPositiveButton("Quit", dialogClickListener)
+        builder.setMessage("Do you want to quit?")
+                .setPositiveButton("Quit", dialogClickListener)
                 .setNegativeButton("Cancel", dialogClickListener).show();
     }
 
