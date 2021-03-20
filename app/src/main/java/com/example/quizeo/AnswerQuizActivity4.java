@@ -272,7 +272,9 @@ public class AnswerQuizActivity4 extends AppCompatActivity {
             public void onClick(View v) {
                 if (isAnswered) {
                     Question nextQuestion = quiz.getNext();
-                    if (nextQuestion.getNumberOfAnswers() == 2) {
+                    if (! quiz.nextQuestionExists()) {
+                        finishQuiz();
+                    } else if (quiz.getNext().getNumberOfAnswers() == 2) {
                         answerNext2();
                     } else if (nextQuestion.getNumberOfAnswers() == 3) {
                         answerNext3();
@@ -352,6 +354,14 @@ public class AnswerQuizActivity4 extends AppCompatActivity {
         quiz.quitQuiz();
         Intent intent = new Intent(this, PlayQuizActivity.class);
         intent.putExtra("location", location);
+        intent.putExtra("user", userAnswered);
+        startActivity(intent);
+    }
+
+    public void finishQuiz () {
+        Intent intent = new Intent(this, FinishQuizActivity.class);
+        intent.putExtra("answerQuiz", answerQuiz);
+        intent.putExtra("quiz", quiz);
         intent.putExtra("user", userAnswered);
         startActivity(intent);
     }
