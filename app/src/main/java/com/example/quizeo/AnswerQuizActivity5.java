@@ -363,6 +363,7 @@ public class AnswerQuizActivity5 extends AppCompatActivity {
         Intent intent = new Intent(this, FinishQuizActivity.class);
         intent.putExtra("quiz", quiz);
         intent.putExtra("user", userAnswered);
+        intent.putExtra("answerQuiz", answerQuiz);
         startActivity(intent);
     }
 }
