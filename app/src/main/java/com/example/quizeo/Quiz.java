@@ -102,6 +102,7 @@ public class Quiz implements Parcelable {
         scoreToPass = in.readInt();
         numberOfQuestions = in.readInt();
         index = in.readInt();
+        questions = in.readArrayList(Question.class.getClassLoader());
     }
 
     @Override
@@ -113,6 +114,7 @@ public class Quiz implements Parcelable {
         dest.writeInt(scoreToPass);
         dest.writeInt(numberOfQuestions);
         dest.writeInt(index);
+        dest.writeList(questions);
     }
 
     @Override
@@ -183,7 +185,6 @@ public class Quiz implements Parcelable {
         // Save the old index and increment the index:
         int oldIndex = index;
         index++;
-
         // Retrieve the question:
         return questions.get(oldIndex);
     }
@@ -336,7 +337,7 @@ public class Quiz implements Parcelable {
     }
 
     public Boolean nextQuestionExists() {
-        return (index < questions.size());
+        return (index < questions.size() - 1);
     }
 
     public Question getCurrent() {
