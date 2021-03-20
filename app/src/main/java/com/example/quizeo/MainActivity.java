@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     // variables for latitude and longitude
     public double longitude;
     public double latitude;
+    LocationQuizeo location;
 
     /** Holds the Authentication instance */
     private Authentication authentication;
@@ -99,8 +100,9 @@ public class MainActivity extends AppCompatActivity {
         buttonStartQuiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openPlayQuizActivity();
                 getLocation();
+                location = new LocationQuizeo(latitude, longitude);
+                openPlayQuizActivity();
             }
         });
 
@@ -155,6 +157,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void openPlayQuizActivity(){
         Intent intent = new Intent(this, PlayQuizActivity.class);
+        intent.putExtra("location", location);
         startActivity(intent);
     }
 

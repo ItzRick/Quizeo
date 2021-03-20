@@ -3,18 +3,32 @@ package com.example.quizeo;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Location implements Parcelable {
+public class LocationQuizeo implements Parcelable {
 
+    public static final Creator<LocationQuizeo> CREATOR = new Creator<LocationQuizeo>() {
+        @Override
+        public LocationQuizeo createFromParcel(Parcel in) {
+            return new LocationQuizeo(in);
+        }
+
+        @Override
+        public LocationQuizeo[] newArray(int size) {
+            return new LocationQuizeo[size];
+        }
+    };
     private double latitude;
-
     private double longitude;
 
-    public Location(double x, double y) {
+    public LocationQuizeo(double x, double y) {
         latitude = x;
         longitude = y;
     }
 
-    protected Location(Parcel in) {
+    public LocationQuizeo() {
+
+    }
+
+    protected LocationQuizeo(Parcel in) {
         latitude = in.readDouble();
         longitude = in.readDouble();
     }
@@ -29,18 +43,6 @@ public class Location implements Parcelable {
     public int describeContents() {
         return 0;
     }
-
-    public static final Creator<Location> CREATOR = new Creator<Location>() {
-        @Override
-        public Location createFromParcel(Parcel in) {
-            return new Location(in);
-        }
-
-        @Override
-        public Location[] newArray(int size) {
-            return new Location[size];
-        }
-    };
 
     public void changeLocation(double x, double y) {
         latitude = x;

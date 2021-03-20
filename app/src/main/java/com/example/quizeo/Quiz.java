@@ -33,7 +33,7 @@ public class Quiz implements Parcelable {
     private int index;
 
     /** Location belonging to this quiz: */
-    private Location location;
+    private LocationQuizeo location;
 
     /** User who created this quiz: */
     private User userCreated;
@@ -59,7 +59,7 @@ public class Quiz implements Parcelable {
      * @param quizName name of the quiz.
      * @param location location belonging to the current quiz.
      */
-    public Quiz(UUID quizId, String quizName, Location location) {
+    public Quiz(UUID quizId, String quizName, LocationQuizeo location) {
         // Set the passed variables to the correct value:
         this.quizId = quizId;
         this.quizName = quizName;
@@ -83,7 +83,7 @@ public class Quiz implements Parcelable {
      * @param location location belonging to the current quiz.
      * @param percentageToPass percentage required to pass the current quiz.
      */
-    public Quiz(UUID quizId, String quizName, Location location, int percentageToPass) {
+    public Quiz(UUID quizId, String quizName, LocationQuizeo location, int percentageToPass) {
         this.quizId = quizId;
         this.quizName = quizName;
         questions = new ArrayList<>();
@@ -227,7 +227,7 @@ public class Quiz implements Parcelable {
      *
      * @return the location associated with the quiz.
      */
-    public Location getLocation() {
+    public LocationQuizeo getLocation() {
         return location;
     }
 
@@ -313,7 +313,7 @@ public class Quiz implements Parcelable {
      *
      * @param location belonging to this quiz.
      */
-    public void setLocation(Location location) {
+    public void setLocation(LocationQuizeo location) {
         this.location = location;
     }
 
