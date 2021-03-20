@@ -179,7 +179,9 @@ public class AnswerQuizActivity3 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (isAnswered) {
-                    if (quiz.getNext().getNumberOfAnswers() == 2) {
+                    if (! quiz.nextQuestionExists()) {
+                        finishQuiz();
+                    } else if (quiz.getNext().getNumberOfAnswers() == 2) {
                         answerNext2();
                     } else if (quiz.getNext().getNumberOfAnswers() == 3) {
                         answerNext3();
@@ -244,6 +246,13 @@ public class AnswerQuizActivity3 extends AppCompatActivity {
         Intent intent = new Intent(this, AnswerQuizActivity5.class);
         intent.putExtra("quiz", quiz);
         intent.putExtra("answerQuiz", answerQuiz);
+        intent.putExtra("user", userAnswered);
+        startActivity(intent);
+    }
+
+    public void finishQuiz () {
+        Intent intent = new Intent(this, FinishQuizActivity.class);
+        intent.putExtra("quiz", quiz);
         intent.putExtra("user", userAnswered);
         startActivity(intent);
     }
