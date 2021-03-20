@@ -4,19 +4,17 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
-public class LocationTest {
-    private Location location;
+public class LocationQuizeoTest {
+    private LocationQuizeo location;
 
     @Before
     public void init() {
-        location = new Location(1, 1);
+        location = new LocationQuizeo(1, 1);
     }
 
     @Test
     public void initializationTest() {
-        Location location1 = new Location (1, 1);
+        LocationQuizeo location1 = new LocationQuizeo(1, 1);
         Assert.assertEquals((int)location1.getLatitude(), (int)location.getLongitude());
     }
 

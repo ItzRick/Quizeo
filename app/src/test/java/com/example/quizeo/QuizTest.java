@@ -1,14 +1,10 @@
 package com.example.quizeo;
 
-import androidx.core.widget.TextViewCompat;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.UUID;
-
-import static org.junit.Assert.*;
 
 public class QuizTest {
 
@@ -170,11 +166,11 @@ public class QuizTest {
         System.out.println("getLocation()");
 
         // Add a new location to this quiz:
-        Location location = new Location(1, 1);
+        LocationQuizeo location = new LocationQuizeo(1, 1);
         quiz.setLocation(location);
 
         // Retrieve this location and confirm this is the same location:
-        Location location1 = quiz.getLocation();
+        LocationQuizeo location1 = quiz.getLocation();
         Assert.assertEquals((int)location.getLatitude(), (int)location1.getLatitude());
         Assert.assertEquals((int)location.getLongitude(), (int)location1.getLongitude());
         Assert.assertEquals(location, location1);
@@ -309,13 +305,13 @@ public class QuizTest {
         // Create an Id, quizName and location and initialize the quiz:
         UUID id = UUID.randomUUID();
         String quizName = "This is a quiz";
-        Location location = new Location(1, 1);
+        LocationQuizeo location = new LocationQuizeo(1, 1);
         Quiz quiz1 = new Quiz(id, quizName, location);
 
         // Check if these values were correctly added to the quiz:
         Assert.assertEquals(id, quiz1.getQuizId());
         Assert.assertEquals(quizName, quiz1.getQuizName());
-        Location location1 = quiz1.getLocation();
+        LocationQuizeo location1 = quiz1.getLocation();
         Assert.assertEquals((int)location.getLatitude(), (int)location1.getLatitude());
         Assert.assertEquals((int)location.getLongitude(), (int)location1.getLongitude());
         Assert.assertEquals(location, location1);
@@ -330,7 +326,7 @@ public class QuizTest {
         // Create an Id, quizName, location and percentageToPass and initialize the quiz:
         UUID id = UUID.randomUUID();
         String quizName = "This is a quiz";
-        Location location = new Location(1, 1);
+        LocationQuizeo location = new LocationQuizeo(1, 1);
         int percentageToPass = 50;
         Quiz quiz1 = new Quiz(id, quizName, location, percentageToPass);
         quiz1.addQuestion(question);
@@ -338,7 +334,7 @@ public class QuizTest {
         // Check if these values were correctly added to the quiz:
         Assert.assertEquals(id, quiz1.getQuizId());
         Assert.assertEquals(quizName, quiz1.getQuizName());
-        Location location1 = quiz1.getLocation();
+        LocationQuizeo location1 = quiz1.getLocation();
         Assert.assertEquals((int)location.getLatitude(), (int)location1.getLatitude());
         Assert.assertEquals((int)location.getLongitude(), (int)location1.getLongitude());
         Assert.assertEquals(location, location1);

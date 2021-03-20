@@ -86,7 +86,7 @@ public final class Database {
      * @param location the location you want to query
      * @param callback the callback object
      */
-    public void getQuizzes(Location location, DownloadQuizzesCallback callback) {
+    public void getQuizzes(LocationQuizeo location, DownloadQuizzesCallback callback) {
         double longitude = location.getLongitude();
         double latitude = location.getLatitude();
 
@@ -234,7 +234,7 @@ public final class Database {
      */
     private void docToQuiz(DocumentSnapshot doc, Quiz q) {
         UUID GlobalID = (UUID) UUID.fromString((String) doc.get("GlobalID"));
-        Location location = new Location((double) doc.get("Latitude"), (double) doc.get("Longitude"));
+        LocationQuizeo location = new LocationQuizeo((double) doc.get("Latitude"), (double) doc.get("Longitude"));
         String name = (String) doc.get("Name");
         int nrOfQuestions = ((Long) doc.get("Number of Questions")).intValue();
         int nrOfRatings = ((Long) doc.get("Number of Ratings")).intValue();
@@ -262,7 +262,7 @@ public final class Database {
      */
     public void uploadQuiz(Quiz quiz) {
         // ----- Preparing for upload ------
-        Location loc = quiz.getLocation(); //location of the quiz
+        LocationQuizeo loc = quiz.getLocation(); //location of the quiz
 
         Map<String, Object> data = new HashMap<>();
         ArrayList<String> listOfQuestions = new ArrayList<>();
