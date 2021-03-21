@@ -378,6 +378,9 @@ public class AnswerQuizActivity5 extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * Method for transition to the finished quiz screen.
+     */
     public void finishQuiz () {
         Intent intent = new Intent(this, FinishQuizActivity.class);
         intent.putExtra("answerQuiz", answerQuiz);

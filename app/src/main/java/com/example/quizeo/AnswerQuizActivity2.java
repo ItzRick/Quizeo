@@ -183,6 +183,7 @@ public class AnswerQuizActivity2 extends AppCompatActivity {
             public void onClick(View v) {
                 if (isAnswered) {
                     Question nextQuestion = quiz.getNext();
+                    // if there are no more questions remaining, finish the quiz
                     if (! quiz.nextQuestionExists()) {
                         finishQuiz();
                     } else if (quiz.getNext().getNumberOfAnswers() == 2) {
@@ -269,6 +270,9 @@ public class AnswerQuizActivity2 extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * Method for transition to the finished quiz screen.
+     */
     public void finishQuiz () {
         Intent intent = new Intent(this, FinishQuizActivity.class);
         intent.putExtra("answerQuiz", answerQuiz);
