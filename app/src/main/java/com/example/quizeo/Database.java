@@ -9,6 +9,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -479,40 +480,4 @@ public final class Database {
         }
     }
     //endregion
-
-    //region -- USER --
-
-    public void downloadUser() {
-
-    }
-
-    public void uploadUser(User user) {
-        HashMap<String, Object> data = new HashMap();
-
-        data.put("ID", user.getUserId());
-        data.put("Nickname", user.getNickName());
-
-
-        firestore.collection("Users").document(user.getUserId())
-                .set(data)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d("","Upload Success");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d("","Upload failure");
-                    }
-                });
-    }
-
-    public void removeUserData() {
-
-    }
-
-    //endregion
-
 }

@@ -11,7 +11,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 //Authentication singleton class
@@ -95,6 +97,52 @@ public class Authentication {
      * Sets the currentUser variable to the currentUser used by firebase authentication
      */
     private void convertToUserObject() {
-        currentUser = new User("", mAuth.getCurrentUser().getUid());
+        currentUser = new User(mAuth.getCurrentUser().getDisplayName(), mAuth.getCurrentUser().getUid());
+    }
+
+    /**
+     * Will update the nick name of the user in the database
+     *
+     * @param user User object with the new information
+     */
+    public void updateUser(User user) {
+        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                .setDisplayName(user.getNickName())
+                .build();
+
+        mAuth.getCurrentUser().updateProfile(profileUpdates)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Log.d("UpdateProfile", "User profile updated.");
+                        }
+                    }
+                });
+
+    }
+
+    /**
+     * Removes all data of the current user form the database
+     * INCLUDING Questions and Quizzes they made.
+     */
+    public void removeCurrentUserData() {
+        Database database = Database.getInstance();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            database.getQuizzes(user.getUid(), new Database.DownloadQuizzesCallback() {
+                @Override
+                public void onCallback(ArrayList<Quiz> list) {
+                    for (Quiz quiz : list) {
+                        database.removeQuiz(quiz);
+                    }
+                    user.delete();
+                    FirebaseAuth.getInstance().signOut();
+                }
+            });
+        }
     }
 }
+
+
+
