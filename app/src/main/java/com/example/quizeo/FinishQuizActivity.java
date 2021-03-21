@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 public class FinishQuizActivity extends AppCompatActivity {
@@ -20,6 +21,8 @@ public class FinishQuizActivity extends AppCompatActivity {
     private Button buttonQuizzesMenu;
     private TextView quizInfo;
     private TextView quizName;
+    private RatingBar ratingBar;
+
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -37,7 +40,7 @@ public class FinishQuizActivity extends AppCompatActivity {
         buttonQuizzesMenu = findViewById(R.id.quizes_menu);
         quizInfo = findViewById(R.id.finished_quiz_info);
         quizName = findViewById(R.id.quiz_name);
-
+        ratingBar = findViewById(R.id.rating_bar);
 
 
         // when this button is pressed, go back to the main menu of the app
@@ -48,6 +51,9 @@ public class FinishQuizActivity extends AppCompatActivity {
             goToQuizzesMenu();
         });
 
+        // when the rating bar is touched, retrieve the rating and add it to the other ratings
+        ratingBar.setOnRatingBarChangeListener((ratingBar, rating, fromUser) -> quiz.setAdditionalRating(rating));
+
         // show the name of the quiz
         quizName.setText(quiz.getQuizName());
 
@@ -56,9 +62,11 @@ public class FinishQuizActivity extends AppCompatActivity {
         if (calculateScore(answerQuiz.getScore(), quiz.getNumberOfQuestions()) >= 0.75) {
             quizInfo.setText("Congratulations!\n You passed this quiz!\n You got "
                     + answerQuiz.getScore() + " out of " + quiz.getNumberOfQuestions() + " correct.");
+            quizInfo.setBackgroundColor(51200);
         } else {
             quizInfo.setText("Better luck next time!\n You failed this quiz..\n You got "
                     + answerQuiz.getScore() + " out of " + quiz.getNumberOfQuestions() + " correct.");
+            quizInfo.setBackgroundColor(12451840);
         }
 
 

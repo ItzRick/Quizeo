@@ -44,4 +44,7 @@
     <string name="already_answered">"This question is already answered!"</string>
     <string name="not_answered">"Answer the question first!"</string>
     <string name="quit">Quit</string>
+    <string name="return_to_main_menu">Return to main menu</string>
+    <string name="play_new_quiz">Play new quiz</string>
+    <string name="rate_this_quiz">Rate this quiz:</string>
 </resources>

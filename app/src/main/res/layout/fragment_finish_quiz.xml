@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,18 +10,16 @@
 
     <TextView
         android:id="@+id/quiz_name"
-        android:layout_width="340dp"
-        android:layout_height="wrap_content"
+        android:layout_width="329dp"
+        android:layout_height="35dp"
         android:layout_marginStart="16dp"
-        android:background="@color/white"
+        android:layout_marginTop="60dp"
         android:gravity="center"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.345"
+        app:layout_constraintHorizontal_bias="0.378"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.123" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/finished_quiz_info"
@@ -37,13 +34,13 @@
         app:layout_constraintHorizontal_bias="0.394"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.381" />
+        app:layout_constraintVertical_bias="0.305" />
 
     <Button
         android:id="@+id/quizes_menu"
         android:layout_width="124dp"
         android:layout_height="57dp"
-        android:text="Play new quiz"
+        android:text="@string/play_new_quiz"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.822"
@@ -55,7 +52,7 @@
         android:id="@+id/main_menu"
         android:layout_width="124dp"
         android:layout_height="57dp"
-        android:text="Return to main menu"
+        android:text="@string/return_to_main_menu"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.152"
@@ -63,16 +60,36 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.931" />
 
-    <Button
-        android:id="@+id/quiz_rating"
-        android:layout_width="280dp"
-        android:layout_height="50dp"
-        android:layout_marginBottom="164dp"
-        android:gravity="center"
+
+    <RatingBar
+        android:id="@+id/rating_bar"
+        android:layout_width="457dp"
+        android:layout_height="74dp"
+        android:layout_marginTop="515dp"
+        android:layout_marginBottom="162dp"
+        android:numStars="10"
+        android:scaleX="0.8"
+        android:scaleY="0.8"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/question_2"
-        app:layout_constraintVertical_bias="0.217" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/rate_quiz_text"
+        android:layout_width="166dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="123dp"
+        android:layout_marginTop="473dp"
+        android:layout_marginEnd="122dp"
+        android:layout_marginBottom="226dp"
+        android:gravity="center"
+        android:text="@string/rate_this_quiz"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
