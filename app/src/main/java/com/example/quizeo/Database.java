@@ -24,21 +24,6 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 
-/* TODO:
-    -Upload Questions
-    -Upload Quiz
-        (Check for Duplicates)
-    -Remove Questions
-    -Remove Quiz
-    -Edit Questions
-    -Edit Quiz
-    -Get New ID
-    -Query for quiz with location
-    Query for quiz with user
-    Find Questions of the quiz
-    -IsTaken method handling of failures
-    ~Login
-*/
 
 //Database Interface Singleton
 public final class Database {
@@ -113,6 +98,42 @@ public final class Database {
                     callback.onCallback(list);
                 } else {
                     Log.d(TAG, "getting quizzes failed");
+                }
+            }
+        });
+    }
+
+    /**
+     * Gets all quizzes made by an user
+     *
+     * @param user the user object of the creator
+     * @param callback the callback object
+     */
+    public void getQuizzes(User user, DownloadQuizzesCallback callback) {
+        getQuizzes(user.getUserId(), callback);
+    }
+
+    /**
+     * Gets all quizzes made by an user
+     *
+     * @param userID the creator of the quizzes
+     * @param callback the callback object
+     */
+    public void getQuizzes(String userID, DownloadQuizzesCallback callback) {
+        quizRef.whereEqualTo("UserId", userID)
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    QuerySnapshot snapshot = task.getResult();
+                    ArrayList<Quiz> list = new ArrayList<>();
+                    for (DocumentSnapshot doc: snapshot.getDocuments()) {
+                        list.add(new Quiz());
+                        docToQuiz(doc, list.get(list.size()-1));
+                    }
+                    callback.onCallback(list);
+                } else {
+                    Log.d("QuizDownOnUser", "Query failed");
                 }
             }
         });
@@ -241,7 +262,7 @@ public final class Database {
 
         double rating = (double) doc.get("Rating");
         int percentageToPass = ((Long) doc.get("Percentage to pass")).intValue();
-        UUID user = (UUID) doc.get("User");
+        String user = (String) doc.get("UserId");
 
         q.setLocation(location);
         q.setQuizId(GlobalID);
@@ -459,6 +480,39 @@ public final class Database {
     }
     //endregion
 
+    //region -- USER --
 
+    public void downloadUser() {
+
+    }
+
+    public void uploadUser(User user) {
+        HashMap<String, Object> data = new HashMap();
+
+        data.put("ID", user.getUserId());
+        data.put("Nickname", user.getNickName());
+
+
+        firestore.collection("Users").document(user.getUserId())
+                .set(data)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("","Upload Success");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("","Upload failure");
+                    }
+                });
+    }
+
+    public void removeUserData() {
+
+    }
+
+    //endregion
 
 }
