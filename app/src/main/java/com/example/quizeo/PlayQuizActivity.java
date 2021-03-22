@@ -56,7 +56,7 @@ public class PlayQuizActivity extends AppCompatActivity implements Database.Down
 
     @Override
     public void onCallback(ArrayList<Quiz> list) {
-        quizzes = list;
+        quizzes = new ArrayList<>(list);
     }
 
     @Override
