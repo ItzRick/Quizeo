@@ -25,23 +25,14 @@
         android:id="@+id/startQuiz"
         android:layout_width="300dp"
         android:layout_height="100dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="28dp"
         android:gravity="center"
         android:text="@string/start_quiz"
         android:textAllCaps="false"
-        android:textSize="55sp"
         android:textColor="?attr/colorSecondary"
+        android:textSize="55sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/buttonPlayQuiz"
-        android:layout_width="240dp"
-        android:layout_height="88dp"
-        android:text="@string/play_quiz"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -54,6 +45,17 @@
         android:text="@string/back"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <ScrollView
+        android:id="@+id/quizzes_scroll"
+        android:layout_width="412dp"
+        android:layout_height="488dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </ScrollView>
 
     <!--<Button
         android:id="@+id/buttonBack"

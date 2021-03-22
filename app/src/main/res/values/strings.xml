@@ -38,11 +38,15 @@
     <string name="check_mark">Check mark</string>
     <string name="sound_icon">Sound icon</string>
     <string name="mute_icon">Mute icon</string>
+    <string name="already_answered">"This question is already answered!"</string>
     <string name="add_an_answer">Add an Answer…</string>
     <string name="delete_question">Delete Question</string>
     <string name="add_option">Add Option</string>
     <string name="remove_option">Remove Option</string>
-    <string name="already_answered">"The question is already answered!"</string>
     <string name="not_answered">"Answer the question first!"</string>
+    <string name="quit">Quit</string>
+    <string name="return_to_main_menu">Return to main menu</string>
+    <string name="play_new_quiz">Play new quiz</string>
+    <string name="rate_this_quiz">Rate this quiz:</string>
     <string name="next_question">"Next Question"</string>
 </resources>

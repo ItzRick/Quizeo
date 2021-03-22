@@ -2,13 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.quizeo">
 
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <!--
- Required only when requesting background location access on
-         Android 10 (API level 29) and higher.
-    -->
+
+    <uses-permission
+        android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
+    <!-- Required only when requesting background location access on
+         Android 10 (API level 29) and higher. -->
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+
 
     <application
         android:allowBackup="true"
@@ -22,8 +24,12 @@
         <activity android:name=".CreateQuizActivity2" />
         <activity android:name=".PlayQuizActivity" />
         <activity android:name=".OptionsActivity" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".AddQuestionActivity" />
+        <activity android:name=".MainActivity"/>
+        <activity android:name=".AddQuestionActivity"/>
+        <activity android:name=".AnswerQuizActivity2"/>
+        <activity android:name=".AnswerQuizActivity3"/>
+        <activity android:name=".AnswerQuizActivity4"/>
+        <activity android:name=".AnswerQuizActivity5"/>
         <activity android:name=".AddQuestionActivity2"/>
         <activity android:name=".AddQuestionActivity3"/>
         <activity android:name=".AddQuestionActivity4"/>

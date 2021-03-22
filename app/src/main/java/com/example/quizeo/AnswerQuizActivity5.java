@@ -19,6 +19,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import org.w3c.dom.Text;
 
+import java.util.UUID;
+
 public class AnswerQuizActivity5 extends AppCompatActivity {
 
     Quiz quiz;
@@ -32,17 +34,25 @@ public class AnswerQuizActivity5 extends AppCompatActivity {
     Button buttonAnswer4;
     Button buttonAnswer5;
     Button next;
+    Button quit;
 
     TextView currentQuestionNumber;
     TextView numberCorrect;
     TextView currentQuestionText;
+
+    LocationQuizeo location;
 
     boolean isAnswered;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_answer_quiz_4);
+        setContentView(R.layout.fragment_answer_quiz_5);
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        location = getIntent().getParcelableExtra("location");
         quiz = getIntent().getParcelableExtra("quiz");
         answerQuiz = getIntent().getParcelableExtra("answerQuiz");
         userAnswered = getIntent().getParcelableExtra("user");
@@ -60,15 +70,21 @@ public class AnswerQuizActivity5 extends AppCompatActivity {
 
         next = (Button) findViewById(R.id.next_question_5);
 
+        quit = (Button) findViewById(R.id.quit_5);
+
+        if (!quiz.nextQuestionExists()) {
+            next.setText("End quiz!");
+        }
 
         currentQuestionNumber = (TextView) findViewById(R.id.current_question_5);
-        numberCorrect = (TextView) findViewById(R.id.score_4);
-        currentQuestionText = (TextView) findViewById(R.id.question_4);
+        numberCorrect = (TextView) findViewById(R.id.score_5);
+        currentQuestionText = (TextView) findViewById(R.id.question_5);
 
         String current = currentQuestion.getId() + " / " + quiz.getNumberOfQuestions();
-        currentQuestionText.setText(current);
+        currentQuestionNumber.setText(current);
 
-        String score = answerQuiz.getScore() + " / " + quiz.getNumberOfQuestions();
+        String score = answerQuiz.getScore() + " / " + (currentQuestion.getId() - 1);
+
         numberCorrect.setText(score);
 
         currentQuestionText.setText(currentQuestion.getQuestion());
@@ -95,21 +111,22 @@ public class AnswerQuizActivity5 extends AppCompatActivity {
                 } else {
                     // inflate the layout of the popup window
                     LayoutInflater inflater = (LayoutInflater)
-                            getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
-                    ViewGroup container = (ViewGroup) inflater.inflate(R.layout.popup_already_answered, null);
+                            v.getContext().getSystemService(v.getContext().LAYOUT_INFLATER_SERVICE);
+                    //getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+                    View popupView = inflater.inflate(R.layout.popup_already_answered, null);
 
                     // create the popup window
                     int width = LinearLayout.LayoutParams.WRAP_CONTENT;
                     int height = LinearLayout.LayoutParams.WRAP_CONTENT;
                     boolean focusable = true; // lets taps outside the popup also dismiss it
-                    PopupWindow popupWindow = new PopupWindow(container, width, height, focusable);
+                    PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
 
                     // show the popup window
                     // which view you pass in doesn't matter, it is only used for the window token
-                    popupWindow.showAtLocation(container, Gravity.CENTER, 0, 0);
+                    popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
 
                     // dismiss the popup window when touched
-                    container.setOnTouchListener(new View.OnTouchListener() {
+                    popupView.setOnTouchListener(new View.OnTouchListener() {
                         @Override
                         public boolean onTouch(View v, MotionEvent event) {
                             popupWindow.dismiss();
@@ -135,21 +152,22 @@ public class AnswerQuizActivity5 extends AppCompatActivity {
                 } else {
                     // inflate the layout of the popup window
                     LayoutInflater inflater = (LayoutInflater)
-                            getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
-                    ViewGroup container = (ViewGroup) inflater.inflate(R.layout.popup_already_answered, null);
+                            v.getContext().getSystemService(v.getContext().LAYOUT_INFLATER_SERVICE);
+                            //getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+                    View popupView = inflater.inflate(R.layout.popup_already_answered, null);
 
                     // create the popup window
                     int width = LinearLayout.LayoutParams.WRAP_CONTENT;
                     int height = LinearLayout.LayoutParams.WRAP_CONTENT;
                     boolean focusable = true; // lets taps outside the popup also dismiss it
-                    PopupWindow popupWindow = new PopupWindow(container, width, height, focusable);
+                    PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
 
                     // show the popup window
                     // which view you pass in doesn't matter, it is only used for the window token
-                    popupWindow.showAtLocation(container, Gravity.CENTER, 0, 0);
+                    popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
 
                     // dismiss the popup window when touched
-                    container.setOnTouchListener(new View.OnTouchListener() {
+                    popupView.setOnTouchListener(new View.OnTouchListener() {
                         @Override
                         public boolean onTouch(View v, MotionEvent event) {
                             popupWindow.dismiss();
@@ -175,21 +193,22 @@ public class AnswerQuizActivity5 extends AppCompatActivity {
                 } else {
                     // inflate the layout of the popup window
                     LayoutInflater inflater = (LayoutInflater)
-                            getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
-                    ViewGroup container = (ViewGroup) inflater.inflate(R.layout.popup_already_answered, null);
+                            v.getContext().getSystemService(v.getContext().LAYOUT_INFLATER_SERVICE);
+                    //getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+                    View popupView = inflater.inflate(R.layout.popup_already_answered, null);
 
                     // create the popup window
                     int width = LinearLayout.LayoutParams.WRAP_CONTENT;
                     int height = LinearLayout.LayoutParams.WRAP_CONTENT;
                     boolean focusable = true; // lets taps outside the popup also dismiss it
-                    PopupWindow popupWindow = new PopupWindow(container, width, height, focusable);
+                    PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
 
                     // show the popup window
                     // which view you pass in doesn't matter, it is only used for the window token
-                    popupWindow.showAtLocation(container, Gravity.CENTER, 0, 0);
+                    popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
 
                     // dismiss the popup window when touched
-                    container.setOnTouchListener(new View.OnTouchListener() {
+                    popupView.setOnTouchListener(new View.OnTouchListener() {
                         @Override
                         public boolean onTouch(View v, MotionEvent event) {
                             popupWindow.dismiss();
@@ -287,7 +306,9 @@ public class AnswerQuizActivity5 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (isAnswered) {
-                    if (quiz.getNext().getNumberOfAnswers() == 2) {
+                    if (! quiz.nextQuestionExists()) {
+                        finishQuiz();
+                    } else if (quiz.getNext().getNumberOfAnswers() == 2) {
                         answerNext2();
                     } else if (quiz.getNext().getNumberOfAnswers() == 3) {
                         answerNext3();
@@ -353,6 +374,17 @@ public class AnswerQuizActivity5 extends AppCompatActivity {
         Intent intent = new Intent(this, AnswerQuizActivity5.class);
         intent.putExtra("quiz", quiz);
         intent.putExtra("answerQuiz", answerQuiz);
+        intent.putExtra("user", userAnswered);
+        startActivity(intent);
+    }
+
+    /**
+     * Method for transition to the finished quiz screen.
+     */
+    public void finishQuiz () {
+        Intent intent = new Intent(this, FinishQuizActivity.class);
+        intent.putExtra("answerQuiz", answerQuiz);
+        intent.putExtra("quiz", quiz);
         intent.putExtra("user", userAnswered);
         startActivity(intent);
     }
