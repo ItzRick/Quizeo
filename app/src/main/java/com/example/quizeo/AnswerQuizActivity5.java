@@ -302,6 +302,14 @@ public class AnswerQuizActivity5 extends AppCompatActivity {
             }
         });
 
+        quit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                quit();
+            }
+        });
+
+
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -347,8 +355,11 @@ public class AnswerQuizActivity5 extends AppCompatActivity {
         });
     }
 
+
+
     public void answerNext2() {
         Intent intent = new Intent(this, AnswerQuizActivity2.class);
+        intent.putExtra("location", location);
         intent.putExtra("quiz", quiz);
         intent.putExtra("answerQuiz", answerQuiz);
         intent.putExtra("user", userAnswered);
@@ -357,6 +368,7 @@ public class AnswerQuizActivity5 extends AppCompatActivity {
 
     public void answerNext3() {
         Intent intent = new Intent(this, AnswerQuizActivity3.class);
+        intent.putExtra("location", location);
         intent.putExtra("quiz", quiz);
         intent.putExtra("answerQuiz", answerQuiz);
         intent.putExtra("user", userAnswered);
@@ -365,6 +377,7 @@ public class AnswerQuizActivity5 extends AppCompatActivity {
 
     public void answerNext4() {
         Intent intent = new Intent(this, AnswerQuizActivity4.class);
+        intent.putExtra("location", location);
         intent.putExtra("quiz", quiz);
         intent.putExtra("answerQuiz", answerQuiz);
         intent.putExtra("user", userAnswered);
@@ -373,8 +386,17 @@ public class AnswerQuizActivity5 extends AppCompatActivity {
 
     public void answerNext5() {
         Intent intent = new Intent(this, AnswerQuizActivity5.class);
+        intent.putExtra("location", location);
         intent.putExtra("quiz", quiz);
         intent.putExtra("answerQuiz", answerQuiz);
+        intent.putExtra("user", userAnswered);
+        startActivity(intent);
+    }
+
+    public void quit() {
+        quiz.quitQuiz();
+        Intent intent = new Intent(this, PlayQuizActivity.class);
+        intent.putExtra("location", location);
         intent.putExtra("user", userAnswered);
         startActivity(intent);
     }
@@ -384,6 +406,7 @@ public class AnswerQuizActivity5 extends AppCompatActivity {
      */
     public void finishQuiz () {
         Intent intent = new Intent(this, FinishQuizActivity.class);
+        intent.putExtra("location", location);
         intent.putExtra("answerQuiz", answerQuiz);
         intent.putExtra("quiz", quiz);
         intent.putExtra("user", userAnswered);

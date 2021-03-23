@@ -275,6 +275,7 @@ public class AnswerQuizActivity2 extends AppCompatActivity {
      */
     public void finishQuiz () {
         Intent intent = new Intent(this, FinishQuizActivity.class);
+        intent.putExtra("location", location);
         intent.putExtra("answerQuiz", answerQuiz);
         intent.putExtra("quiz", quiz);
         intent.putExtra("user", userAnswered);

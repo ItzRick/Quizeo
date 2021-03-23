@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -23,6 +24,8 @@ public class FinishQuizActivity extends AppCompatActivity {
     private TextView quizName;
     private RatingBar ratingBar;
 
+    LocationQuizeo location;
+
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -34,6 +37,7 @@ public class FinishQuizActivity extends AppCompatActivity {
         quiz = getIntent().getParcelableExtra("quiz");
         currentUser = getIntent().getParcelableExtra("user");
         answerQuiz = getIntent().getParcelableExtra("answerQuiz");
+        location = getIntent().getParcelableExtra("location");
 
         // assign components of the screen to values
         buttonMainMenu = findViewById(R.id.main_menu);
@@ -59,14 +63,14 @@ public class FinishQuizActivity extends AppCompatActivity {
 
 
         // if score is sufficient (>= 75% correct), print a corresponding message, else print diff message
-        if (calculateScore(answerQuiz.getScore(), quiz.getNumberOfQuestions()) >= 0.75) {
+        if (answerQuiz.getScore() >= quiz.getScoreToPass()) {
             quizInfo.setText("Congratulations!\n You passed this quiz!\n You got "
                     + answerQuiz.getScore() + " out of " + quiz.getNumberOfQuestions() + " correct.");
-            quizInfo.setBackgroundColor(51200);
+            quizInfo.setBackgroundColor(Color.GREEN);
         } else {
             quizInfo.setText("Better luck next time!\n You failed this quiz..\n You got "
                     + answerQuiz.getScore() + " out of " + quiz.getNumberOfQuestions() + " correct.");
-            quizInfo.setBackgroundColor(12451840);
+            quizInfo.setBackgroundColor(Color.RED);
         }
 
 
@@ -77,6 +81,7 @@ public class FinishQuizActivity extends AppCompatActivity {
      */
     private void goToQuizzesMenu() {
         Intent intent = new Intent(this, PlayQuizActivity.class);
+        intent.putExtra("location", location);
         startActivity(intent);
     }
 
