@@ -1,9 +1,11 @@
 package com.example.quizeo;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.view.Gravity;
 import android.view.View;
 
 import android.view.Menu;
@@ -13,6 +15,7 @@ import android.widget.Button;
 import android.content.Intent;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -88,7 +91,9 @@ public class PlayQuizActivity extends AppCompatActivity implements Database.Down
 //        quiz1.setUserCreated(user1);
 //        quizzes.add(quiz1);
 //        quizzes.add(quiz1);
-
+        if (quizzes == null) {
+            quizzes = new ArrayList<>();
+        }
         LinearLayout linearLayout = new LinearLayout(this);
         linearLayout.setOrientation(LinearLayout.VERTICAL);
         Button[] buttons = new Button[quizzes.size()];
@@ -109,6 +114,14 @@ public class PlayQuizActivity extends AppCompatActivity implements Database.Down
                 }
             });
 
+        }
+        if (quizzes.size() == 0) {
+            TextView noQuizes = new TextView(this);
+            noQuizes.setTextSize(38);
+            noQuizes.setTextColor(Color.WHITE);
+            noQuizes.setText("No quizzes found!");
+            noQuizes.setGravity(Gravity.CENTER);
+            linearLayout.addView(noQuizes);
         }
         quizzesView.addView(linearLayout);
     }
