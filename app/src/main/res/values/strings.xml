@@ -48,5 +48,13 @@
     <string name="return_to_main_menu">Return to main menu</string>
     <string name="play_new_quiz">Play new quiz</string>
     <string name="rate_this_quiz">Rate this quiz:</string>
-    <string name="next_question">"Next Question"</string>
+    <string name="next_question">Next Question</string>
+    <string name="your_quiz_name">QuizName</string>
+    <string name="your_quiz_name_1">QuizName1</string>
+    <string name="eleven_questions">11 questions</string>
+    <string name="seven_questions">7 questions</string>
+    <string name="submitted">Submitted</string>
+    <string name="unfinished">Unfinished</string>
+    <string name="verified">Verified</string>
+    <string name="under_review">Under review</string>
 </resources>
