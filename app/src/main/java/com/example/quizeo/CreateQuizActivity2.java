@@ -13,7 +13,7 @@ import java.util.UUID;
 
 public class CreateQuizActivity2 extends AppCompatActivity {
 
-    //local variables
+    // Declare local variables
     Button buttonSaveQuit;
     Button buttonSaveName;
     Button buttonAddQuestion;
@@ -53,6 +53,7 @@ public class CreateQuizActivity2 extends AppCompatActivity {
         String textToSet = "Number of questions: " + quiz.getNumberOfQuestions();
         numberOfQuestions.setText(textToSet);
 
+        // Open the home screen with the save & quit button
         buttonSaveQuit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,7 +61,7 @@ public class CreateQuizActivity2 extends AppCompatActivity {
             }
         });
 
-
+        // Open the AddQuestionActivity with add question button
         buttonAddQuestion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,15 +70,16 @@ public class CreateQuizActivity2 extends AppCompatActivity {
         });
     }
 
+    // Method to open the home screen
     public void openMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
+    // Method to open the AddQuestionActivity
     public void openAddQuestion() {
         Intent intent = new Intent(this, AddQuestionActivity.class);
         intent.putExtra("quiz", quiz);
         startActivity(intent);
     }
-
 }

@@ -15,7 +15,7 @@ import androidx.fragment.app.FragmentManager;
 
 public class AddQuestionActivity2 extends AppCompatActivity {
 
-    //local variables
+    // Declare local variables
     Button buttonRemoveOption;
     Button buttonAddOption;
     Button buttonSaveQuit;
@@ -26,11 +26,13 @@ public class AddQuestionActivity2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_add_question_2);
 
+        // Define variables with corresponding button
         buttonRemoveOption = (Button) findViewById(R.id.buttonRemoveOption);
         buttonAddOption = (Button) findViewById(R.id.buttonAddOption);
         buttonSaveQuit = (Button) findViewById(R.id.buttonSaveQuit);
         buttonDeleteQuestion = (Button) findViewById(R.id.buttonDeleteQuestion);
 
+        // Open previous activity with remove option button
         buttonRemoveOption.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -38,6 +40,7 @@ public class AddQuestionActivity2 extends AppCompatActivity {
             }
         });
 
+        // Open next activity with add option button
         buttonAddOption.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -45,6 +48,7 @@ public class AddQuestionActivity2 extends AppCompatActivity {
             }
         });
 
+        // Open the CreateQuizActivity2 with the save & quit button
         buttonSaveQuit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,6 +56,7 @@ public class AddQuestionActivity2 extends AppCompatActivity {
             }
         });
 
+        // Open the CreateQuizActivity2 with the delete button
         buttonDeleteQuestion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,16 +65,19 @@ public class AddQuestionActivity2 extends AppCompatActivity {
         });
     }
 
+    // Method to open AddQuestionActivity
     public void openAddQuestionActivity() {
         Intent intent = new Intent(this, AddQuestionActivity.class);
         startActivity(intent);
     }
 
+    // Method to open AddQuestionActivity3
     public void openAddQuestionActivity3() {
         Intent intent = new Intent(this, AddQuestionActivity3.class);
         startActivity(intent);
     }
 
+    // Method to open CreateQuizActivity2
     public void openCreateQuizActivity2() {
         Intent intent = new Intent(this, CreateQuizActivity2.class);
         startActivity(intent);
