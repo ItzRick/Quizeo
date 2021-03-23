@@ -40,8 +40,8 @@
         android:gravity="center"
         android:text="@string/your_quizzes"
         android:textAllCaps="false"
-        android:textSize="55sp"
         android:textColor="?attr/colorSecondary"
+        android:textSize="55sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -65,5 +65,118 @@
         app:layout_constraintBottom_toBottomOf="@id/toolbar2"
         app:layout_constraintEnd_toEndOf="@id/toolbar2"
         app:layout_constraintTop_toTopOf="@+id/toolbar2" />
+
+    <ImageView
+        android:id="@+id/imageYourQuizInfo"
+        android:layout_width="318dp"
+        android:layout_height="87dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="22dp"
+        android:layout_marginBottom="22dp"
+        android:src="@drawable/edittext_background_white"
+        app:layout_constraintBottom_toTopOf="@+id/imageView4"
+        app:layout_constraintEnd_toEndOf="@+id/yourQuiz"
+        app:layout_constraintHorizontal_bias="0.678"
+        app:layout_constraintStart_toStartOf="@id/yourQuiz"
+        app:layout_constraintTop_toBottomOf="@+id/yourQuiz"
+        app:layout_constraintVertical_bias="0.0"
+        android:contentDescription="@string/your_quiz_info" />
+
+    <ImageView
+        android:id="@+id/imageYourQuizInfo2"
+        android:layout_width="318dp"
+        android:layout_height="87dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="22dp"
+        android:src="@drawable/edittext_background_white"
+        app:layout_constraintEnd_toEndOf="@id/imageYourQuizInfo"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/imageYourQuizInfo"
+        app:layout_constraintTop_toBottomOf="@id/imageYourQuizInfo"
+        android:contentDescription="@string/your_quiz_info" />
+
+    <TextView
+        android:id="@+id/textQuizName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/your_quiz_name"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="@id/imageYourQuizInfo"
+        app:layout_constraintTop_toTopOf="@id/imageYourQuizInfo" />
+
+    <TextView
+        android:id="@+id/textSubmitted"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="28dp"
+        android:text="@string/submitted"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@id/imageYourQuizInfo"
+        app:layout_constraintTop_toTopOf="@id/imageYourQuizInfo" />
+
+    <TextView
+        android:id="@+id/textElevenQuestions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/eleven_questions"
+        android:textSize="20sp"
+        tools:layout_editor_absoluteX="66dp"
+        tools:layout_editor_absoluteY="214dp"
+        app:layout_constraintStart_toStartOf="@id/textQuizName"
+        app:layout_constraintBottom_toBottomOf="@id/imageYourQuizInfo"/>
+
+    <TextView
+        android:id="@+id/textVerified"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/verified"
+        android:textSize="20sp"
+        tools:layout_editor_absoluteX="264dp"
+        tools:layout_editor_absoluteY="214dp"
+        app:layout_constraintStart_toStartOf="@id/textSubmitted"
+        app:layout_constraintBottom_toBottomOf="@id/imageYourQuizInfo"/>
+
+    <TextView
+        android:id="@+id/textQuizName1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/your_quiz_name_1"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="@+id/imageYourQuizInfo2"
+        app:layout_constraintTop_toTopOf="@+id/imageYourQuizInfo2" />
+
+    <TextView
+        android:id="@+id/textSevenQuestions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/seven_questions"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@id/imageYourQuizInfo2"
+        app:layout_constraintStart_toStartOf="@id/textQuizName1" />
+
+    <TextView
+        android:id="@+id/textUnfinished"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="28dp"
+        android:text="@string/unfinished"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@id/imageYourQuizInfo2"
+        app:layout_constraintTop_toTopOf="@id/imageYourQuizInfo2" />
+
+    <TextView
+        android:id="@+id/textUnderReview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/under_review"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@id/imageYourQuizInfo2"
+        app:layout_constraintStart_toStartOf="@id/textUnfinished" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
