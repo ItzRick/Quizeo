@@ -156,7 +156,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openPlayQuizActivity(){
+        boolean verified = getIntent().getBooleanExtra("verified", true);
         Intent intent = new Intent(this, PlayQuizActivity.class);
+        intent.putExtra("verified", verified);
         intent.putExtra("location", location);
         startActivity(intent);
     }
