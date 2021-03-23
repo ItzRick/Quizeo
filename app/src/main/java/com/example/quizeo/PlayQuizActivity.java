@@ -44,7 +44,7 @@ public class PlayQuizActivity extends AppCompatActivity implements Database.Down
         quizzesView = (ScrollView) findViewById(R.id.quizzes_scroll);
         user = getIntent().getParcelableExtra("userAnswered");
 
-        quizzes = new ArrayList<>();
+//        quizzes = new ArrayList<>();
 
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,7 +61,7 @@ public class PlayQuizActivity extends AppCompatActivity implements Database.Down
 
     @Override
     public void onCallback(ArrayList<Quiz> list) {
-//        quizzes = new ArrayList<>(list);
+        quizzes = new ArrayList<>(list);
     }
 
     @Override
@@ -72,44 +72,45 @@ public class PlayQuizActivity extends AppCompatActivity implements Database.Down
         System.out.println(verified);
         database.getQuizzes(location, this);
 
-        String string1 = "this is a question";
-        String string2 = "this is another question";
-        String[] array = new String[]{
-                "first", "two", "three", "four", "five"
-        };
-        String correct = "two";
-        String explanation = "this is an explanation!";
-        int id = 1;
-        UUID globalId = UUID.randomUUID();
-        Question question = new Question(string1, array, correct, explanation, id, globalId);
-        Question question1 = new Question(string2, array, correct, explanation, id + 1, globalId);
-        UUID id1 = UUID.randomUUID();
-        String quizName = "This is a quiz";
-        LocationQuizeo location1 = new LocationQuizeo(1, 1);
-        Quiz quiz1 = new Quiz(id1, quizName, location1);
-        quiz1.addQuestion(question);
-        quiz1.addQuestion(question1);
-        quiz1.addQuestion(question);
-        String nickName = "test";
-        String id2 = UUID.randomUUID().toString();
-        User user1 = new User(nickName, id2);
-        quiz1.setUserCreated(user1);
-        quizzes.add(quiz1);
-        quizzes.add(quiz1);
-//        if (quizzes == null) {
-//            quizzes = new ArrayList<>();
-//        }
+//        String string1 = "this is a question";
+//        String string2 = "this is another question";
+//        String[] array = new String[]{
+//                "first", "two", "three", "four", "five"
+//        };
+//        String correct = "two";
+//        String explanation = "this is an explanation!";
+//        int id = 1;
+//        UUID globalId = UUID.randomUUID();
+//        Question question = new Question(string1, array, correct, explanation, id, globalId);
+//        Question question1 = new Question(string2, array, correct, explanation, id + 1, globalId);
+//        UUID id1 = UUID.randomUUID();
+//        String quizName = "This is a quiz";
+//        LocationQuizeo location1 = new LocationQuizeo(1, 1);
+//        Quiz quiz1 = new Quiz(id1, quizName, location1);
+//        quiz1.addQuestion(question);
+//        quiz1.addQuestion(question1);
+//        quiz1.addQuestion(question);
+//        String nickName = "test";
+//        String id2 = UUID.randomUUID().toString();
+//        User user1 = new User(nickName, id2);
+//        quiz1.setUserCreated(user1);
+//        quizzes.add(quiz1);
+//        quizzes.add(quiz1);
+
+        if (quizzes == null) {
+            quizzes = new ArrayList<>();
+        }
 
         // Remove all quizzes that are not verified.
-//        if (verified) {
-//            for (int i = 0; i < quizzes.size(); i++) {
-//                Quiz temp = quizzes.get(i);
-//                if (temp.getNumberOfRatings() < 100 && temp.getRating() < 0.75) {
-//                    quizzes.remove(i);
-//                    i--;
-//                }
-//            }
-//        }
+        if (verified) {
+            for (int i = 0; i < quizzes.size(); i++) {
+                Quiz temp = quizzes.get(i);
+                if (temp.getNumberOfRatings() < 100 && temp.getRating() < 0.75) {
+                    quizzes.remove(i);
+                    i--;
+                }
+            }
+        }
 
 
         LinearLayout linearLayout = new LinearLayout(this);
