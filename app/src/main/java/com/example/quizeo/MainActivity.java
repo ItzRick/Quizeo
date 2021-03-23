@@ -29,7 +29,7 @@ import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
 
-    //local variables
+    // Declare local variables
     Button buttonMakeQuiz;
     Button buttonStartQuiz;
     Button buttonOptions;
@@ -84,12 +84,14 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+        // Define variables with corresponding button
         buttonMakeQuiz = (Button) findViewById(R.id.buttonMakeQuiz);
         buttonStartQuiz = (Button) findViewById(R.id.buttonStartQuiz);
         buttonOptions = (Button) findViewById(R.id.buttonOptions);
 
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
+        // Open the CreateQuizActivity with make quiz button
         buttonMakeQuiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Open the PlayQuizActivity with start quiz button
         buttonStartQuiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Open the OptionsActivity with the options button
         buttonOptions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -150,11 +154,13 @@ public class MainActivity extends AppCompatActivity {
         request = i.getBooleanExtra("request", false);
     }
 
+    // Method to open the CreateQuizActivity
     public void openCreateQuizActivity(){
         Intent intent = new Intent(this, CreateQuizActivity.class);
         startActivity(intent);
     }
 
+    //Method to open the PlayQuizActivity
     public void openPlayQuizActivity(){
         Intent intent = new Intent(this, PlayQuizActivity.class);
         intent.putExtra("location", location);

@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class CreateQuizActivity extends AppCompatActivity {
 
-    //local variables
+    // Declare local variables
     Button buttonBack;
     Button buttonNew;
 
@@ -17,9 +17,12 @@ public class CreateQuizActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_create_quiz);
+
+        // Define variables with corresponding button
         buttonBack = (Button) findViewById(R.id.buttonBack);
         buttonNew = (Button) findViewById(R.id.buttonNew);
 
+        // Open the home screen with back button
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -27,6 +30,7 @@ public class CreateQuizActivity extends AppCompatActivity {
             }
         });
 
+        // Open the CreateQuizActivity2 with new button
         buttonNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -35,11 +39,13 @@ public class CreateQuizActivity extends AppCompatActivity {
         });
     }
 
+    // Method to open the home screen
     public void openMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
+    // Method to open CreateQuizActivity2
     public void openCreateQuizActivity2() {
         Intent intent = new Intent(this, CreateQuizActivity2.class);
         startActivity(intent);

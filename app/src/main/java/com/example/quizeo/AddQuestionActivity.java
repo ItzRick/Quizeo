@@ -17,12 +17,11 @@ public class AddQuestionActivity extends AppCompatActivity implements View.OnCli
 
     private static final int RESULT_LOAD_IMAGE = 1;
 
-    //local variables
+    // Declare local variables
     ImageView imageUpload;
 
     Button buttonSaveQuit;
     Button buttonDeleteQuestion;
-
     Button buttonAddOption;
 
     EditText textQuestion;
@@ -33,6 +32,7 @@ public class AddQuestionActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_add_question);
 
+        // Define variables with corresponding image/button/text
         imageUpload = (ImageView) findViewById(R.id.imageUpload);
 
         buttonSaveQuit = (Button) findViewById(R.id.buttonSaveQuit);
@@ -44,6 +44,7 @@ public class AddQuestionActivity extends AppCompatActivity implements View.OnCli
         imageUpload.setOnClickListener(this);
         buttonSaveQuit.setOnClickListener(this);
 
+        // Open next activity with add option button
         buttonAddOption.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,6 +52,7 @@ public class AddQuestionActivity extends AppCompatActivity implements View.OnCli
             }
         });
 
+        // Open the CreateQuizActivity2 with the save & quit button
         buttonSaveQuit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,6 +60,7 @@ public class AddQuestionActivity extends AppCompatActivity implements View.OnCli
             }
         });
 
+        // Open the CreateQuizActivity2 with the delete button
         buttonDeleteQuestion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,11 +69,13 @@ public class AddQuestionActivity extends AppCompatActivity implements View.OnCli
         });
     }
 
+    // Method to open the AddQuestionsActivity2
     public void openAddQuestionActivity2() {
         Intent intent = new Intent(this, AddQuestionActivity2.class);
         startActivity(intent);
     }
 
+    // Method to open the CreateQuizActivity2
     public void openCreateQuizActivity2() {
         Intent intent = new Intent(this, CreateQuizActivity2.class);
         startActivity(intent);
