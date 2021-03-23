@@ -337,10 +337,11 @@ public class Quiz implements Parcelable {
     }
 
     public Boolean nextQuestionExists() {
-        return (index < questions.size() - 1);
+        return (index < questions.size());
     }
 
     public Question getCurrent() {
+        System.out.println("index" + index);
         return questions.get(index);
     }
 

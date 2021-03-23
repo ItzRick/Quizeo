@@ -183,10 +183,10 @@ public class AnswerQuizActivity2 extends AppCompatActivity {
             public void onClick(View v) {
                 if (isAnswered) {
                     Question nextQuestion = quiz.getNext();
-                    // if there are no more questions remaining, finish the quiz
+                    // If there are no more questions available, finish the quiz:
                     if (! quiz.nextQuestionExists()) {
                         finishQuiz();
-                    } else if (quiz.getNext().getNumberOfAnswers() == 2) {
+                    } else if (nextQuestion.getNumberOfAnswers() == 2) {
                         answerNext2();
                     } else if (nextQuestion.getNumberOfAnswers() == 3) {
                         answerNext3();

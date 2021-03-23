@@ -229,7 +229,7 @@ public class AnswerQuizActivity3 extends AppCompatActivity {
                     Question nextQuestion = quiz.getNext();
                     if (! quiz.nextQuestionExists()) {
                         finishQuiz();
-                    } else if (quiz.getNext().getNumberOfAnswers() == 2) {
+                    } else if (nextQuestion.getNumberOfAnswers() == 2) {
                         answerNext2();
                     } else if (nextQuestion.getNumberOfAnswers() == 3) {
                         answerNext3();

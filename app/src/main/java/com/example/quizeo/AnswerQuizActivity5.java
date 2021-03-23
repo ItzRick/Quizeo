@@ -306,15 +306,16 @@ public class AnswerQuizActivity5 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (isAnswered) {
+                    Question nextQuestion = quiz.getNext();
                     if (! quiz.nextQuestionExists()) {
                         finishQuiz();
-                    } else if (quiz.getNext().getNumberOfAnswers() == 2) {
+                    } else if (nextQuestion.getNumberOfAnswers() == 2) {
                         answerNext2();
-                    } else if (quiz.getNext().getNumberOfAnswers() == 3) {
+                    } else if (nextQuestion.getNumberOfAnswers() == 3) {
                         answerNext3();
-                    } else if (quiz.getNext().getNumberOfAnswers() == 4) {
+                    } else if (nextQuestion.getNumberOfAnswers() == 4) {
                         answerNext4();
-                    } else if (quiz.getNext().getNumberOfAnswers() == 5) {
+                    } else if (nextQuestion.getNumberOfAnswers() == 5) {
                         answerNext5();
                     }
                 } else {

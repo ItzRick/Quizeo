@@ -61,7 +61,7 @@ public class PlayQuizActivity extends AppCompatActivity implements Database.Down
 
     @Override
     public void onCallback(ArrayList<Quiz> list) {
-        quizzes = new ArrayList<>(list);
+//        quizzes = new ArrayList<>(list);
     }
 
     @Override
@@ -89,26 +89,27 @@ public class PlayQuizActivity extends AppCompatActivity implements Database.Down
         Quiz quiz1 = new Quiz(id1, quizName, location1);
         quiz1.addQuestion(question);
         quiz1.addQuestion(question1);
+        quiz1.addQuestion(question);
         String nickName = "test";
         String id2 = UUID.randomUUID().toString();
         User user1 = new User(nickName, id2);
         quiz1.setUserCreated(user1);
         quizzes.add(quiz1);
         quizzes.add(quiz1);
-        if (quizzes == null) {
-            quizzes = new ArrayList<>();
-        }
+//        if (quizzes == null) {
+//            quizzes = new ArrayList<>();
+//        }
 
         // Remove all quizzes that are not verified.
-        if (verified) {
-            for (int i = 0; i < quizzes.size(); i++) {
-                Quiz temp = quizzes.get(i);
-                if (temp.getNumberOfRatings() < 100 && temp.getRating() < 0.75) {
-                    quizzes.remove(i);
-                    i--;
-                }
-            }
-        }
+//        if (verified) {
+//            for (int i = 0; i < quizzes.size(); i++) {
+//                Quiz temp = quizzes.get(i);
+//                if (temp.getNumberOfRatings() < 100 && temp.getRating() < 0.75) {
+//                    quizzes.remove(i);
+//                    i--;
+//                }
+//            }
+//        }
 
 
         LinearLayout linearLayout = new LinearLayout(this);
