@@ -196,8 +196,9 @@ public class AnswerQuizActivity extends AppCompatActivity {
                     // Create a pop up that the question should first be answered:
                     // inflate the layout of the popup window
                     LayoutInflater inflater = (LayoutInflater)
-                            getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
-                    ViewGroup container = (ViewGroup)
+                            v.getContext().getSystemService
+                                    (v.getContext().LAYOUT_INFLATER_SERVICE);
+                    View container =
                             inflater.inflate(R.layout.popup_not_answered, null);
 
                     // create the popup window
@@ -209,7 +210,7 @@ public class AnswerQuizActivity extends AppCompatActivity {
 
                     // show the popup window
                     // which view you pass in doesn't matter, it is only used for the window token
-                    popupWindow.showAtLocation(container, Gravity.CENTER, 0, 0);
+                    popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
 
                     // dismiss the popup window when touched
                     container.setOnTouchListener(new View.OnTouchListener() {
