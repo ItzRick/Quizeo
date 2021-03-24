@@ -149,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
     // Get the options sent by the options activity
     public void getOptions(Intent i) {
         sound = i.getBooleanExtra("sound", true);
-        verified = i.getBooleanExtra("verified", false);
+        verified = i.getBooleanExtra("verified", true);
         darkmode = i.getBooleanExtra("darkmode", false);
         request = i.getBooleanExtra("request", false);
     }

@@ -24,6 +24,8 @@ public class FinishQuizActivity extends AppCompatActivity {
     private TextView quizName;
     private RatingBar ratingBar;
 
+    boolean verified;
+
     LocationQuizeo location;
 
 
@@ -34,6 +36,7 @@ public class FinishQuizActivity extends AppCompatActivity {
         setContentView(R.layout.fragment_finish_quiz);
 
         // get the same instances of classes as the previous activity
+        verified = getIntent().getBooleanExtra("verified", true);
         quiz = getIntent().getParcelableExtra("quiz");
         currentUser = getIntent().getParcelableExtra("user");
         answerQuiz = getIntent().getParcelableExtra("answerQuiz");
@@ -82,6 +85,8 @@ public class FinishQuizActivity extends AppCompatActivity {
     private void goToQuizzesMenu() {
         Intent intent = new Intent(this, PlayQuizActivity.class);
         intent.putExtra("location", location);
+        intent.putExtra("verified", verified);
+        intent.putExtra("user", currentUser);
         startActivity(intent);
     }
 
@@ -91,6 +96,9 @@ public class FinishQuizActivity extends AppCompatActivity {
      */
     public void goToMainMenu() {
         Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("location", location);
+        intent.putExtra("verified", verified);
+        intent.putExtra("user", currentUser);
         startActivity(intent);
     }
 

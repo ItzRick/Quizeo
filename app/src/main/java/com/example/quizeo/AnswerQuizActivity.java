@@ -42,6 +42,7 @@ public class AnswerQuizActivity extends AppCompatActivity {
 
     // Local variable:
     boolean isAnswered;
+    boolean verified;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,7 @@ public class AnswerQuizActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         // Retrieve all passed objects:
+        verified = getIntent().getBooleanExtra("verified", true);
         location = getIntent().getParcelableExtra("location");
         quiz = getIntent().getParcelableExtra("quiz");
         answerQuiz = getIntent().getParcelableExtra("answerQuiz");
@@ -228,6 +230,7 @@ public class AnswerQuizActivity extends AppCompatActivity {
      */
     public void answerNext() {
         Intent intent = new Intent(this, AnswerQuizActivity.class);
+        intent.putExtra("verified", verified);
         intent.putExtra("location", location);
         intent.putExtra("quiz", quiz);
         intent.putExtra("answerQuiz", answerQuiz);
@@ -241,6 +244,7 @@ public class AnswerQuizActivity extends AppCompatActivity {
     public void quit() {
         quiz.quitQuiz();
         Intent intent = new Intent(this, PlayQuizActivity.class);
+        intent.putExtra("verified", verified);
         intent.putExtra("location", location);
         intent.putExtra("user", userAnswered);
         startActivity(intent);
@@ -251,6 +255,7 @@ public class AnswerQuizActivity extends AppCompatActivity {
      */
     public void finishQuiz () {
         Intent intent = new Intent(this, FinishQuizActivity.class);
+        intent.putExtra("verified", verified);
         intent.putExtra("location", location);
         intent.putExtra("answerQuiz", answerQuiz);
         intent.putExtra("quiz", quiz);

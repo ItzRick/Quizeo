@@ -64,6 +64,8 @@ public class PlayQuizActivity extends AppCompatActivity implements Database.Down
 
         public void openMainActivity() {
             Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra("verified", verified);
+            intent.putExtra("location", location);
             intent.putExtra("user", user);
             startActivity(intent);
         }
@@ -112,6 +114,7 @@ public class PlayQuizActivity extends AppCompatActivity implements Database.Down
             quizzes = new ArrayList<>();
         }
 
+        System.out.println("verified " + verified);
         // Remove all quizzes that are not verified.
         if (verified) {
             for (int i = 0; i < quizzes.size(); i++) {
@@ -169,6 +172,7 @@ public class PlayQuizActivity extends AppCompatActivity implements Database.Down
     /** To invoke the AnswerQuizActivity class and play the quiz. */
     public void playQuiz() {
             Intent intent = new Intent(this, AnswerQuizActivity.class);
+            intent.putExtra("verified", verified);
             intent.putExtra("location", location);
             intent.putExtra("quiz", quiz);
             intent.putExtra("user", user);
