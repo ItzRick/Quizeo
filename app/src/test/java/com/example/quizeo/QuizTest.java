@@ -341,16 +341,70 @@ public class QuizTest {
         Assert.assertEquals(1, quiz1.getScoreToPass());
     }
 
+    /** Test for the nextQuestionExists() method, when there is a next question. */
     @Test
     public void nextQuestionExists() {
         System.out.println("nextQuestionExists() 1");
         Assert.assertTrue(quiz.nextQuestionExists());
     }
 
+    /** Test for the nextQuestionExists() method, when there is no next question. */
     @Test
     public void nextQuestionExists1() {
         System.out.println("nextQuestionExists() 2");
         quiz.getNext();
         Assert.assertFalse(quiz.nextQuestionExists());
+    }
+
+    /** Test the getNumberOfRatings() method. */
+    @Test
+    public void getNumberOfRatings() {
+        System.out.println("getNumberOfRatings() 1");
+        // Test if the getNumberOfRatings is correct.
+        Assert.assertEquals(0, quiz.getNumberOfRatings());
+    }
+
+    /** Test the getNumberOfRatings() method. */
+    @Test
+    public void getNumberOfRatings1() {
+        System.out.println("getNumberOfRatings() 2");
+        quiz.setAdditionalRating(10);
+        // Test if the getNumberOfRatings is correct.
+        Assert.assertEquals(1, quiz.getNumberOfRatings());
+    }
+
+    /** Test the setNumberOfRatings() method. */
+    @Test
+    public void SetNumberOfRatings() {
+        System.out.println("setNumberOfRatings()");
+        quiz.setNrOfRatings(10);
+        // Test if the setNumberOfRatings is correct.
+        Assert.assertEquals(10, quiz.getNumberOfRatings());
+    }
+
+    /** Test the setRating() method. */
+    @Test
+    public void SetRating() {
+        System.out.println("setRating()");
+        quiz.setRating(10);
+        // Test if the setNumberOfRatings is correct.
+        Assert.assertEquals((int) 10, (int) quiz.getRating());
+    }
+
+    /** Test the setNumberOfQuestions() method. */
+    @Test
+    public void setNumberOfQuestions() {
+        System.out.println("setNumberOfQuestions()");
+        quiz.setNumberOfQuestions(10);
+        // Test if the numberOfQuestions is correct.
+        Assert.assertEquals(10, quiz.getNumberOfQuestions());
+    }
+
+    /** Test the getPercentageToPass() method. */
+    @Test
+    public void getPercentageToPass() {
+        System.out.println("setNumberOfQuestions()");
+        // Test if the numberOfQuestions is correct.
+        Assert.assertEquals(75, (int) quiz.getPercentageToPass());
     }
 }

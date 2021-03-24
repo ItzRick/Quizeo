@@ -213,4 +213,40 @@ public class QuestionTest {
         Assert.assertEquals(user.getNickName(), question.getUserCreated().getNickName());
         Assert.assertEquals(user.getUserId(), question.getUserCreated().getUserId());
     }
+
+    /** Test the getCorrect() method which returns a string. */
+    @Test
+    public void testCorrect() {
+        System.out.println("getCorrect()");
+
+        String correct = "correct";
+        question.setCorrect(correct);
+        Assert.assertEquals(correct, question.getCorrect());
+    }
+
+    /** Test the getCorrectInt() method which returns a integer. */
+    @Test
+    public void testCorrectInt() {
+        System.out.println("getCorrect()");
+
+        int correct = 1;
+        String[] array = new String[]{
+                "first", "two", "three", "four", "five"
+        };
+        question.setAnswers(array);
+        question.setCorrect(correct);
+        Assert.assertEquals(correct, question.getCorrectInt());
+    }
+
+    /** Test the getCorrectInt() method which returns a integer. */
+    @Test
+    public void getNumberOfAnswers() {
+        System.out.println("getCorrect()");
+
+        String[] array = new String[]{
+                "first", "two", "three", "four", "five"
+        };
+        question.setAnswers(array);
+        Assert.assertEquals(5, question.getNumberOfAnswers());
+    }
 }

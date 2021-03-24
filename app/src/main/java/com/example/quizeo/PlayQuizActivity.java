@@ -51,7 +51,7 @@ public class PlayQuizActivity extends AppCompatActivity implements Database.Down
         quizzesView = (ScrollView) findViewById(R.id.quizzes_scroll);
         user = getIntent().getParcelableExtra("userAnswered");
 
-//        quizzes = new ArrayList<>();
+        quizzes = new ArrayList<>();
 
         // Add a listener to the back button:
         buttonBack.setOnClickListener(new View.OnClickListener() {
@@ -68,6 +68,7 @@ public class PlayQuizActivity extends AppCompatActivity implements Database.Down
             startActivity(intent);
         }
 
+    /** To retrieve the quizzes in a certain location. */
     @Override
     public void onCallback(ArrayList<Quiz> list) {
 //        quizzes = new ArrayList<>(list);
@@ -76,15 +77,16 @@ public class PlayQuizActivity extends AppCompatActivity implements Database.Down
     @Override
     protected void onStart() {
         super.onStart();
+        // Retrieve all objects that were pushed from the previous class:
         location = getIntent().getParcelableExtra("location");
         verified = getIntent().getBooleanExtra("verified", false);
-        System.out.println(verified);
         database.getQuizzes(location, this);
+
 
         String string1 = "this is a question";
         String string2 = "this is another question";
         String[] array = new String[]{
-                "first", "two", "three", "four", "five"
+                "first, two, third, fourth,fithshgakjhgadhaglkhsalfadjh", "two", "three", "four", "five"
         };
         String correct = "two";
         String explanation = "this is an explanation!";
@@ -106,6 +108,7 @@ public class PlayQuizActivity extends AppCompatActivity implements Database.Down
         quizzes.add(quiz1);
         quizzes.add(quiz1);
 
+        // If there were no quizzes passed, create a new empty arraylist (to prevent crashes):
         if (quizzes == null) {
             quizzes = new ArrayList<>();
         }
@@ -122,17 +125,24 @@ public class PlayQuizActivity extends AppCompatActivity implements Database.Down
         }
 
 
+        // Create a vertical linearlayout:
         LinearLayout linearLayout = new LinearLayout(this);
         linearLayout.setOrientation(LinearLayout.VERTICAL);
+
+        // Create an array of buttons with the same length as the quizzes arraylist:
         Button[] buttons = new Button[quizzes.size()];
         for (int i = 0; i < quizzes.size(); i++) {
+            // Create a new button for each quiz:
             buttons[i] = new Button(this);
+            // Set the correct text for this quiz:
             String string = "Quiz: " + quizzes.get(i).getQuizName() + "\n" +
                     quizzes.get(i).getNumberOfQuestions() +
                     " questions \n" + "Created by: " + quizzes.get(i).getUserCreated().getNickName();
             buttons[i].setText(string);
             buttons[i].setTag(i);
+            // Add the button to the linearlayout:
             linearLayout.addView(buttons[i]);
+            // Set a clicklistener which makes sure you can play that quiz:
             buttons[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -144,6 +154,7 @@ public class PlayQuizActivity extends AppCompatActivity implements Database.Down
 
         }
 
+        // If there are no quizzes: display this:
         if (quizzes.size() == 0) {
             TextView noQuizes = new TextView(this);
             noQuizes.setTextSize(38);
@@ -152,8 +163,11 @@ public class PlayQuizActivity extends AppCompatActivity implements Database.Down
             noQuizes.setGravity(Gravity.CENTER);
             linearLayout.addView(noQuizes);
         }
+        // Add the linearLayout to the ScrollView:
         quizzesView.addView(linearLayout);
     }
+
+    /** To invoke the AnswerQuizActivity class and play the quiz. */
     public void playQuiz() {
             Intent intent = new Intent(this, AnswerQuizActivity.class);
             intent.putExtra("location", location);

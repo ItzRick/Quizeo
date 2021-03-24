@@ -111,6 +111,9 @@ public class Question implements Parcelable {
         this.globalId = globalId;
     }
 
+    /**
+     * Method for the parcelable, required to pass this object between classes.
+     */
     protected Question(Parcel in) {
         id = in.readInt();
         question = in.readString();
@@ -120,6 +123,9 @@ public class Question implements Parcelable {
         explanation = in.readString();
     }
 
+    /**
+     * Creator for the parcelable, required to pass this object between classes.
+     */
     public static final Creator<Question> CREATOR = new Creator<Question>() {
         @Override
         public Question createFromParcel(Parcel in) {
@@ -316,16 +322,26 @@ public class Question implements Parcelable {
         return userCreated;
     }
 
+    /**
+     * Get the number of answers for this question.
+     *
+     * @return The number of answers for this question.
+     */
     public int getNumberOfAnswers() {
         return answers.size();
     }
 
-
+    /**
+     * Method for the parcelable, required to pass this object between classes.
+     */
     @Override
     public int describeContents() {
         return 0;
     }
 
+    /**
+     * Method for the parcelable, required to pass this object between classes.
+     */
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(id);

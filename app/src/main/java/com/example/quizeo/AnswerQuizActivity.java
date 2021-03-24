@@ -24,106 +24,133 @@ import java.util.UUID;
 
 public class AnswerQuizActivity extends AppCompatActivity {
 
+    // Local variables for thw quiz and user:
     Quiz quiz;
     Question currentQuestion;
     AnswerQuiz answerQuiz;
     User userAnswered;
+    LocationQuizeo location;
 
+    // User interface elements:
     Button[] buttons;
     Button next;
     Button quit;
-
     TextView currentQuestionNumber;
     TextView numberCorrect;
     TextView currentQuestionText;
-
-    LocationQuizeo location;
-
     ScrollView answersView;
 
+    // Local variable:
     boolean isAnswered;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Set the correct layout:
         setContentView(R.layout.fragment_answer_quiz);
     }
     @Override
     protected void onStart() {
         super.onStart();
+        // Retrieve all passed objects:
         location = getIntent().getParcelableExtra("location");
         quiz = getIntent().getParcelableExtra("quiz");
         answerQuiz = getIntent().getParcelableExtra("answerQuiz");
         userAnswered = getIntent().getParcelableExtra("user");
+
+        // If there was not yet an answerQuiz object created (and passed) create one:
         if (answerQuiz == null) {
             answerQuiz = new AnswerQuiz();
         }
 
+        // Retrieve the currentQuestion:
         currentQuestion = quiz.getNext();
 
+        // Retrieve the next and quit buttons:
         next = (Button) findViewById(R.id.next_question_answer);
 
         quit = (Button) findViewById(R.id.quit_answer);
 
+        // If there is no next question, set the nextquestion button text to "End quiz!":
         if (!quiz.nextQuestionExists()) {
             next.setText("End quiz!");
         }
 
+        // Retrieve the question text, the question number and the number of correct questions:
         currentQuestionNumber = (TextView) findViewById(R.id.current_question_answer);
         numberCorrect = (TextView) findViewById(R.id.score_answer);
         currentQuestionText = (TextView) findViewById(R.id.question_answer);
 
-        answersView = (ScrollView) findViewById(R.id.answer_quizzes_scroll);
-
+        // Set the current question number:
         String current = currentQuestion.getId() + " / " + quiz.getNumberOfQuestions();
         currentQuestionNumber.setText(current);
 
+        // Set the number of correctly answered questions:
         String score = answerQuiz.getScore() + " / " + (currentQuestion.getId() - 1);
-
         numberCorrect.setText(score);
 
+        // Set the current question text:
         currentQuestionText.setText(currentQuestion.getQuestion());
 
+        // Retrieve the scrollview for the ansers:
+        answersView = (ScrollView) findViewById(R.id.answer_quizzes_scroll);
+
+        // Create a new linearLayout for the scrollview and set the orientation to vertical:
         LinearLayout linearLayout = new LinearLayout(this);
         linearLayout.setOrientation(LinearLayout.VERTICAL);
+        // Initialize the array for the buttons:
         buttons = new Button[currentQuestion.getNumberOfAnswers()];
+        // Retrieve the possible answers:
         String[] answers = currentQuestion.getAnswers();
+        // Add the different answers to different buttons and add this to the scrollview:
         for (int i = 0; i < currentQuestion.getNumberOfAnswers(); i++) {
+            // Create a new button and set the text, which is the specific answer:
             buttons[i] = new Button(this);
             String string = answers[i];
             buttons[i].setText(string);
             buttons[i].setTag(i);
+            // Add the button to the LinearLayout:
             linearLayout.addView(buttons[i]);
+            // Create a clicklistener:
             buttons[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int tag = (int) v.getTag();
+                    // If the answer has not yet been answered:
                     if (!isAnswered) {
+                        // If the answer is correct, set the color of this button to green and
+                        // update the score:
                         if (currentQuestion.getCorrect(tag + 1)) {
                             buttons[tag].setBackgroundColor(Color.GREEN);
                             answerQuiz.updateScore(true);
+                        // If the answer is incorrect, set the color of this button to red,
+                        // set the correct question to green and update the score:
                         } else {
                             buttons[tag].setBackgroundColor(Color.RED);
                             int correct = currentQuestion.getCorrectInt();
                             buttons[correct - 1].setBackgroundColor(Color.GREEN);
                             answerQuiz.updateScore(false);
                         }
+                        // The question has been answered:
                         isAnswered = true;
                     } else {
+                        // Create a pop up that the question has already been answered:
                         // inflate the layout of the popup window
                         LayoutInflater inflater = (LayoutInflater)
-                                v.getContext().getSystemService(v.getContext().LAYOUT_INFLATER_SERVICE);
-                        //getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
-                        View popupView = inflater.inflate(R.layout.popup_already_answered, null);
+                                v.getContext().getSystemService
+                                        (v.getContext().LAYOUT_INFLATER_SERVICE);
+                        View popupView =
+                                inflater.inflate(R.layout.popup_already_answered, null);
 
                         // create the popup window
                         int width = LinearLayout.LayoutParams.WRAP_CONTENT;
                         int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-                        boolean focusable = true; // lets taps outside the popup also dismiss it
-                        PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+                        // Makes sure you can also press outside the popup to dismiss it:
+                        boolean focusable = true;
+                        PopupWindow popupWindow =
+                                new PopupWindow(popupView, width, height, focusable);
 
                         // show the popup window
-                        // which view you pass in doesn't matter, it is only used for the window token
                         popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
 
                         // dismiss the popup window when touched
@@ -139,8 +166,10 @@ public class AnswerQuizActivity extends AppCompatActivity {
             });
 
         }
+        // Add the LinearLayout to the scrollview:
         answersView.addView(linearLayout);
 
+        // Adds an actionlistener to be able to quit the quiz:
         quit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -149,9 +178,12 @@ public class AnswerQuizActivity extends AppCompatActivity {
         });
 
 
+        // Adds an actonlistener for the next question:
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // If the question is answered, go to the next question, or finish the quiz if
+                // there is no next question:
                 if (isAnswered) {
                     if (! quiz.nextQuestionExists()) {
                         finishQuiz();
@@ -159,15 +191,18 @@ public class AnswerQuizActivity extends AppCompatActivity {
                         answerNext();
                     }
                 } else {
+                    // Create a pop up that the question should first be answered:
                     // inflate the layout of the popup window
                     LayoutInflater inflater = (LayoutInflater)
                             getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
-                    ViewGroup container = (ViewGroup) inflater.inflate(R.layout.popup_not_answered, null);
+                    ViewGroup container = (ViewGroup)
+                            inflater.inflate(R.layout.popup_not_answered, null);
 
                     // create the popup window
                     int width = LinearLayout.LayoutParams.WRAP_CONTENT;
                     int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-                    boolean focusable = true; // lets taps outside the popup also dismiss it
+                    // Sets that you can press outside the popup to close it:
+                    boolean focusable = true;
                     PopupWindow popupWindow = new PopupWindow(container, width, height, focusable);
 
                     // show the popup window
@@ -188,8 +223,9 @@ public class AnswerQuizActivity extends AppCompatActivity {
     }
 
 
-
-
+    /**
+     * Go to the next question and push all required objects.
+     */
     public void answerNext() {
         Intent intent = new Intent(this, AnswerQuizActivity.class);
         intent.putExtra("location", location);
@@ -199,6 +235,9 @@ public class AnswerQuizActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * Quit the quiz and push all required objects:
+     */
     public void quit() {
         quiz.quitQuiz();
         Intent intent = new Intent(this, PlayQuizActivity.class);

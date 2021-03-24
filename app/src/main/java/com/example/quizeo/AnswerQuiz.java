@@ -31,11 +31,17 @@ public class AnswerQuiz implements Parcelable {
         this.userAnswered = userAnswered;
     }
 
+    /**
+     * Method for the parcelable, required to pass this object between classes.
+     */
     protected AnswerQuiz(Parcel in) {
         score = in.readInt();
         userAnswered = in.readParcelable(User.class.getClassLoader());
     }
 
+    /**
+     * Creator for the parcelable, required to pass this object between classes.
+     */
     public static final Creator<AnswerQuiz> CREATOR = new Creator<AnswerQuiz>() {
         @Override
         public AnswerQuiz createFromParcel(Parcel in) {
@@ -86,11 +92,17 @@ public class AnswerQuiz implements Parcelable {
         return score;
     }
 
+    /**
+     * Method for the parcelable, required to pass this object between classes.
+     */
     @Override
     public int describeContents() {
         return 0;
     }
 
+    /**
+     * Method for the parcelable, required to pass this object between classes.
+     */
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(score);

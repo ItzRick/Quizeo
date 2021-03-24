@@ -94,6 +94,9 @@ public class Quiz implements Parcelable {
         this.percentageToPass = percentageToPass;
     }
 
+    /**
+     * Method for the parcelable, required to pass this object between classes.
+     */
     protected Quiz(Parcel in) {
         quizName = in.readString();
         rating = in.readDouble();
@@ -105,6 +108,9 @@ public class Quiz implements Parcelable {
         questions = in.readArrayList(Question.class.getClassLoader());
     }
 
+    /**
+     * Method for the parcelable, required to pass this object between classes.
+     */
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(quizName);
@@ -117,11 +123,17 @@ public class Quiz implements Parcelable {
         dest.writeList(questions);
     }
 
+    /**
+     * Method for the parcelable, required to pass this object between classes.
+     */
     @Override
     public int describeContents() {
         return 0;
     }
 
+    /**
+     * Creator for the parcelable, required to pass this object between classes.
+     */
     public static final Creator<Quiz> CREATOR = new Creator<Quiz>() {
         @Override
         public Quiz createFromParcel(Parcel in) {
@@ -336,14 +348,19 @@ public class Quiz implements Parcelable {
         this.userCreated = userCreated;
     }
 
+    /**
+     * Check if there is a next question in this quiz.
+     *
+     * @return true if the next question exists, otherwise false.
+     */
     public Boolean nextQuestionExists() {
         return (index < questions.size());
     }
 
-    public Question getCurrent() {
-        System.out.println("index" + index);
-        return questions.get(index);
-    }
+//    public Question getCurrent() {
+//        System.out.println("index" + index);
+//        return questions.get(index);
+//    }
 
     /**
      * Set the number of questions of this quiz
@@ -360,7 +377,7 @@ public class Quiz implements Parcelable {
      * @param value number of ratings
      */
     public void setNrOfRatings(int value) {
-        this.numberOfQuestions = value;
+        this.nrOfRatings = value;
     }
 
     /**
