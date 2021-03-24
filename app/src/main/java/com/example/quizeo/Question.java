@@ -299,6 +299,15 @@ public class Question implements Parcelable {
     }
 
     /**
+     * Get the correct answer (as int).
+     *
+     * @return int of the correct answer.
+     */
+    public int getCorrectInt() {
+        return correctInt;
+    }
+
+    /**
      * Get the user that has created this question.
      *
      * @return User that created this quiz.
