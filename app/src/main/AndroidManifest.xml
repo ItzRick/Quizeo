@@ -27,9 +27,6 @@
         <activity android:name=".MainActivity"/>
         <activity android:name=".AddQuestionActivity"/>
         <activity android:name=".AnswerQuizActivity"/>
-        <activity android:name=".AddQuestionActivity2"/>
-        <activity android:name=".AddQuestionActivity3"/>
-        <activity android:name=".AddQuestionActivity4"/>
         <activity
             android:name=".SplashScreen"
             android:label="@string/app_name"
