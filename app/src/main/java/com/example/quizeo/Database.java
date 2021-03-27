@@ -179,9 +179,8 @@ public final class Database {
         void onCallback(ArrayList<Question> list);
     }
 
-    //I think this method is redundant now, but I will keep it here for now
     /**
-     * Returns question object from the database
+     * Returns single question object from the database
      *
      * @param questionID the id you want to retrieve from the database
      * @param callback callback object to which the question object will be send
@@ -209,7 +208,6 @@ public final class Database {
                 }
             }
         });
-
     }
 
     /** Callback interface for downloading questions */
@@ -327,7 +325,6 @@ public final class Database {
      * Upload a question to the database, question is part of multiple quizzes
      *
      * @param question question to be uploaded
-     * @return whether the upload was successful
      */
     public void uploadQuestion(Question question, Quiz quiz) {
 
@@ -448,7 +445,7 @@ public final class Database {
     /**
      * Checks whether a given UUID is already taken in a certain collection
      *
-     * @param uuid the id we want c=to check
+     * @param uuid the id we want to check
      * @param cr the collection that we want to check
      * @return whether the UUID is already in the database
      */
