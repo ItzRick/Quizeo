@@ -8,10 +8,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
+
+import java.io.OutputStreamWriter;
 
 public class AddQuestionActivity2 extends AppCompatActivity {
 
@@ -20,6 +23,10 @@ public class AddQuestionActivity2 extends AppCompatActivity {
     Button buttonAddOption;
     Button buttonSaveQuit;
     Button buttonDeleteQuestion;
+
+    EditText textQuestion;
+    EditText textAddAnswer1;
+    EditText textAddAnswer2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +38,10 @@ public class AddQuestionActivity2 extends AppCompatActivity {
         buttonAddOption = (Button) findViewById(R.id.buttonAddOption);
         buttonSaveQuit = (Button) findViewById(R.id.buttonSaveQuit);
         buttonDeleteQuestion = (Button) findViewById(R.id.buttonDeleteQuestion);
+
+        textQuestion = (EditText) findViewById(R.id.textQuestion);
+        textAddAnswer1 = (EditText) findViewById(R.id.textAddAnswer1);
+        textAddAnswer2 = (EditText) findViewById(R.id.textAddAnswer2);
 
         // Open previous activity with remove option button
         buttonRemoveOption.setOnClickListener(new View.OnClickListener() {

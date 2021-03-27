@@ -8,12 +8,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
-public class AddQuestionActivity extends AppCompatActivity implements View.OnClickListener{
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+
+public class AddQuestionActivity extends AppCompatActivity {
 
     private static final int RESULT_LOAD_IMAGE = 1;
 
@@ -25,7 +29,10 @@ public class AddQuestionActivity extends AppCompatActivity implements View.OnCli
     Button buttonAddOption;
 
     EditText textQuestion;
-    Quiz quiz;
+    EditText textAddAnswer1;
+    EditText textAddAnswer2;
+
+    LocationQuizeo location;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +47,10 @@ public class AddQuestionActivity extends AppCompatActivity implements View.OnCli
         buttonAddOption = (Button) findViewById(R.id.buttonAddOption);
 
         textQuestion = (EditText) findViewById(R.id.textQuestion);
+        textAddAnswer1 = (EditText) findViewById(R.id.textAddAnswer1);
+        textAddAnswer2 = (EditText) findViewById(R.id.textAddAnswer2);
 
-        imageUpload.setOnClickListener(this);
-        buttonSaveQuit.setOnClickListener(this);
+        location = getIntent().getParcelableExtra("location");
 
         // Open next activity with add option button
         buttonAddOption.setOnClickListener(new View.OnClickListener() {
@@ -79,18 +87,6 @@ public class AddQuestionActivity extends AppCompatActivity implements View.OnCli
     public void openCreateQuizActivity2() {
         Intent intent = new Intent(this, CreateQuizActivity2.class);
         startActivity(intent);
-    }
-
-    @Override
-    public void onClick(View v ) {
-        switch(v.getId()){
-            case R.id.imageUpload:
-                Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
-                break;
-            case R.id.buttonSaveQuit:
-                break;
-        }
     }
 
     @Override

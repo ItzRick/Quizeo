@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,12 +8,6 @@
     android:layout_height="match_parent"
     android:background="@drawable/gradient"
     tools:context=".AddQuestionActivity">
-
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:context=".AddQuestionActivity3">
 
         <ImageView
             android:id="@+id/imageView4"
@@ -41,41 +35,23 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <ImageView
-            android:id="@+id/imageUpload"
-            android:layout_width="215dp"
-            android:layout_height="204dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="8dp"
-            android:contentDescription="@string/upload_image_here"
-            android:src="@drawable/image"
-            app:layout_constraintBottom_toTopOf="@id/imageView4"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.489"
-            app:layout_constraintStart_toStartOf="@id/textQuestion"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
-
         <EditText
             android:id="@+id/textQuestion"
-            android:background="@drawable/edittext_background_blue"
             android:layout_width="371dp"
             android:layout_height="139dp"
             android:autofillHints=""
+            android:background="@drawable/edittext_background_blue"
             android:gravity="center_horizontal"
             android:hint="@string/add_a_question"
             android:inputType="textMultiLine"
             android:textColor="@color/black"
             android:textColorHint="@color/black"
             android:textSize="25sp"
-            app:layout_constraintBottom_toTopOf="@id/textAddAnswer1"
+            app:layout_constraintBottom_toTopOf="@id/imageView4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.625"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageUpload" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/textAddAnswer1"
@@ -171,8 +147,7 @@
             android:text="@string/remove_option"
             app:layout_constraintBottom_toTopOf="@id/toolbar2"
             app:layout_constraintEnd_toEndOf="@id/buttonDeleteQuestion"
-            app:layout_constraintStart_toStartOf="@id/buttonDeleteQuestion"
-            />
+            app:layout_constraintStart_toStartOf="@id/buttonDeleteQuestion" />
 
         <Button
             android:id="@+id/buttonSaveQuit"
@@ -203,6 +178,5 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView4" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 
-</ScrollView>

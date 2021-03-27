@@ -15,12 +15,13 @@ public class CreateQuizActivity2 extends AppCompatActivity {
 
     // Declare local variables
     Button buttonSaveQuit;
-    Button buttonSaveName;
     Button buttonAddQuestion;
 
     TextView numberOfQuestions;
 
     EditText quizName;
+    EditText yourUserName;
+
     Quiz quiz;
     Question questionToAdd;
 
@@ -28,8 +29,15 @@ public class CreateQuizActivity2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_create_quiz_2);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        setContentView(R.layout.fragment_create_quiz_2);
         buttonSaveQuit = (Button) findViewById(R.id.buttonSaveQuit);
         quizName = (EditText) findViewById(R.id.YourQuizName);
+        yourUserName = (EditText) findViewById(R.id.YourUsername);
         buttonAddQuestion = (Button) findViewById(R.id.buttonAddQuestion);
         numberOfQuestions = (TextView) findViewById(R.id.NumberOfQuestions);
 

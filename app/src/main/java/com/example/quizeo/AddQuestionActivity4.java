@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,6 +15,10 @@ public class AddQuestionActivity4 extends AppCompatActivity {
     Button buttonSaveQuit;
     Button buttonDeleteQuestion;
 
+    EditText textQuestion;
+    EditText textAddAnswer1;
+    EditText textAddAnswer2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +28,10 @@ public class AddQuestionActivity4 extends AppCompatActivity {
         buttonRemoveOption = (Button) findViewById(R.id.buttonRemoveOption);
         buttonSaveQuit = (Button) findViewById(R.id.buttonSaveQuit);
         buttonDeleteQuestion = (Button) findViewById(R.id.buttonDeleteQuestion);
+
+        textQuestion = (EditText) findViewById(R.id.textQuestion);
+        textAddAnswer1 = (EditText) findViewById(R.id.textAddAnswer1);
+        textAddAnswer2 = (EditText) findViewById(R.id.textAddAnswer2);
 
         // Open previous activity with remove option button
         buttonRemoveOption.setOnClickListener(new View.OnClickListener() {
