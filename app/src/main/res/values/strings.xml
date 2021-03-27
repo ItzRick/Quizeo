@@ -57,4 +57,7 @@
     <string name="unfinished">Unfinished</string>
     <string name="verified">Verified</string>
     <string name="under_review">Under review</string>
+    <string name="no_correct">Please select the correct answer first!</string>
+    <string name="no_answer">Please enter all answers first!</string>
+    <string name="no_question">Please enter the question first!</string>
 </resources>

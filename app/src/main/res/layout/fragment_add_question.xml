@@ -48,43 +48,12 @@
             android:textColor="@color/black"
             android:textColorHint="@color/black"
             android:textSize="25sp"
-            app:layout_constraintBottom_toTopOf="@id/imageView4"
+            app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.625"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.069" />
 
-        <EditText
-            android:id="@+id/textAddAnswer1"
-            android:layout_width="371dp"
-            android:layout_height="50dp"
-            android:background="@drawable/edittext_background_white"
-            android:gravity="center_horizontal"
-            android:hint="@string/add_an_answer"
-            android:inputType="textMultiLine"
-            android:textColorHint="@color/black"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/textAddAnswer2"
-            app:layout_constraintStart_toStartOf="@+id/textQuestion"
-            app:layout_constraintEnd_toEndOf="@+id/textQuestion"
-            app:layout_constraintTop_toBottomOf="@id/textQuestion"
-            android:autofillHints="" />
-
-        <EditText
-            android:id="@+id/textAddAnswer2"
-            android:layout_width="371dp"
-            android:layout_height="50dp"
-            android:background="@drawable/edittext_background_white"
-            android:gravity="center_horizontal"
-            android:hint="@string/add_an_answer"
-            android:inputType="textMultiLine"
-            android:textColorHint="@color/black"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/buttonAddOption"
-            app:layout_constraintStart_toStartOf="@+id/textAddAnswer1"
-            app:layout_constraintEnd_toEndOf="@+id/textAddAnswer1"
-            app:layout_constraintTop_toBottomOf="@id/textAddAnswer1"
-            android:autofillHints="" />
 
         <Button
             android:id="@+id/buttonAddOption"
@@ -92,13 +61,13 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="67dp"
-            android:layout_marginEnd="10dp"
             android:text="@string/add_option"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/buttonSaveQuit"
-            app:layout_constraintStart_toStartOf="@id/buttonSaveQuit"
-            app:layout_constraintTop_toBottomOf="@id/textQuestion" />
-
+            app:layout_constraintEnd_toEndOf="@+id/buttonDeleteQuestion"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/buttonDeleteQuestion"
+            app:layout_constraintTop_toBottomOf="@id/textQuestion"
+            app:layout_constraintVertical_bias="0.729" />
 
         <Button
             android:id="@+id/buttonSaveQuit"
@@ -111,6 +80,19 @@
             app:layout_constraintEnd_toStartOf="@+id/toolbar2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+
+        <ScrollView
+            android:id="@+id/answers_scroll"
+            android:layout_width="359dp"
+            android:layout_height="335dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.494"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textQuestion"
+            app:layout_constraintVertical_bias="0.082">
+
+        </ScrollView>
 
         <Button
             android:id="@+id/buttonDeleteQuestion"

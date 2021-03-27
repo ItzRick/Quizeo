@@ -23,7 +23,8 @@ public class CreateQuizActivity2 extends AppCompatActivity {
     EditText yourUserName;
 
     Quiz quiz;
-    Question questionToAdd;
+    LocationQuizeo location;
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +42,10 @@ public class CreateQuizActivity2 extends AppCompatActivity {
         buttonAddQuestion = (Button) findViewById(R.id.buttonAddQuestion);
         numberOfQuestions = (TextView) findViewById(R.id.NumberOfQuestions);
 
+        user = getIntent().getParcelableExtra("user");
+
+        location = getIntent().getParcelableExtra("location");
+
         // Retrieve passed quiz element if it exists:
         quiz = getIntent().getParcelableExtra("quiz");
         // Set new if it does not exist:
@@ -50,11 +55,6 @@ public class CreateQuizActivity2 extends AppCompatActivity {
             quiz.setQuizId(UUID.randomUUID());
         } else {
             quizName.setText(quiz.getQuizName());
-        }
-
-        questionToAdd = getIntent().getParcelableExtra("question");
-        if (questionToAdd != null) {
-            quiz.addQuestion(questionToAdd);
         }
 
 
@@ -88,6 +88,8 @@ public class CreateQuizActivity2 extends AppCompatActivity {
     public void openAddQuestion() {
         Intent intent = new Intent(this, AddQuestionActivity.class);
         intent.putExtra("quiz", quiz);
+        intent.putExtra("user", user);
+        intent.putExtra("location", location);
         startActivity(intent);
     }
 }
