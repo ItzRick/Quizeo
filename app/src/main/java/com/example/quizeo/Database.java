@@ -286,7 +286,7 @@ public final class Database {
         int nrOfRatings = ((Long) doc.get("Number of Ratings")).intValue();
 
         double rating = (double) doc.get("Rating");
-        int percentageToPass = ((Long) doc.get("Percentage to pass")).intValue();
+        int percentageToPass = ((Double) doc.get("Percentage to pass")).intValue();
         String userId = (String) doc.get("UserId");
         String username = (String) doc.get("Username");
 
