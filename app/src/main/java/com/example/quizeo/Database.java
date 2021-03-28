@@ -45,12 +45,14 @@ public final class Database {
     /** The collection references for questions and quizzes */
     final private CollectionReference questionRef;
     final private CollectionReference quizRef;
+    final private CollectionReference notPublishedRef;
 
     /** Constructor, should only be called by getInstance method */
     private Database() {
         firestore = FirebaseFirestore.getInstance();
         questionRef = firestore.collection("Questions");
         quizRef = firestore.collection("Quizzes");
+        notPublishedRef = firestore.collection("Not-Published");
     }
 
     /**
@@ -90,10 +92,12 @@ public final class Database {
                     QuerySnapshot snapshot = task.getResult();
                     ArrayList<Quiz> list = new ArrayList<>();
                     for (DocumentSnapshot doc: snapshot.getDocuments()) {
-                        double longitude = (double) doc.get("Latitude");
-                        if (longitude >= minLat && longitude <= maxLat) {
-                            list.add(new Quiz());
-                            docToQuiz(doc, list.get(list.size()-1));
+                        if (doc.get("Latitude") != null) {
+                            double latitude1 = (Double) doc.get("Latitude");
+                            if (latitude1 >= minLat && latitude1 <= maxLat) {
+                                list.add(new Quiz());
+                                docToQuiz(doc, list.get(list.size() - 1));
+                            }
                         }
                     }
                     callback.onCallback(list);
@@ -109,9 +113,10 @@ public final class Database {
      *
      * @param user the user object of the creator
      * @param callback the callback object
+     * @param nonPublished whether to query not published quizzes aswell
      */
-    public void getQuizzes(User user, DownloadQuizzesCallback callback) {
-        getQuizzes(user.getUserId(), callback);
+    public void getQuizzes(User user, boolean nonPublished, DownloadQuizzesCallback callback) {
+        getQuizzes(user.getUserId(), nonPublished, callback);
     }
 
     /**
@@ -119,8 +124,9 @@ public final class Database {
      *
      * @param userID the creator of the quizzes
      * @param callback the callback object
+     * @param nonPublished whether to query not published quizzes aswell
      */
-    public void getQuizzes(String userID, DownloadQuizzesCallback callback) {
+    public void getQuizzes(String userID, boolean nonPublished, DownloadQuizzesCallback callback) {
         quizRef.whereEqualTo("UserId", userID)
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -132,7 +138,26 @@ public final class Database {
                         list.add(new Quiz());
                         docToQuiz(doc, list.get(list.size()-1));
                     }
-                    callback.onCallback(list);
+                    if (nonPublished) { //Query non published quizzes aswell
+                        notPublishedRef.whereEqualTo("UserId", userID)
+                                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    QuerySnapshot snapshot = task.getResult();
+                                    for (DocumentSnapshot doc : snapshot.getDocuments()) {
+                                        list.add(new Quiz());
+                                        docToQuiz(doc, list.get(list.size() - 1));
+                                    }
+                                    callback.onCallback(list);
+                                } else {
+                                    Log.d("QuizDownOnUser", "Query failed");
+                                }
+                            }
+                        });
+                    } else {
+                        callback.onCallback(list);
+                    }
                 } else {
                     Log.d("QuizDownOnUser", "Query failed");
                 }
@@ -225,12 +250,13 @@ public final class Database {
     private void docToQuestion(DocumentSnapshot doc, Question q) {
 
         //getting the values
-        UUID GlobalID = (UUID) UUID.fromString((String) doc.get("GlobalID"));
+        UUID GlobalID = UUID.fromString((String) doc.get("GlobalID"));
         String question = (String) doc.get("Question");
         String explanation = (String) doc.get("Explanation");
         ArrayList<String> answers = (ArrayList<String>) doc.get("Answers");
         String correct = (String) doc.get("Correct");
         int ID = ((Long) doc.get("Question Number")).intValue();
+        String user = (String) doc.get("Question Number");
 
         String[] ans = new String[answers.size()];
         for (int i = 0; i < answers.size(); i++) {
@@ -253,7 +279,7 @@ public final class Database {
      * @param q the quiz object which will hold the new values
      */
     private void docToQuiz(DocumentSnapshot doc, Quiz q) {
-        UUID GlobalID = (UUID) UUID.fromString((String) doc.get("GlobalID"));
+        UUID GlobalID = UUID.fromString((String) doc.get("GlobalID"));
         LocationQuizeo location = new LocationQuizeo((double) doc.get("Latitude"), (double) doc.get("Longitude"));
         String name = (String) doc.get("Name");
         int nrOfQuestions = ((Long) doc.get("Number of Questions")).intValue();
@@ -261,7 +287,10 @@ public final class Database {
 
         double rating = (double) doc.get("Rating");
         int percentageToPass = ((Long) doc.get("Percentage to pass")).intValue();
-        String user = (String) doc.get("UserId");
+        String userId = (String) doc.get("UserId");
+        String username = (String) doc.get("Username");
+
+        User user = new User(username, userId);
 
         q.setLocation(location);
         q.setQuizId(GlobalID);
@@ -270,6 +299,7 @@ public final class Database {
         q.setNumberOfQuestions(nrOfQuestions);
         q.setRating(rating);
         q.setPercentageToPass(percentageToPass);
+        q.setUserCreated(user);
 
     }
     //endregion
@@ -279,8 +309,9 @@ public final class Database {
      * Uploads a quiz and all its questions to the database
      *
      * @param quiz Quiz to uploaded
+     * @param publish whether the quiz is published to the public
      */
-    public void uploadQuiz(Quiz quiz) {
+    public void uploadQuiz(Quiz quiz, boolean publish) {
         // ----- Preparing for upload ------
         LocationQuizeo loc = quiz.getLocation(); //location of the quiz
 
@@ -301,11 +332,18 @@ public final class Database {
         data.put("Latitude", loc.getLatitude());
         data.put("Longitude", loc.getLongitude());
         data.put("Questions", listOfQuestions);
-        data.put("UserId", FirebaseAuth.getInstance().getCurrentUser().getUid());
+        data.put("UserId", quiz.getUserCreated().getUserId());
+        data.put("Username", quiz.getUserCreated().getNickName());
 
         // ------ upload quiz ------
+        CollectionReference cr;
+        if (publish) {
+            cr = quizRef;
+        } else {
+            cr = notPublishedRef;
+        }
 
-        firestore.collection("Quizzes").document(quiz.getQuizId().toString())
+        cr.document(quiz.getQuizId().toString())
                 .set(data)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -364,7 +402,7 @@ public final class Database {
         data.put("Part of", quiz.getQuizId().toString());
         data.put("Question Number", question.getId());
 
-        ArrayList<String> ans = new ArrayList<String>(Arrays.asList(question.getAnswers()));
+        ArrayList<String> ans = new ArrayList<>(Arrays.asList(question.getAnswers()));
         data.put("Answers", ans);
 
         return data;
@@ -438,7 +476,8 @@ public final class Database {
         UUID newID;
         do {
             newID = UUID.randomUUID();
-        } while (uuidIsTaken(newID, questionRef) || uuidIsTaken(newID, quizRef));
+        } while (uuidIsTaken(newID, questionRef) || uuidIsTaken(newID, quizRef) ||
+                           uuidIsTaken(newID, notPublishedRef));
         return newID;
     }
 
