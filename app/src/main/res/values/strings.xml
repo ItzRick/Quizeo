@@ -60,4 +60,10 @@
     <string name="no_correct">Please select the correct answer first!</string>
     <string name="no_answer">Please enter all answers first!</string>
     <string name="no_question">Please enter the question first!</string>
+    <string name="little_questions">Please add at least 5 questions first!</string>
+    <string name="no_quizname">Please add a Quizname first!</string>
+    <string name="no_location">Please add a Location first!</string>
+    <string name="save_username">Save Username</string>
+    <string name="select_username">Choose your username!</string>
+    <string name="remove_question">Remove question</string>
 </resources>

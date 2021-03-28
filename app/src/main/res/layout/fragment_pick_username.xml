@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient"
-    tools:context=".CreateQuizFragment">
+    tools:context=".PickUsername">
 
     <ImageView
         android:id="@+id/imageView4"
@@ -34,48 +34,46 @@
 
     <TextView
         android:id="@+id/yourQuiz"
-        android:layout_width="396dp"
-        android:layout_height="63dp"
+        android:layout_width="406dp"
+        android:layout_height="152dp"
         android:layout_marginTop="44dp"
         android:gravity="center"
-        android:text="@string/your_quizzes"
+        android:text="@string/select_username"
         android:textAllCaps="false"
-        android:textColor="?attr/colorSecondary"
+        android:textColor="@color/white"
         android:textSize="55sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/buttonBack"
-        android:layout_width="150dp"
-        android:layout_height="88dp"
-        android:layout_marginStart="20dp"
-        android:text="@string/back"
-        app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
-        app:layout_constraintStart_toStartOf="@+id/toolbar2"
-        app:layout_constraintTop_toTopOf="@+id/toolbar2" />
+    <EditText
+        android:id="@+id/Your_User_Name"
+        android:layout_width="314dp"
+        android:layout_height="68dp"
+        android:autofillHints=""
+        android:gravity="center"
+        android:hint="@string/your_username"
+        android:inputType="textShortMessage"
+        android:textSize="40sp"
+        android:backgroundTint="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/yourQuiz"
+        app:layout_constraintVertical_bias="0.072"
+        tools:ignore="LabelFor" />
 
     <Button
-        android:id="@+id/buttonNew"
+        android:id="@+id/button_save_username"
         android:layout_width="150dp"
         android:layout_height="88dp"
         android:layout_marginEnd="20dp"
-        android:text="@string/new_quiz"
+        android:text="@string/save_username"
         app:layout_constraintBottom_toBottomOf="@id/toolbar2"
         app:layout_constraintEnd_toEndOf="@id/toolbar2"
         app:layout_constraintTop_toTopOf="@+id/toolbar2" />
 
-    <ScrollView
-        android:id="@+id/quizzes_scroll_create"
-        android:layout_width="350dp"
-        android:layout_height="490dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </ScrollView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

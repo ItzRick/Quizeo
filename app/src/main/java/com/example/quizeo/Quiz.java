@@ -106,6 +106,9 @@ public class Quiz implements Parcelable {
         numberOfQuestions = in.readInt();
         index = in.readInt();
         questions = in.readArrayList(Question.class.getClassLoader());
+        quizId = (UUID) in.readSerializable();
+        location = in.readParcelable(LocationQuizeo.class.getClassLoader());
+        userCreated = in.readParcelable(User.class.getClassLoader());
     }
 
     /**
@@ -121,6 +124,9 @@ public class Quiz implements Parcelable {
         dest.writeInt(numberOfQuestions);
         dest.writeInt(index);
         dest.writeList(questions);
+        dest.writeSerializable(quizId);
+        dest.writeParcelable(location, flags);
+        dest.writeParcelable(userCreated, flags);
     }
 
     /**

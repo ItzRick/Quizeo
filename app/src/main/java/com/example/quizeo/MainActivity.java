@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -27,6 +28,8 @@ import android.widget.Button;
 import android.content.Intent;
 import android.widget.ImageView;
 
+import java.util.UUID;
+
 public class MainActivity extends AppCompatActivity {
 
     // Declare local variables
@@ -49,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
     public double longitude;
     public double latitude;
     LocationQuizeo location;
+
+    User user;
 
     /** Holds the Authentication instance */
     private Authentication authentication;
@@ -95,6 +100,8 @@ public class MainActivity extends AppCompatActivity {
         buttonMakeQuiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                getLocation();
+                location = new LocationQuizeo(latitude, longitude);
                 openCreateQuizActivity();
             }
         });
@@ -138,6 +145,38 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         authentication.loginAnonymously(MainActivity.this);
+        user = getIntent().getParcelableExtra("user");
+        if (user == null) {
+            loadData();
+            if (user.getNickName().equals("")) {
+                pickUsername();
+            }
+        }
+    }
+
+    private void saveData() {
+        SharedPreferences sp =
+                getSharedPreferences("MyPrefs",
+                        Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString("nickname", user.getNickName());
+        editor.putString("id", user.getUserId());
+        editor.commit();
+    }
+
+    private void loadData() {
+        SharedPreferences sp =
+                getSharedPreferences("MyPrefs",
+                        Context.MODE_PRIVATE);
+        String nickname = sp.getString("nickname", "");
+        String id = sp.getString("id", "");
+        user = new User(nickname, id);
+    }
+
+    public void pickUsername() {
+        Intent intent = new Intent(this, PickUsername.class);
+        intent.putExtra("location", location);
+        startActivity(intent);
     }
 
     @Override
@@ -157,6 +196,8 @@ public class MainActivity extends AppCompatActivity {
     // Method to open the CreateQuizActivity
     public void openCreateQuizActivity(){
         Intent intent = new Intent(this, CreateQuizActivity.class);
+        intent.putExtra("location", location);
+        intent.putExtra("user", user);
         startActivity(intent);
     }
 

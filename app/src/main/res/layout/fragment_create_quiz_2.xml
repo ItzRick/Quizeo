@@ -75,24 +75,6 @@
         app:layout_constraintVertical_bias="0.7"
         tools:ignore="LabelFor" />
 
-    <EditText
-        android:id="@+id/YourUsername"
-        android:layout_width="121dp"
-        android:layout_height="41dp"
-        android:layout_marginBottom="3dp"
-        android:autofillHints=""
-        android:gravity="center"
-        android:hint="@string/your_username"
-        android:inputType="textShortMessage"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toTopOf="@+id/imageView4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.476"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/YourQuizName"
-        app:layout_constraintVertical_bias="0.0"
-        tools:ignore="LabelFor" />
-
     <TextView
         android:id="@+id/YourQuizInfo"
         android:layout_width="361dp"
@@ -107,8 +89,10 @@
         android:textSize="40sp"
         app:layout_constraintBottom_toTopOf="@+id/toolbar2"
         app:layout_constraintEnd_toEndOf="@+id/buttonSubmitQuiz"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/buttonSaveQuit"
-        app:layout_constraintTop_toBottomOf="@+id/YourUsername"
+        app:layout_constraintTop_toBottomOf="@+id/YourQuizName"
+        app:layout_constraintVertical_bias="0.448"
         tools:ignore="TextViewEdits" />
 
     <TextView
@@ -150,7 +134,7 @@
         app:layout_constraintTop_toBottomOf="@+id/buttonAddQuestion" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/buttonAddLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/add_location"
@@ -158,5 +142,23 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/buttonAddQuestion"
         app:layout_constraintTop_toBottomOf="@+id/textLocation" />
+
+    <Button
+        android:id="@+id/buttonRemoveQuestion"
+        android:layout_width="154dp"
+        android:layout_height="81dp"
+        android:layout_marginBottom="29dp"
+        android:text="@string/remove_question"
+        android:textColor="#F4EFEF"
+        android:textColorHighlight="#F8EEEE"
+        android:textColorLink="#F1EFEF"
+        app:backgroundTint="#ED0909"
+        app:iconTint="#F4EFEF"
+        app:layout_constraintBottom_toTopOf="@+id/toolbar2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/YourQuizInfo"
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

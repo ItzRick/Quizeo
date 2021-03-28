@@ -25,6 +25,7 @@ public class PlayQuizActivity extends AppCompatActivity implements Database.Down
     //local variables for UI elements:
     Button buttonBack;
     ScrollView quizzesView;
+    LinearLayout quizzesLayout;
 
     // Variables for the quizzes and users:
     ArrayList<Quiz> quizzes;
@@ -73,7 +74,8 @@ public class PlayQuizActivity extends AppCompatActivity implements Database.Down
     /** To retrieve the quizzes in a certain location. */
     @Override
     public void onCallback(ArrayList<Quiz> list) {
-//        quizzes = new ArrayList<>(list);
+        quizzes = new ArrayList<>(list);
+        updateDisplay();
     }
 
     @Override
@@ -84,71 +86,92 @@ public class PlayQuizActivity extends AppCompatActivity implements Database.Down
         verified = getIntent().getBooleanExtra("verified", false);
         database.getQuizzes(location, this);
 
-        String string1 = "this is a question";
-        String string2 = "this is another question";
-        String[] array = new String[]{
-                "first, two, third, fourth,fithshgakjhgadhaglkhsalfadjh", "two", "three", "four", "five"
-        };
-        String correct = "two";
-        String explanation = "this is an explanation!";
-        int id = 1;
-        UUID globalId = UUID.randomUUID();
-        Question question = new Question(string1, array, correct, explanation, id, globalId);
-        Question question1 = new Question(string2, array, correct, explanation, id + 1, globalId);
-        UUID id1 = UUID.randomUUID();
-        String quizName = "This is a quiz";
-        LocationQuizeo location1 = new LocationQuizeo(1, 1);
-        Quiz quiz1 = new Quiz(id1, quizName, location1);
-        quiz1.addQuestion(question);
-        quiz1.addQuestion(question1);
-        String nickName = "test";
-        String id2 = UUID.randomUUID().toString();
-        User user1 = new User(nickName, id2);
-        quiz1.setUserCreated(user1);
-        quizzes.add(quiz1);
-        quizzes.add(quiz1);
+        quizzesLayout = new LinearLayout(this);
+        quizzesLayout.setOrientation(LinearLayout.VERTICAL);
 
+        Database database = Database.getInstance();
+        database.getQuizzes(location, this);
+//        String string1 = "this is a question";
+//        String string2 = "this is another question";
+//        String[] array = new String[]{
+//                "first, two, third, fourth,fithshgakjhgadhaglkhsalfadjh", "two", "three", "four", "five"
+//        };
+//        String correct = "two";
+//        String explanation = "this is an explanation!";
+//        int id = 1;
+//        UUID globalId = UUID.randomUUID();
+//        Question question = new Question(string1, array, correct, explanation, id, globalId);
+//        Question question1 = new Question(string2, array, correct, explanation, id + 1, globalId);
+//        UUID id1 = UUID.randomUUID();
+//        String quizName = "This is a quiz";
+//        LocationQuizeo location1 = new LocationQuizeo(1, 1);
+//        Quiz quiz1 = new Quiz(id1, quizName, location1);
+//        quiz1.addQuestion(question);
+//        quiz1.addQuestion(question1);
+//        String nickName = "test";
+//        String id2 = UUID.randomUUID().toString();
+//        User user1 = new User(nickName, id2);
+//        quiz1.setUserCreated(user1);
+//        quizzes.add(quiz1);
+//        quizzes.add(quiz1);
+
+    }
+
+    /** To invoke the AnswerQuizActivity class and play the quiz. */
+    public void playQuiz() {
+            Intent intent = new Intent(this, AnswerQuizActivity.class);
+            intent.putExtra("verified", verified);
+            intent.putExtra("location", location);
+            intent.putExtra("quiz", quiz);
+            intent.putExtra("user", user);
+            startActivity(intent);
+    }
+
+    public void updateDisplay() {
         // If there were no quizzes passed, create a new empty arraylist (to prevent crashes):
         if (quizzes == null) {
             quizzes = new ArrayList<>();
         }
 
-        System.out.println("verified " + verified);
-        // Remove all quizzes that are not verified.
-        if (verified) {
-            for (int i = 0; i < quizzes.size(); i++) {
-                Quiz temp = quizzes.get(i);
-                if (temp.getNumberOfRatings() < 100 && temp.getRating() < 0.75) {
-                    quizzes.remove(i);
-                    i--;
-                }
-            }
-        }
-
-
-        // Create a vertical linearlayout:
-        LinearLayout linearLayout = new LinearLayout(this);
-        linearLayout.setOrientation(LinearLayout.VERTICAL);
 
         // Create an array of buttons with the same length as the quizzes arraylist:
         Button[] buttons = new Button[quizzes.size()];
+        System.out.println(quizzes.size());
         for (int i = 0; i < quizzes.size(); i++) {
             // Create a new button for each quiz:
             buttons[i] = new Button(this);
+            Quiz tempQuiz = quizzes.get(i);
+            String verified1;
+            String published1;
+            if (tempQuiz.getNumberOfRatings() == -1) {
+                published1 = "not Published";
+                verified1 = "not Verified";
+            } else {
+                published1 = "Published";
+                if (tempQuiz.getNumberOfRatings() > 100 && tempQuiz.getRating() > 0.75) {
+                    verified1 = "Verified";
+                } else {
+                    verified1 = "not Verified";
+                }
+            }
+
+
             // Set the correct text for this quiz:
             String string = "Quiz: " + quizzes.get(i).getQuizName() + "\n" +
                     quizzes.get(i).getNumberOfQuestions() +
-                    " questions \n" + "Created by: " + quizzes.get(i).getUserCreated().getNickName();
+                    " questions \n" + "Created by: " + quizzes.get(i).getUserCreated().getNickName()
+                    + "\n" + published1 + "               " + verified1;
             buttons[i].setText(string);
             buttons[i].setTag(i);
             // Add the button to the linearlayout:
-            linearLayout.addView(buttons[i]);
+            quizzesLayout.addView(buttons[i]);
             // Set a clicklistener which makes sure you can play that quiz:
             buttons[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int tag = (int) v.getTag();
                     quiz = quizzes.get(tag);
+                    System.out.println("ID:" + quiz.getQuizId());
                     playQuiz();
                 }
             });
@@ -162,19 +185,11 @@ public class PlayQuizActivity extends AppCompatActivity implements Database.Down
             noQuizes.setTextColor(Color.WHITE);
             noQuizes.setText("No quizzes found!");
             noQuizes.setGravity(Gravity.CENTER);
-            linearLayout.addView(noQuizes);
+            quizzesLayout.addView(noQuizes);
         }
-        // Add the linearLayout to the ScrollView:
-        quizzesView.addView(linearLayout);
-    }
 
-    /** To invoke the AnswerQuizActivity class and play the quiz. */
-    public void playQuiz() {
-            Intent intent = new Intent(this, AnswerQuizActivity.class);
-            intent.putExtra("verified", verified);
-            intent.putExtra("location", location);
-            intent.putExtra("quiz", quiz);
-            intent.putExtra("user", user);
-            startActivity(intent);
+
+        // Add the linearLayout to the ScrollView:
+        quizzesView.addView(quizzesLayout);
     }
 }
