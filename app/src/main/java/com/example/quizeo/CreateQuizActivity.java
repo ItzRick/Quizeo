@@ -108,7 +108,7 @@ public class CreateQuizActivity extends AppCompatActivity implements Database.Do
 
         // Create an array of buttons with the same length as the quizzes arraylist:
         Button[] buttons = new Button[quizzes.size()];
-        System.out.println(quizzes.size());
+//        System.out.println(quizzes.size());
         for (int i = 0; i < quizzes.size(); i++) {
             // Create a new button for each quiz:
             buttons[i] = new Button(this);
@@ -143,7 +143,7 @@ public class CreateQuizActivity extends AppCompatActivity implements Database.Do
                 public void onClick(View v) {
                     int tag = (int) v.getTag();
                     quiz = quizzes.get(tag);
-                    System.out.println("ID:" + quiz.getQuizId());
+//                    System.out.println("ID:" + quiz.getQuizId());
                     editQuiz();
                 }
             });
