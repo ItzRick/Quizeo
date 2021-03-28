@@ -130,7 +130,7 @@ public class Authentication {
         Database database = Database.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
-            database.getQuizzes(user.getUid(), new Database.DownloadQuizzesCallback() {
+            database.getQuizzes(user.getUid(), true, new Database.DownloadQuizzesCallback() {
                 @Override
                 public void onCallback(ArrayList<Quiz> list) {
                     for (Quiz quiz : list) {

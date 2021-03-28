@@ -436,6 +436,7 @@ public final class Database {
             questionRef.document(questionIDs.toString()).delete();
         }
         quizRef.document(quizID.toString()).delete();
+        notPublishedRef.document(quizID.toString()).delete();
     }
 
 
