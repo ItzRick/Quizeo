@@ -93,7 +93,9 @@ public class CreateQuizActivity2 extends AppCompatActivity {
                     return;
                 } else {
                     quiz.setQuizName(quizName.getText().toString());
-                    quiz.setNrOfRatings(0);
+                    if (quiz.getNumberOfRatings() == - 1) {
+                        quiz.setNrOfRatings(0);
+                    }
                     Database database = Database.getInstance();
                     database.uploadQuiz(quiz, true);
                     openCreateQuizActivity();
