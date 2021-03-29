@@ -169,6 +169,11 @@ public class Quiz implements Parcelable {
         scoreToPass = (int) Math.ceil(temp);
     }
 
+    public void addQuestions(ArrayList<Question> list) {
+        System.out.println("HENK");
+        questions = new ArrayList<>(list);
+    }
+
     /**
      * Get all the questions in the current quiz.
      *

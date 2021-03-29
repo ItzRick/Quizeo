@@ -191,7 +191,7 @@ public final class Database {
                         list.add(new Question());
                         docToQuestion(doc, list.get(list.size()-1));
                     }
-                    callback.onCallback(list);
+                    callback.onCallback1(list);
                 } else {
                     Log.d(TAG, "getting question failed");
                 }
@@ -201,7 +201,7 @@ public final class Database {
 
     /** Callback interface for downloading questions */
     public interface DownloadQuestionListCallback {
-        void onCallback(ArrayList<Question> list);
+        void onCallback1(ArrayList<Question> list);
     }
 
     /**

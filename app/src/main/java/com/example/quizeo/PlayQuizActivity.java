@@ -20,7 +20,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class PlayQuizActivity extends AppCompatActivity implements Database.DownloadQuizzesCallback {
+public class PlayQuizActivity extends AppCompatActivity implements Database.DownloadQuizzesCallback, Database.DownloadQuestionListCallback {
 
     //local variables for UI elements:
     Button buttonBack;
@@ -33,7 +33,7 @@ public class PlayQuizActivity extends AppCompatActivity implements Database.Down
     User user;
 
     // Variables for retrieving the quizzes:
-//    Database database;
+    Database database;
     LocationQuizeo location;
 
     // Local variable
@@ -87,7 +87,7 @@ public class PlayQuizActivity extends AppCompatActivity implements Database.Down
         quizzesLayout = new LinearLayout(this);
         quizzesLayout.setOrientation(LinearLayout.VERTICAL);
 
-        Database database = Database.getInstance();
+        database = Database.getInstance();
         database.getQuizzes(location, this);
 
         // Add the linearLayout to the ScrollView:
@@ -156,6 +156,7 @@ public class PlayQuizActivity extends AppCompatActivity implements Database.Down
                 public void onClick(View v) {
                     int tag = (int) v.getTag();
                     quiz = quizzes.get(tag);
+                    getQuestions();
                     playQuiz();
                 }
             });
@@ -172,5 +173,16 @@ public class PlayQuizActivity extends AppCompatActivity implements Database.Down
             quizzesLayout.addView(noQuizes);
         }
 
+    }
+
+
+    @Override
+    public void onCallback1(ArrayList<Question> list) {
+        System.out.println("HENk");
+        quiz.addQuestions(list);
+    }
+
+    public void getQuestions() {
+        database.getQuestions(quiz.getQuizId(), this);
     }
 }

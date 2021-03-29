@@ -62,12 +62,12 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="67dp"
             android:text="@string/add_option"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/buttonDeleteQuestion"
             app:layout_constraintEnd_toEndOf="@+id/buttonDeleteQuestion"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/buttonDeleteQuestion"
             app:layout_constraintTop_toBottomOf="@id/textQuestion"
-            app:layout_constraintVertical_bias="0.729" />
+            app:layout_constraintVertical_bias="0.929" />
 
         <Button
             android:id="@+id/buttonSaveQuit"
@@ -75,7 +75,7 @@
             android:layout_height="88dp"
             android:layout_marginStart="200dp"
             android:layout_marginTop="100dp"
-            android:text="@string/save_quit"
+            android:text="@string/add_question"
             app:layout_constraintBottom_toTopOf="@+id/toolbar2"
             app:layout_constraintEnd_toStartOf="@+id/toolbar2"
             app:layout_constraintStart_toStartOf="parent"
