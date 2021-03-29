@@ -168,8 +168,11 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sp =
                 getSharedPreferences("MyPrefs",
                         Context.MODE_PRIVATE);
+//        sp.edit().remove("nickname").commit();
+//        sp.edit().remove("id").commit();
         String nickname = sp.getString("nickname", "");
         String id = sp.getString("id", "");
+        System.out.println("UUID "+ id);
         user = new User(nickname, id);
     }
 

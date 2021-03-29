@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class CreateQuizActivity2 extends AppCompatActivity {
@@ -24,6 +25,7 @@ public class CreateQuizActivity2 extends AppCompatActivity {
     Button buttonAddLocation;
     Button buttonSubmitQuiz;
     Button buttonRemoveQuestion;
+    boolean publish;
 
     TextView locationAdded;
     boolean newQuiz;
@@ -32,6 +34,8 @@ public class CreateQuizActivity2 extends AppCompatActivity {
 
     EditText quizName;
     EditText yourUserName;
+
+    Database database;
 
     Quiz quiz;
     LocationQuizeo location;
@@ -63,6 +67,7 @@ public class CreateQuizActivity2 extends AppCompatActivity {
         user = getIntent().getParcelableExtra("user");
 
         location = getIntent().getParcelableExtra("location");
+        database = Database.getInstance();
 
         newQuiz = getIntent().getBooleanExtra("newquiz", false);
         // Retrieve passed quiz element if it exists:
@@ -98,12 +103,19 @@ public class CreateQuizActivity2 extends AppCompatActivity {
                 } else if (quiz.getLocation() == null) {
                     showPopup(v, R.layout.popup_no_location);
                     return;
+                } else if (quiz.getQuestions().length == 0) {
+                    publish = true;
+                    quiz.setQuizName(quizName.getText().toString());
+                    if (quiz.getNumberOfRatings() == - 1) {
+                        quiz.setNrOfRatings(0);
+                    }
+                    database.getQuestions(quiz.getQuizId(), new QuestionsCallback());
+                    return;
                 } else {
                     quiz.setQuizName(quizName.getText().toString());
                     if (quiz.getNumberOfRatings() == - 1) {
                         quiz.setNrOfRatings(0);
                     }
-                    Database database = Database.getInstance();
                     database.uploadQuiz(quiz, true);
                     openCreateQuizActivity();
                 }
@@ -114,11 +126,21 @@ public class CreateQuizActivity2 extends AppCompatActivity {
         buttonSaveQuit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (quiz.getLocation() ==  null) {
+                    showPopup(v, R.layout.popup_no_location);
+                    return;
+                } else if (quizName.getText().toString().equals("")) {
+                    showPopup(v, R.layout.popup_no_quizname);
+                } else if (quiz.getQuestions().length == 0 && !newQuiz) {
+                    database.getQuestions(quiz.getQuizId(), new QuestionsCallback());
+                    publish = false;
+                    quiz.setQuizName(quizName.getText().toString());
+                    return;
+                }
                 quiz.setQuizName(quizName.getText().toString());
                 quiz.setNrOfRatings(-1);
-                Database database = Database.getInstance();
                 database.removeQuiz(quiz);
-                System.out.println("GlobalID" + quiz.getQuestions()[0].getGlobalId());
+//                System.out.println("GlobalID" + quiz.getQuestions()[0].getGlobalId());
                 database.uploadQuiz(quiz, false);
                 openCreateQuizActivity();
             }
@@ -128,6 +150,7 @@ public class CreateQuizActivity2 extends AppCompatActivity {
         buttonAddQuestion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                quiz.setNrOfRatings(-1);
                 quiz.setQuizName(quizName.getText().toString());
                 openAddQuestion();
             }
@@ -206,5 +229,17 @@ public class CreateQuizActivity2 extends AppCompatActivity {
                 return true;
             }
         });
+    }
+
+    private class QuestionsCallback implements Database.DownloadQuestionListCallback {
+
+        @Override
+        public void onCallback(ArrayList<Question> list) {
+            quiz.addQuestions(list);
+            database.removeQuiz(quiz);
+//                System.out.println("GlobalID" + quiz.getQuestions()[0].getGlobalId());
+            database.uploadQuiz(quiz, publish);
+            openCreateQuizActivity();
+        }
     }
 }

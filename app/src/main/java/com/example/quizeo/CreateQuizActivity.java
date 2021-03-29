@@ -15,7 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class CreateQuizActivity extends AppCompatActivity implements Database.DownloadQuizzesCallback {
+public class CreateQuizActivity extends AppCompatActivity {
 
     // Declare local variables
     Button buttonBack;
@@ -56,7 +56,7 @@ public class CreateQuizActivity extends AppCompatActivity implements Database.Do
         location = getIntent().getParcelableExtra("location");
         verified = getIntent().getBooleanExtra("verified", false);
         Database database = Database.getInstance();
-        database.getQuizzes(user, true, this);
+        database.getQuizzes(user, true, new quizzesCallback());
 
 
 
@@ -83,13 +83,6 @@ public class CreateQuizActivity extends AppCompatActivity implements Database.Do
     public void openMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
-    }
-
-
-    @Override
-    public void onCallback(ArrayList<Quiz> list) {
-        quizzes = new ArrayList<>(list);
-        updateDisplay();
     }
 
 
@@ -167,5 +160,14 @@ public class CreateQuizActivity extends AppCompatActivity implements Database.Do
 
         // Add the linearLayout to the ScrollView:
         quizesView.addView(quizzesLayout);
+    }
+
+    private class quizzesCallback implements Database.DownloadQuizzesCallback {
+
+        @Override
+        public void onCallback(ArrayList<Quiz> list) {
+            quizzes = new ArrayList<>(list);
+            updateDisplay();
+        }
     }
 }
