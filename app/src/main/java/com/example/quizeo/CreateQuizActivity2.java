@@ -29,6 +29,7 @@ public class CreateQuizActivity2 extends AppCompatActivity {
 
     TextView locationAdded;
     boolean newQuiz;
+    boolean verified;
 
     TextView numberOfQuestions;
 
@@ -63,6 +64,7 @@ public class CreateQuizActivity2 extends AppCompatActivity {
         buttonRemoveQuestion = (Button) findViewById(R.id.buttonRemoveQuestion);
 
         user = getIntent().getParcelableExtra("user");
+        verified = getIntent().getBooleanExtra("verified", true);
 
         location = getIntent().getParcelableExtra("location");
         database = Database.getInstance();
@@ -185,6 +187,7 @@ public class CreateQuizActivity2 extends AppCompatActivity {
     // Method to open the home screen
     public void openCreateQuizActivity() {
         Intent intent = new Intent(this, CreateQuizActivity.class);
+        intent.putExtra("verified", verified);
         intent.putExtra("user", user);
         intent.putExtra("location", location);
         startActivity(intent);
@@ -193,6 +196,7 @@ public class CreateQuizActivity2 extends AppCompatActivity {
     // Method to open the AddQuestionActivity
     public void openAddQuestion() {
         Intent intent = new Intent(this, AddQuestionActivity.class);
+        intent.putExtra("verified", verified);
         intent.putExtra("quiz", quiz);
         intent.putExtra("user", user);
         intent.putExtra("location", location);

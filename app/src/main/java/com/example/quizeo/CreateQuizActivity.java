@@ -54,7 +54,7 @@ public class CreateQuizActivity extends AppCompatActivity {
         // Retrieve all objects that were pushed from the previous class:
         user = getIntent().getParcelableExtra("user");
         location = getIntent().getParcelableExtra("location");
-        verified = getIntent().getBooleanExtra("verified", false);
+        verified = getIntent().getBooleanExtra("verified", true);
         Database database = Database.getInstance();
         database.getQuizzes(user, true, new quizzesCallback());
 
@@ -82,6 +82,9 @@ public class CreateQuizActivity extends AppCompatActivity {
     // Method to open the home screen
     public void openMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("location", location);
+        intent.putExtra("user", user);
+        intent.putExtra("verified", verified);
         startActivity(intent);
     }
 
@@ -92,6 +95,7 @@ public class CreateQuizActivity extends AppCompatActivity {
         intent.putExtra("location", location);
         intent.putExtra("user", user);
         intent.putExtra("quiz", quiz);
+        intent.putExtra("verified", verified);
         startActivity(intent);
     }
 

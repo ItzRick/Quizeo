@@ -144,6 +144,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        verified = getIntent().getBooleanExtra("verified", true);
         authentication.loginAnonymously(MainActivity.this);
         user = getIntent().getParcelableExtra("user");
         if (user == null) {
@@ -199,6 +200,7 @@ public class MainActivity extends AppCompatActivity {
     // Method to open the CreateQuizActivity
     public void openCreateQuizActivity(){
         Intent intent = new Intent(this, CreateQuizActivity.class);
+        intent.putExtra("verified", verified);
         intent.putExtra("location", location);
         intent.putExtra("user", user);
         startActivity(intent);
@@ -206,8 +208,8 @@ public class MainActivity extends AppCompatActivity {
 
     //Method to open the PlayQuizActivity
     public void openPlayQuizActivity(){
-        boolean verified = getIntent().getBooleanExtra("verified", true);
         Intent intent = new Intent(this, PlayQuizActivity.class);
+        intent.putExtra("user", user);
         intent.putExtra("verified", verified);
         intent.putExtra("location", location);
         startActivity(intent);
