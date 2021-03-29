@@ -254,7 +254,7 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    // class where the location is found and assigned
+    // class which keeps track if the location is disabled  or the location is changed
     class MyLocationListener implements LocationListener {
 
         @Override
@@ -264,6 +264,11 @@ public class MainActivity extends AppCompatActivity {
                 latitude =  location.getLatitude();
                 longitude = location.getLongitude();
             }
+        }
+
+        @Override
+        public void onProviderDisabled (@NonNull String message) {
+
         }
 
     }
