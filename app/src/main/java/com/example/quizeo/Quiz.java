@@ -401,6 +401,15 @@ public class Quiz implements Parcelable {
     }
 
     /**
+     * Set the score to pass of this quiz
+     *
+     * @param value the new score to pass
+     */
+    public void setScoreToPass(int value) {
+        this.scoreToPass = value;
+    }
+
+    /**
      * Retrieve the percentage required to pass this quiz.
      *
      * @return the percentage required to pass the quiz.

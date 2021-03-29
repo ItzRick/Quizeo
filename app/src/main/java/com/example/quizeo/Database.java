@@ -288,7 +288,7 @@ public final class Database {
         String name = (String) doc.get("Name");
         int nrOfQuestions = ((Long) doc.get("Number of Questions")).intValue();
         int nrOfRatings = ((Long) doc.get("Number of Ratings")).intValue();
-
+        int scoreToPass = ((Long) doc.get("Score to Pass")).intValue();
         double rating = (double) doc.get("Rating");
         int percentageToPass = ((Double) doc.get("Percentage to pass")).intValue();
         String userId = (String) doc.get("UserId");
@@ -301,6 +301,7 @@ public final class Database {
         q.setQuizName(name);
         q.setNrOfRatings(nrOfRatings);
         q.setNumberOfQuestions(nrOfQuestions);
+        q.setScoreToPass(scoreToPass);
         q.setRating(rating);
         q.setPercentageToPass(percentageToPass);
         q.setUserCreated(user);
@@ -333,6 +334,7 @@ public final class Database {
         data.put("Number of Ratings", quiz.getNumberOfRatings());
         data.put("Number of Questions", quiz.getNumberOfQuestions());
         data.put("Percentage to pass", quiz.getPercentageToPass());
+        data.put("Score to Pass", quiz.getScoreToPass());
         data.put("Latitude", loc.getLatitude());
         data.put("Longitude", loc.getLongitude());
         data.put("Questions", listOfQuestions);
