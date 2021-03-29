@@ -121,6 +121,7 @@ public class Question implements Parcelable {
         correct = in.readString();
         correctInt = in.readInt();
         explanation = in.readString();
+        globalId = (UUID) in.readSerializable();
     }
 
     /**
@@ -350,5 +351,6 @@ public class Question implements Parcelable {
         dest.writeString(correct);
         dest.writeInt(correctInt);
         dest.writeString(explanation);
+        dest.writeSerializable(globalId);
     }
 }

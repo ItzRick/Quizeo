@@ -46,6 +46,8 @@ public class AddQuestionActivity extends AppCompatActivity {
     ArrayList<Button> correctButtons;
     ArrayList<LinearLayout> layouts;
 
+    boolean newQuiz;
+
     LocationQuizeo location;
     Quiz quiz;
     User user;
@@ -74,6 +76,7 @@ public class AddQuestionActivity extends AppCompatActivity {
         location = getIntent().getParcelableExtra("location");
         quiz = getIntent().getParcelableExtra("quiz");
         user = getIntent().getParcelableExtra("user");
+        newQuiz = getIntent().getBooleanExtra("newquiz", false);
         answers = new ArrayList<>();
         removeButtons = new ArrayList<>();
         correctButtons = new ArrayList<>();
@@ -149,6 +152,7 @@ public class AddQuestionActivity extends AppCompatActivity {
         intent.putExtra("user", user);
         intent.putExtra("quiz", quiz);
         intent.putExtra("location", location);
+        intent.putExtra("newquiz", newQuiz);
         startActivity(intent);
     }
 

@@ -24,6 +24,7 @@ public class CreateQuizActivity extends AppCompatActivity implements Database.Do
     LinearLayout quizzesLayout;
     Quiz quiz;
     User user;
+    boolean newQuiz;
 
     LocationQuizeo location;
     boolean verified;
@@ -72,6 +73,7 @@ public class CreateQuizActivity extends AppCompatActivity implements Database.Do
         buttonNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                newQuiz = true;
                 editQuiz();
             }
         });
@@ -93,6 +95,7 @@ public class CreateQuizActivity extends AppCompatActivity implements Database.Do
 
     public void editQuiz() {
         Intent intent = new Intent(this, CreateQuizActivity2.class);
+        intent.putExtra("newquiz", newQuiz);
         intent.putExtra("location", location);
         intent.putExtra("user", user);
         intent.putExtra("quiz", quiz);
@@ -143,6 +146,7 @@ public class CreateQuizActivity extends AppCompatActivity implements Database.Do
                 public void onClick(View v) {
                     int tag = (int) v.getTag();
                     quiz = quizzes.get(tag);
+                    newQuiz = false;
 //                    System.out.println("ID:" + quiz.getQuizId());
                     editQuiz();
                 }

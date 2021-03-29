@@ -33,7 +33,7 @@ public class PlayQuizActivity extends AppCompatActivity implements Database.Down
     User user;
 
     // Variables for retrieving the quizzes:
-    Database database;
+//    Database database;
     LocationQuizeo location;
 
     // Local variable
@@ -48,11 +48,10 @@ public class PlayQuizActivity extends AppCompatActivity implements Database.Down
         // which user is going to answer this quiz:
         setContentView(R.layout.fragment_play_quiz);
         buttonBack = (Button) findViewById(R.id.buttonBack);
-        database = Database.getInstance();
         quizzesView = (ScrollView) findViewById(R.id.quizzes_scroll);
         user = getIntent().getParcelableExtra("userAnswered");
 
-        quizzes = new ArrayList<>();
+//        quizzes = new ArrayList<>();
 
         // Add a listener to the back button:
         buttonBack.setOnClickListener(new View.OnClickListener() {
@@ -84,13 +83,15 @@ public class PlayQuizActivity extends AppCompatActivity implements Database.Down
         // Retrieve all objects that were pushed from the previous class:
         location = getIntent().getParcelableExtra("location");
         verified = getIntent().getBooleanExtra("verified", false);
-        database.getQuizzes(location, this);
 
         quizzesLayout = new LinearLayout(this);
         quizzesLayout.setOrientation(LinearLayout.VERTICAL);
 
         Database database = Database.getInstance();
         database.getQuizzes(location, this);
+
+        // Add the linearLayout to the ScrollView:
+        quizzesView.addView(quizzesLayout);
 //        String string1 = "this is a question";
 //        String string2 = "this is another question";
 //        String[] array = new String[]{
@@ -140,27 +141,11 @@ public class PlayQuizActivity extends AppCompatActivity implements Database.Down
         for (int i = 0; i < quizzes.size(); i++) {
             // Create a new button for each quiz:
             buttons[i] = new Button(this);
-            Quiz tempQuiz = quizzes.get(i);
-            String verified1;
-            String published1;
-            if (tempQuiz.getNumberOfRatings() == -1) {
-                published1 = "not Published";
-                verified1 = "not Verified";
-            } else {
-                published1 = "Published";
-                if (tempQuiz.getNumberOfRatings() > 100 && tempQuiz.getRating() > 0.75) {
-                    verified1 = "Verified";
-                } else {
-                    verified1 = "not Verified";
-                }
-            }
-
 
             // Set the correct text for this quiz:
             String string = "Quiz: " + quizzes.get(i).getQuizName() + "\n" +
                     quizzes.get(i).getNumberOfQuestions() +
-                    " questions \n" + "Created by: " + quizzes.get(i).getUserCreated().getNickName()
-                    + "\n" + published1 + "               " + verified1;
+                    " questions \n" + "Created by: " + quizzes.get(i).getUserCreated().getNickName();
             buttons[i].setText(string);
             buttons[i].setTag(i);
             // Add the button to the linearlayout:
@@ -171,7 +156,6 @@ public class PlayQuizActivity extends AppCompatActivity implements Database.Down
                 public void onClick(View v) {
                     int tag = (int) v.getTag();
                     quiz = quizzes.get(tag);
-//                    System.out.println("ID:" + quiz.getQuizId());
                     playQuiz();
                 }
             });
@@ -188,8 +172,5 @@ public class PlayQuizActivity extends AppCompatActivity implements Database.Down
             quizzesLayout.addView(noQuizes);
         }
 
-
-        // Add the linearLayout to the ScrollView:
-        quizzesView.addView(quizzesLayout);
     }
 }

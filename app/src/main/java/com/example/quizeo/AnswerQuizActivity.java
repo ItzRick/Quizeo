@@ -57,6 +57,7 @@ public class AnswerQuizActivity extends AppCompatActivity {
         verified = getIntent().getBooleanExtra("verified", true);
         location = getIntent().getParcelableExtra("location");
         quiz = getIntent().getParcelableExtra("quiz");
+        System.out.println(quiz.getNumberOfQuestions());
         answerQuiz = getIntent().getParcelableExtra("answerQuiz");
         userAnswered = getIntent().getParcelableExtra("user");
 

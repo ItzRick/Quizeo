@@ -26,7 +26,7 @@ public class CreateQuizActivity2 extends AppCompatActivity {
     Button buttonRemoveQuestion;
 
     TextView locationAdded;
-
+    boolean newQuiz;
 
     TextView numberOfQuestions;
 
@@ -64,6 +64,7 @@ public class CreateQuizActivity2 extends AppCompatActivity {
 
         location = getIntent().getParcelableExtra("location");
 
+        newQuiz = getIntent().getBooleanExtra("newquiz", false);
         // Retrieve passed quiz element if it exists:
         quiz = getIntent().getParcelableExtra("quiz");
 
@@ -74,6 +75,12 @@ public class CreateQuizActivity2 extends AppCompatActivity {
             quiz.setUserCreated(user);
         } else {
             quizName.setText(quiz.getQuizName());
+        }
+
+        if (!newQuiz) {
+            quiz.setLocation(location);
+            String text = "Location has been added!";
+            locationAdded.setText(text);
         }
 
 
@@ -111,6 +118,7 @@ public class CreateQuizActivity2 extends AppCompatActivity {
                 quiz.setNrOfRatings(-1);
                 Database database = Database.getInstance();
                 database.removeQuiz(quiz);
+                System.out.println("GlobalID" + quiz.getQuestions()[0].getGlobalId());
                 database.uploadQuiz(quiz, false);
                 openCreateQuizActivity();
             }
@@ -132,6 +140,7 @@ public class CreateQuizActivity2 extends AppCompatActivity {
                 quiz.setLocation(location);
                 String text = "Location has been added!";
                 locationAdded.setText(text);
+                newQuiz = false;
             }
         });
 
@@ -165,6 +174,7 @@ public class CreateQuizActivity2 extends AppCompatActivity {
         intent.putExtra("quiz", quiz);
         intent.putExtra("user", user);
         intent.putExtra("location", location);
+        intent.putExtra("newquiz", newQuiz);
         startActivity(intent);
     }
 

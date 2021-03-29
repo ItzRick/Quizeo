@@ -148,7 +148,7 @@
         android:layout_width="154dp"
         android:layout_height="81dp"
         android:layout_marginBottom="29dp"
-        android:text="@string/remove_question"
+        android:text="@string/remove_quiz"
         android:textColor="#F4EFEF"
         android:textColorHighlight="#F8EEEE"
         android:textColorLink="#F1EFEF"

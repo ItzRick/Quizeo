@@ -83,6 +83,9 @@ public class FinishQuizActivity extends AppCompatActivity {
      * Transitions to the available quizzes menu, where the user can select a new quiz.
      */
     private void goToQuizzesMenu() {
+        Database database = Database.getInstance();
+        database.removeQuiz(quiz);
+        database.uploadQuiz(quiz, true);
         Intent intent = new Intent(this, PlayQuizActivity.class);
         intent.putExtra("location", location);
         intent.putExtra("verified", verified);
@@ -95,6 +98,9 @@ public class FinishQuizActivity extends AppCompatActivity {
      * Transitions to the main menu screen
      */
     public void goToMainMenu() {
+        Database database = Database.getInstance();
+        database.removeQuiz(quiz);
+        database.uploadQuiz(quiz, true);
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("location", location);
         intent.putExtra("verified", verified);
@@ -102,13 +108,13 @@ public class FinishQuizActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    /**
-     * Method to calculate the score in percents.
-     * @param num numenator
-     * @param denom denominator
-     * @return percentage num of denom.
-     */
-    public double calculateScore (int num, int denom) {
-        return ((double) num) / denom;
-    }
+//    /**
+//     * Method to calculate the score in percents.
+//     * @param num numenator
+//     * @param denom denominator
+//     * @return percentage num of denom.
+//     */
+//    public double calculateScore (int num, int denom) {
+//        return ((double) num) / denom;
+//    }
 }
