@@ -256,7 +256,10 @@ public final class Database {
         ArrayList<String> answers = (ArrayList<String>) doc.get("Answers");
         String correct = (String) doc.get("Correct");
         int ID = ((Long) doc.get("Question Number")).intValue();
-        String user = (String) doc.get("Question Number");
+        String userId = (String) doc.get("UserId");
+        String username = (String) doc.get("Username");
+
+        User user = new User(username, userId);
 
         String[] ans = new String[answers.size()];
         for (int i = 0; i < answers.size(); i++) {
@@ -270,6 +273,7 @@ public final class Database {
         q.setId(ID);
         q.setQuestion(question);
         q.setExplanation(explanation);
+        q.setUserCreated(user);
     }
 
     /**
