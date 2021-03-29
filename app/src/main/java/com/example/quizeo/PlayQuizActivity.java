@@ -90,6 +90,7 @@ public class PlayQuizActivity extends AppCompatActivity implements Database.Down
         database = Database.getInstance();
         database.getQuizzes(location, new callBackQuizzes());
 
+        quizzesView.removeAllViews();
         // Add the linearLayout to the ScrollView:
         quizzesView.addView(quizzesLayout);
 //        String string1 = "this is a question";

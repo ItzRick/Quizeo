@@ -58,6 +58,7 @@ public class CreateQuizActivity extends AppCompatActivity {
         Database database = Database.getInstance();
         database.getQuizzes(user, true, new quizzesCallback());
 
+        quizesView.removeAllViews();
         // Add the linearLayout to the ScrollView:
         quizesView.addView(quizzesLayout);
 
