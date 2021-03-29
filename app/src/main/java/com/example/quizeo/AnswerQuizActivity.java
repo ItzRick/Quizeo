@@ -85,11 +85,11 @@ public class AnswerQuizActivity extends AppCompatActivity {
         currentQuestionText = (TextView) findViewById(R.id.question_answer);
 
         // Set the current question number:
-        String current = currentQuestion.getId() + " / " + quiz.getNumberOfQuestions();
+        String current = (answerQuiz.getNumberQuestionsAnswered() + 1) + " / " + quiz.getNumberOfQuestions();
         currentQuestionNumber.setText(current);
 
         // Set the number of correctly answered questions:
-        String score = answerQuiz.getScore() + " / " + (currentQuestion.getId() - 1);
+        String score = answerQuiz.getScore() + " / " + answerQuiz.getNumberQuestionsAnswered();
         numberCorrect.setText(score);
 
         // Set the current question text:

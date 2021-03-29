@@ -157,7 +157,7 @@ public class PlayQuizActivity extends AppCompatActivity implements Database.Down
                     int tag = (int) v.getTag();
                     quiz = quizzes.get(tag);
                     database.getQuestions(quiz.getQuizId(), new callBackQuestions());
-                    playQuiz();
+//                    playQuiz();
                 }
             });
 
@@ -190,6 +190,7 @@ public class PlayQuizActivity extends AppCompatActivity implements Database.Down
         @Override
         public void onCallback(ArrayList<Question> list) {
             quiz.addQuestions(list);
+            playQuiz();
         }
     }
 }

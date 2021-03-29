@@ -11,11 +11,14 @@ public class AnswerQuiz implements Parcelable {
     /** User who answered this quiz: */
     private User userAnswered;
 
+    private int questionsAnswered;
+
     /**
      * Initialize the score to 0.
      */
     public AnswerQuiz() {
         score = 0;
+        questionsAnswered = 0;
     }
 
     /**
@@ -27,6 +30,7 @@ public class AnswerQuiz implements Parcelable {
     public AnswerQuiz(User userAnswered) {
         // Initialize the score:
         score = 0;
+        questionsAnswered = 0;
         // Set the correct user who answered this quiz:
         this.userAnswered = userAnswered;
     }
@@ -37,6 +41,7 @@ public class AnswerQuiz implements Parcelable {
     protected AnswerQuiz(Parcel in) {
         score = in.readInt();
         userAnswered = in.readParcelable(User.class.getClassLoader());
+        questionsAnswered = in.readInt();
     }
 
     /**
@@ -72,6 +77,7 @@ public class AnswerQuiz implements Parcelable {
         if (correct) {
             score++;
         }
+        questionsAnswered++;
     }
 
     /**
@@ -92,6 +98,10 @@ public class AnswerQuiz implements Parcelable {
         return score;
     }
 
+    public int getNumberQuestionsAnswered() {
+        return questionsAnswered;
+    }
+
     /**
      * Method for the parcelable, required to pass this object between classes.
      */
@@ -107,5 +117,8 @@ public class AnswerQuiz implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(score);
         dest.writeParcelable(userAnswered, flags);
+        dest.writeInt(questionsAnswered);
     }
 }
+
+
