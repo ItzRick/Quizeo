@@ -85,6 +85,7 @@ public class FinishQuizActivity extends AppCompatActivity {
     private void goToQuizzesMenu() {
         Database database = Database.getInstance();
         database.removeQuiz(quiz);
+//        System.out.println(quiz.getQuestions().length);
         database.uploadQuiz(quiz, true);
         Intent intent = new Intent(this, PlayQuizActivity.class);
         intent.putExtra("location", location);

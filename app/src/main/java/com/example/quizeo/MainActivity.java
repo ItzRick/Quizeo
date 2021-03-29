@@ -125,7 +125,8 @@ public class MainActivity extends AppCompatActivity {
         buttonMakeQuiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Log.d("latitude", String.valueOf(latitude));
+                Log.d("longitude", String.valueOf(longitude));
                 openCreateQuizActivity();
             }
         });
