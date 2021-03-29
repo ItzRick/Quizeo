@@ -198,7 +198,7 @@ public class MainActivity extends AppCompatActivity {
 //        sp.edit().remove("id").commit();
         String nickname = sp.getString("nickname", "");
         String id = sp.getString("id", "");
-        System.out.println("UUID "+ id);
+//        System.out.println("UUID "+ id);
         user = new User(nickname, id);
     }
 

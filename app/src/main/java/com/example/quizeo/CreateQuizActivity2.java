@@ -104,7 +104,7 @@ public class CreateQuizActivity2 extends AppCompatActivity {
                 } else if (quiz.getLocation() == null) {
                     showPopup(v, R.layout.popup_no_location);
                     return;
-                } else if (quiz.getQuestions().length == 0) {
+                } else if (quiz.getQuestions().length != quiz.getNumberOfQuestions()) {
                     publish = true;
                     quiz.setQuizName(quizName.getText().toString());
                     if (quiz.getNumberOfRatings() == - 1) {
@@ -132,10 +132,10 @@ public class CreateQuizActivity2 extends AppCompatActivity {
                     return;
                 } else if (quizName.getText().toString().equals("")) {
                     showPopup(v, R.layout.popup_no_quizname);
-                } else if (quiz.getQuestions().length == 0 && quiz.getNumberOfQuestions() != 0) {
-                    database.getQuestions(quiz.getQuizId(), new QuestionsCallback());
+                } else if (quiz.getQuestions().length != quiz.getNumberOfQuestions()) {
                     publish = false;
                     quiz.setQuizName(quizName.getText().toString());
+                    database.getQuestions(quiz.getQuizId(), new QuestionsCallback());
                     return;
                 }
                 quiz.setQuizName(quizName.getText().toString());
