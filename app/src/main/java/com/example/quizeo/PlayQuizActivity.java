@@ -20,7 +20,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class PlayQuizActivity extends AppCompatActivity implements Database.DownloadQuizzesCallback, Database.DownloadQuestionListCallback {
+public class PlayQuizActivity extends AppCompatActivity implements Database.DownloadQuizzesCallback {
 
     //local variables for UI elements:
     Button buttonBack;
@@ -88,7 +88,7 @@ public class PlayQuizActivity extends AppCompatActivity implements Database.Down
         quizzesLayout.setOrientation(LinearLayout.VERTICAL);
 
         database = Database.getInstance();
-        database.getQuizzes(location, this);
+        database.getQuizzes(location, new callBackQuizzes());
 
         // Add the linearLayout to the ScrollView:
         quizzesView.addView(quizzesLayout);
@@ -156,7 +156,7 @@ public class PlayQuizActivity extends AppCompatActivity implements Database.Down
                 public void onClick(View v) {
                     int tag = (int) v.getTag();
                     quiz = quizzes.get(tag);
-                    getQuestions();
+                    database.getQuestions(quiz.getQuizId(), new callBackQuestions());
                     playQuiz();
                 }
             });
@@ -176,13 +176,20 @@ public class PlayQuizActivity extends AppCompatActivity implements Database.Down
     }
 
 
-    @Override
-    public void onCallback1(ArrayList<Question> list) {
-        System.out.println("HENk");
-        quiz.addQuestions(list);
+    private class callBackQuizzes implements  Database.DownloadQuizzesCallback {
+
+        @Override
+        public void onCallback(ArrayList<Quiz> list) {
+            quizzes = new ArrayList<>(list);
+            updateDisplay();
+        }
     }
 
-    public void getQuestions() {
-        database.getQuestions(quiz.getQuizId(), this);
+    private class callBackQuestions implements Database.DownloadQuestionListCallback {
+
+        @Override
+        public void onCallback(ArrayList<Question> list) {
+            quiz.addQuestions(list);
+        }
     }
 }
