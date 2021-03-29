@@ -8,6 +8,19 @@
     android:background="@drawable/gradient"
     tools:context=".AnswerQuizActivity">
 
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="528dp"
+        android:layout_height="528dp"
+        android:layout_marginBottom="100dp"
+        android:alpha="0.7"
+        android:contentDescription="@string/globe"
+        android:src="@drawable/globe2_removebg_preview"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <TextView
         android:id="@+id/score_answer"
         android:layout_width="110dp"
