@@ -137,33 +137,7 @@ public class AnswerQuizActivity extends AppCompatActivity {
                         // The question has been answered:
                         isAnswered = true;
                     } else {
-                        // Create a pop up that the question has already been answered:
-                        // inflate the layout of the popup window
-                        LayoutInflater inflater = (LayoutInflater)
-                                v.getContext().getSystemService
-                                        (v.getContext().LAYOUT_INFLATER_SERVICE);
-                        View popupView =
-                                inflater.inflate(R.layout.popup_already_answered, null);
-
-                        // create the popup window
-                        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-                        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-                        // Makes sure you can also press outside the popup to dismiss it:
-                        boolean focusable = true;
-                        PopupWindow popupWindow =
-                                new PopupWindow(popupView, width, height, focusable);
-
-                        // show the popup window
-                        popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
-
-                        // dismiss the popup window when touched
-                        popupView.setOnTouchListener(new View.OnTouchListener() {
-                            @Override
-                            public boolean onTouch(View v, MotionEvent event) {
-                                popupWindow.dismiss();
-                                return true;
-                            }
-                        });
+                        showPopup(v, R.layout.popup_already_answered);
                     }
                 }
             });
@@ -194,33 +168,7 @@ public class AnswerQuizActivity extends AppCompatActivity {
                         answerNext();
                     }
                 } else {
-                    // Create a pop up that the question should first be answered:
-                    // inflate the layout of the popup window
-                    LayoutInflater inflater = (LayoutInflater)
-                            v.getContext().getSystemService
-                                    (v.getContext().LAYOUT_INFLATER_SERVICE);
-                    View container =
-                            inflater.inflate(R.layout.popup_not_answered, null);
-
-                    // create the popup window
-                    int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-                    int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-                    // Sets that you can press outside the popup to close it:
-                    boolean focusable = true;
-                    PopupWindow popupWindow = new PopupWindow(container, width, height, focusable);
-
-                    // show the popup window
-                    // which view you pass in doesn't matter, it is only used for the window token
-                    popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
-
-                    // dismiss the popup window when touched
-                    container.setOnTouchListener(new View.OnTouchListener() {
-                        @Override
-                        public boolean onTouch(View v, MotionEvent event) {
-                            popupWindow.dismiss();
-                            return true;
-                        }
-                    });
+                    showPopup(v, R.layout.popup_not_answered);
                 }
             }
         });
@@ -263,5 +211,35 @@ public class AnswerQuizActivity extends AppCompatActivity {
         intent.putExtra("quiz", quiz);
         intent.putExtra("user", userAnswered);
         startActivity(intent);
+    }
+
+    void showPopup (View v, int popup) {
+        // Create a pop up that the question has already been answered:
+        // inflate the layout of the popup window
+        LayoutInflater inflater = (LayoutInflater)
+                v.getContext().getSystemService
+                        (v.getContext().LAYOUT_INFLATER_SERVICE);
+        View popupView =
+                inflater.inflate(popup, null);
+
+        // create the popup window
+        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+        // Makes sure you can also press outside the popup to dismiss it:
+        boolean focusable = true;
+        PopupWindow popupWindow =
+                new PopupWindow(popupView, width, height, focusable);
+
+        // show the popup window
+        popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
+
+        // dismiss the popup window when touched
+        popupView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                popupWindow.dismiss();
+                return true;
+            }
+        });
     }
 }
