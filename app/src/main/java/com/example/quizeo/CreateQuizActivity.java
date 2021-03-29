@@ -58,7 +58,8 @@ public class CreateQuizActivity extends AppCompatActivity {
         Database database = Database.getInstance();
         database.getQuizzes(user, true, new quizzesCallback());
 
-
+        // Add the linearLayout to the ScrollView:
+        quizesView.addView(quizzesLayout);
 
 
         // Open the home screen with back button
@@ -160,10 +161,6 @@ public class CreateQuizActivity extends AppCompatActivity {
             noQuizes.setGravity(Gravity.CENTER);
             quizzesLayout.addView(noQuizes);
         }
-
-
-        // Add the linearLayout to the ScrollView:
-        quizesView.addView(quizzesLayout);
     }
 
     private class quizzesCallback implements Database.DownloadQuizzesCallback {

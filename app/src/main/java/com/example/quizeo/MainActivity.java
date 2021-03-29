@@ -101,6 +101,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 getLocation();
+                System.out.println("latitude " + latitude);
+                System.out.println("longitude" + longitude);
                 location = new LocationQuizeo(latitude, longitude);
                 openCreateQuizActivity();
             }
