@@ -33,7 +33,6 @@ public class CreateQuizActivity2 extends AppCompatActivity {
     TextView numberOfQuestions;
 
     EditText quizName;
-    EditText yourUserName;
 
     Database database;
 
@@ -53,7 +52,6 @@ public class CreateQuizActivity2 extends AppCompatActivity {
         setContentView(R.layout.fragment_create_quiz_2);
         buttonSaveQuit = (Button) findViewById(R.id.buttonSaveQuit);
         quizName = (EditText) findViewById(R.id.YourQuizName);
-        yourUserName = (EditText) findViewById(R.id.YourUsername);
         buttonAddQuestion = (Button) findViewById(R.id.buttonAddQuestion);
         numberOfQuestions = (TextView) findViewById(R.id.NumberOfQuestions);
 
@@ -131,7 +129,7 @@ public class CreateQuizActivity2 extends AppCompatActivity {
                     return;
                 } else if (quizName.getText().toString().equals("")) {
                     showPopup(v, R.layout.popup_no_quizname);
-                } else if (quiz.getQuestions().length == 0 && !newQuiz) {
+                } else if (quiz.getQuestions().length == 0 && quiz.getNumberOfQuestions() != 0) {
                     database.getQuestions(quiz.getQuizId(), new QuestionsCallback());
                     publish = false;
                     quiz.setQuizName(quizName.getText().toString());
@@ -141,6 +139,7 @@ public class CreateQuizActivity2 extends AppCompatActivity {
                 quiz.setNrOfRatings(-1);
                 database.removeQuiz(quiz);
 //                System.out.println("GlobalID" + quiz.getQuestions()[0].getGlobalId());
+//                System.out.println("USER" + quiz.getUserCreated().getUserId());
                 database.uploadQuiz(quiz, false);
                 openCreateQuizActivity();
             }

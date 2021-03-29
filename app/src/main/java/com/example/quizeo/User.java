@@ -32,11 +32,13 @@ public class User implements Parcelable {
 
     protected User(Parcel in) {
         nickName = in.readString();
+        userId = in.readString();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(nickName);
+        dest.writeString(userId);
     }
 
     @Override
