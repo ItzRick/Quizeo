@@ -47,6 +47,7 @@ public class AddQuestionActivity extends AppCompatActivity {
     ArrayList<LinearLayout> layouts;
 
     boolean newQuiz;
+    boolean verified;
 
     LocationQuizeo location;
     Quiz quiz;
@@ -74,6 +75,7 @@ public class AddQuestionActivity extends AppCompatActivity {
         answersLayout.setOrientation(LinearLayout.VERTICAL);
 
         location = getIntent().getParcelableExtra("location");
+        verified = getIntent().getBooleanExtra("verified", true);
         quiz = getIntent().getParcelableExtra("quiz");
         user = getIntent().getParcelableExtra("user");
         newQuiz = getIntent().getBooleanExtra("newquiz", false);
@@ -153,6 +155,7 @@ public class AddQuestionActivity extends AppCompatActivity {
         intent.putExtra("quiz", quiz);
         intent.putExtra("location", location);
         intent.putExtra("newquiz", newQuiz);
+        intent.putExtra("verified", verified);
         startActivity(intent);
     }
 
