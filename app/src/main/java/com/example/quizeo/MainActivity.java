@@ -1,6 +1,7 @@
 package com.example.quizeo;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,14 +11,18 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import android.os.Looper;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 
@@ -27,7 +32,24 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.content.Intent;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+
+import java.time.LocalDate;
+
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.Task;
+import com.google.protobuf.StringValue;
+
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
@@ -43,10 +65,8 @@ public class MainActivity extends AppCompatActivity {
     boolean darkmode;
     boolean request;
 
-    private LocationManager locationManager;
-    private LocationListener locationListener = new MyLocationListener();
-    private boolean gpsEnabled = false;
-    private boolean connectionEnabled = false;
+    int PERMISSION_ID = 44;
+    FusedLocationProviderClient mFusedLocationClient;
 
     // variables for latitude and longitude
     public double longitude;
@@ -58,11 +78,17 @@ public class MainActivity extends AppCompatActivity {
     /** Holds the Authentication instance */
     private Authentication authentication;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
+    @SuppressLint("MissingPermission")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.homescreen);
         Intent intent = getIntent();
+
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
+        getLastLocation();
 
         // get options from options activity
         getOptions(intent);
@@ -94,14 +120,12 @@ public class MainActivity extends AppCompatActivity {
         buttonStartQuiz = (Button) findViewById(R.id.buttonStartQuiz);
         buttonOptions = (Button) findViewById(R.id.buttonOptions);
 
-        locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
         // Open the CreateQuizActivity with make quiz button
         buttonMakeQuiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getLocation();
-                location = new LocationQuizeo(latitude, longitude);
+
                 openCreateQuizActivity();
             }
         });
@@ -110,8 +134,8 @@ public class MainActivity extends AppCompatActivity {
         buttonStartQuiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getLocation();
-                location = new LocationQuizeo(latitude, longitude);
+                Log.d("latitude", String.valueOf(latitude));
+                Log.d("longitude", String.valueOf(longitude));
                 openPlayQuizActivity();
             }
         });
@@ -256,73 +280,101 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    // class which keeps track if the location is disabled  or the location is changed
-    class MyLocationListener implements LocationListener {
 
-        @Override
-        public void onLocationChanged(@NonNull Location location) {
-            if (location != null) {
-                locationManager.removeUpdates(locationListener);
-                latitude =  location.getLatitude();
-                longitude = location.getLongitude();
+    @SuppressLint("MissingPermission")
+    private void getLastLocation(){
+        if (checkPermissions()) {
+            if (isLocationEnabled()) {
+
+                    Task<Location> task = mFusedLocationClient.getLastLocation();
+
+                    task.addOnCompleteListener(
+                            task1 -> {
+                                Location location = task1.getResult();
+                                if (location == null) {
+                                    requestNewLocationData();
+                                } else {
+                                    latitude = location.getLatitude();
+                                    longitude = location.getLongitude();
+                                    this.location = new LocationQuizeo(latitude, longitude);
+                                }
+                            }
+
+                    );
+            } else {
+                Toast.makeText(this, "Turn on location", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivity(intent);
             }
+        } else {
+            requestPermissions();
         }
+    }
 
-        @Override
-        public void onProviderDisabled (@NonNull String message) {
 
-        }
+
+    @SuppressLint("MissingPermission")
+    private void requestNewLocationData(){
+
+        LocationRequest mLocationRequest = LocationRequest.create();
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        mLocationRequest.setInterval(0);
+        mLocationRequest.setFastestInterval(0);
+        mLocationRequest.setNumUpdates(1);
+
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        mFusedLocationClient.requestLocationUpdates(
+                mLocationRequest, mLocationCallback,
+                Looper.myLooper()
+        );
 
     }
 
-    // method to fetch the location
-    public void getLocation() {
-
-        //check if the gps is present and turned on
-        try {
-            gpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-        } catch (Exception ex) {
-
+    private final LocationCallback mLocationCallback = new LocationCallback() {
+        @Override
+        public void onLocationResult(LocationResult locationResult) {
+            Location mLastLocation = locationResult.getLastLocation();
+            latitude  = mLastLocation.getLatitude();
+            longitude =  mLastLocation.getLongitude();
+            location = new LocationQuizeo(latitude, longitude);
         }
+    };
 
-        //check if internet connection is present and turned on
-        try {
-            connectionEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-        } catch (Exception ex) {
+    private boolean checkPermissions() {
+        return ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+    }
 
-        }
+    private void requestPermissions() {
+        ActivityCompat.requestPermissions(
+                this,
+                new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION},
+                PERMISSION_ID
+        );
+    }
 
-        // if they aren't, print a message
-        if (!gpsEnabled && !connectionEnabled) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-            builder.setTitle("Error");
-            builder.setMessage("location services are disabled");
+    private boolean isLocationEnabled() {
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
+                LocationManager.NETWORK_PROVIDER
+        );
+    }
 
-            builder.create().show();
-
-
-        }
-
-        // fetch the location if everything is fine
-        if (gpsEnabled) {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
-                return;
+    @Override
+    public void onRequestPermissionsResult(int requestCode,  String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == PERMISSION_ID) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                getLastLocation();
             }
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0,
-                    0, locationListener);
         }
+    }
 
-        if (connectionEnabled) {
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0,
-                    0, locationListener);
-
+    @Override
+    public void onResume(){
+        super.onResume();
+        if (checkPermissions()) {
+            getLastLocation();
         }
 
     }

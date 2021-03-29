@@ -2,6 +2,7 @@ package com.example.quizeo;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -163,6 +164,8 @@ public class CreateQuizActivity2 extends AppCompatActivity {
                 quiz.setQuizName(quizName.getText().toString());
                 quiz.setLocation(location);
                 String text = "Location has been added!";
+                Log.d("lat", String.valueOf(location.getLatitude()));
+                Log.d("lon", String.valueOf(location.getLongitude()));
                 locationAdded.setText(text);
                 newQuiz = false;
             }
