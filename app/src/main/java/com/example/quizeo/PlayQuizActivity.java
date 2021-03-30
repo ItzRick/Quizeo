@@ -134,13 +134,24 @@ public class PlayQuizActivity extends AppCompatActivity implements Database.Down
         if (quizzes == null) {
             quizzes = new ArrayList<>();
         }
+        if (verified) {
+            for (int i = 0; i < quizzes.size(); i++) {
+                Quiz tempQuiz = quizzes.get(i);
+                if (tempQuiz.getNumberOfRatings() < 100 || tempQuiz.getRating() < 7.5) {
+
+                    quizzes.remove(i);
+                    i--;
+                }
+            }
+        }
 
 
         // Create an array of buttons with the same length as the quizzes arraylist:
         Button[] buttons = new Button[quizzes.size()];
 //        System.out.println(quizzes.size());
         for (int i = 0; i < quizzes.size(); i++) {
-//            System.out.println("number of ratings1: " + quizzes.get(i).getNumberOfRatings());
+            System.out.println("number of ratings1: " + quizzes.get(i).getNumberOfRatings());
+            System.out.println(quizzes.get(i).getRating());
             // Create a new button for each quiz:
             buttons[i] = new Button(this);
 
