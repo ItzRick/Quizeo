@@ -179,6 +179,10 @@ public class AddQuestionActivity extends AppCompatActivity {
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int height = displayMetrics.heightPixels;
         int width = displayMetrics.widthPixels;
+        if (width > height) {
+            width = (int) (0.8 * width);
+            System.out.println(width);
+        }
 
         LinearLayout tempLayout = new LinearLayout(this);
         tempLayout.setOrientation(LinearLayout.HORIZONTAL);
@@ -223,6 +227,7 @@ public class AddQuestionActivity extends AppCompatActivity {
 //        System.out.println("INDEX" + index);
 
         answersView.getLayoutParams().width = (int) (width*0.9);
+
 
         tempButton.setOnClickListener(new View.OnClickListener() {
             @Override
