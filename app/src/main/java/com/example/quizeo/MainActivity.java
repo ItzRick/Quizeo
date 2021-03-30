@@ -89,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
+        //fetch location on create
         getLastLocation();
 
         // get options from options activity
