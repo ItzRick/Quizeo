@@ -174,6 +174,11 @@ public class AnswerQuizActivity extends AppCompatActivity {
         });
     }
 
+    // Back button does the same thing as the quit button
+    @Override
+    public void onBackPressed() {
+        quit();
+    }
 
     /**
      * Go to the next question and push all required objects.

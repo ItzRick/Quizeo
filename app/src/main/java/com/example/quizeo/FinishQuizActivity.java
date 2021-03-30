@@ -90,6 +90,13 @@ public class FinishQuizActivity extends AppCompatActivity {
 
     }
 
+    // Back button does the same thing as return to menu button
+    @Override
+    public void onBackPressed() {
+        Button b = findViewById(R.id.main_menu);
+        b.callOnClick();
+    }
+
     /**
      * Transitions to the available quizzes menu, where the user can select a new quiz.
      */

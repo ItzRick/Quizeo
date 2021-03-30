@@ -248,12 +248,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void test(View v) {
-        int resID=getResources().getIdentifier("test", "raw", getPackageName());
-        MediaPlayer mp =MediaPlayer.create(this, resID);
-        mp.start();
-    }
-
     // Asks the user if they want to quit the application
     public void exitClick(View v) {
         AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());

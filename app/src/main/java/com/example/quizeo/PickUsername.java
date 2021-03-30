@@ -42,6 +42,12 @@ public class PickUsername extends AppCompatActivity {
         });
     }
 
+    // Back button closes the app
+    @Override
+    public void onBackPressed() {
+        finishAffinity();
+    }
+
     public void toMain() {
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("user", user);

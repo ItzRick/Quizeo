@@ -181,6 +181,13 @@ public class CreateQuizActivity2 extends AppCompatActivity {
         });
     }
 
+    // Back button does the same thing as the save and quit button
+    @Override
+    public void onBackPressed() {
+        Button b = findViewById(R.id.buttonSaveQuit);
+        b.callOnClick();
+    }
+
     // Method to open the home screen
     public void openMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);

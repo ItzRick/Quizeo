@@ -81,6 +81,12 @@ public class CreateQuizActivity extends AppCompatActivity {
         });
     }
 
+    // Back button does the same thing as the button with the text "back"
+    @Override
+    public void onBackPressed() {
+        openMainActivity();
+    }
+
     // Method to open the home screen
     public void openMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);

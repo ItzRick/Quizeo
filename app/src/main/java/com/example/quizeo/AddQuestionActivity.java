@@ -151,6 +151,12 @@ public class AddQuestionActivity extends AppCompatActivity {
 //        }
 //    }
 
+// Back button does the same thing as delete question button
+    @Override
+    public void onBackPressed() {
+        createQuiz();
+    }
+
     void createQuiz() {
         Intent intent = new Intent(this, CreateQuizActivity2.class);
         intent.putExtra("user", user);

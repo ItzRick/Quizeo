@@ -119,6 +119,12 @@ public class PlayQuizActivity extends AppCompatActivity implements Database.Down
 
     }
 
+    // Back button does the same thing as the button with the text "back"
+    @Override
+    public void onBackPressed() {
+        openMainActivity();
+    }
+
     /** To invoke the AnswerQuizActivity class and play the quiz. */
     public void playQuiz() {
             Intent intent = new Intent(this, AnswerQuizActivity.class);
