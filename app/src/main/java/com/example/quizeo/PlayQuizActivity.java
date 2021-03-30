@@ -38,7 +38,7 @@ public class PlayQuizActivity extends AppCompatActivity implements Database.Down
 
     // Local variable
     boolean verified;
-
+    boolean darkmode;
 
 
     @Override
@@ -65,6 +65,7 @@ public class PlayQuizActivity extends AppCompatActivity implements Database.Down
         public void openMainActivity() {
             Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra("verified", verified);
+            intent.putExtra("darkmode", darkmode);
             intent.putExtra("location", location);
             intent.putExtra("user", user);
             startActivity(intent);
@@ -83,6 +84,7 @@ public class PlayQuizActivity extends AppCompatActivity implements Database.Down
         // Retrieve all objects that were pushed from the previous class:
         location = getIntent().getParcelableExtra("location");
         verified = getIntent().getBooleanExtra("verified", false);
+        darkmode = getIntent().getBooleanExtra("darkmode", false);
 
         quizzesLayout = new LinearLayout(this);
         quizzesLayout.setOrientation(LinearLayout.VERTICAL);
@@ -129,6 +131,7 @@ public class PlayQuizActivity extends AppCompatActivity implements Database.Down
     public void playQuiz() {
             Intent intent = new Intent(this, AnswerQuizActivity.class);
             intent.putExtra("verified", verified);
+            intent.putExtra("darkmode", darkmode);
             intent.putExtra("location", location);
             intent.putExtra("quiz", quiz);
             intent.putExtra("user", user);

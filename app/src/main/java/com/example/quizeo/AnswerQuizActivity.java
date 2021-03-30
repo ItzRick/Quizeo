@@ -43,6 +43,7 @@ public class AnswerQuizActivity extends AppCompatActivity {
     // Local variable:
     boolean isAnswered;
     boolean verified;
+    boolean darkmode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +56,7 @@ public class AnswerQuizActivity extends AppCompatActivity {
         super.onStart();
         // Retrieve all passed objects:
         verified = getIntent().getBooleanExtra("verified", true);
+        darkmode = getIntent().getBooleanExtra("darkmode", false);
         location = getIntent().getParcelableExtra("location");
         quiz = getIntent().getParcelableExtra("quiz");
 //        System.out.println(quiz.getNumberOfQuestions());
@@ -186,6 +188,7 @@ public class AnswerQuizActivity extends AppCompatActivity {
     public void answerNext() {
         Intent intent = new Intent(this, AnswerQuizActivity.class);
         intent.putExtra("verified", verified);
+        intent.putExtra("darkmode", darkmode);
         intent.putExtra("location", location);
         intent.putExtra("quiz", quiz);
         intent.putExtra("answerQuiz", answerQuiz);
@@ -200,6 +203,7 @@ public class AnswerQuizActivity extends AppCompatActivity {
         quiz.quitQuiz();
         Intent intent = new Intent(this, PlayQuizActivity.class);
         intent.putExtra("verified", verified);
+        intent.putExtra("darkmode", darkmode);
         intent.putExtra("location", location);
         intent.putExtra("user", userAnswered);
         startActivity(intent);
@@ -211,6 +215,7 @@ public class AnswerQuizActivity extends AppCompatActivity {
     public void finishQuiz () {
         Intent intent = new Intent(this, FinishQuizActivity.class);
         intent.putExtra("verified", verified);
+        intent.putExtra("darkmode", darkmode);
         intent.putExtra("location", location);
         intent.putExtra("answerQuiz", answerQuiz);
         intent.putExtra("quiz", quiz);

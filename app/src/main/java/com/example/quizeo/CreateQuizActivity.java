@@ -28,6 +28,7 @@ public class CreateQuizActivity extends AppCompatActivity {
 
     LocationQuizeo location;
     boolean verified;
+    boolean darkmode;
 
     ArrayList<Quiz> quizzes;
 
@@ -55,6 +56,7 @@ public class CreateQuizActivity extends AppCompatActivity {
         user = getIntent().getParcelableExtra("user");
         location = getIntent().getParcelableExtra("location");
         verified = getIntent().getBooleanExtra("verified", true);
+        darkmode = getIntent().getBooleanExtra("darkmode", false);
         Database database = Database.getInstance();
         database.getQuizzes(user, true, new quizzesCallback());
 
@@ -93,6 +95,7 @@ public class CreateQuizActivity extends AppCompatActivity {
         intent.putExtra("location", location);
         intent.putExtra("user", user);
         intent.putExtra("verified", verified);
+        intent.putExtra("darkmode", darkmode);
         startActivity(intent);
     }
 
@@ -104,6 +107,7 @@ public class CreateQuizActivity extends AppCompatActivity {
         intent.putExtra("user", user);
         intent.putExtra("quiz", quiz);
         intent.putExtra("verified", verified);
+        intent.putExtra("darkmode", darkmode);
         startActivity(intent);
     }
 

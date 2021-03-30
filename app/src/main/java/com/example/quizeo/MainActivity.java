@@ -224,6 +224,7 @@ public class MainActivity extends AppCompatActivity {
     public void openCreateQuizActivity(){
         Intent intent = new Intent(this, CreateQuizActivity.class);
         intent.putExtra("verified", verified);
+        intent.putExtra("darkmode", darkmode);
         intent.putExtra("location", location);
         intent.putExtra("user", user);
         startActivity(intent);
@@ -234,6 +235,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, PlayQuizActivity.class);
         intent.putExtra("user", user);
         intent.putExtra("verified", verified);
+        intent.putExtra("darkmode", darkmode);
         intent.putExtra("location", location);
         startActivity(intent);
     }

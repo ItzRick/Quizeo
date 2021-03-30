@@ -48,6 +48,7 @@ public class AddQuestionActivity extends AppCompatActivity {
 
     boolean newQuiz;
     boolean verified;
+    boolean darkmode;
 
     LocationQuizeo location;
     Quiz quiz;
@@ -76,6 +77,7 @@ public class AddQuestionActivity extends AppCompatActivity {
 
         location = getIntent().getParcelableExtra("location");
         verified = getIntent().getBooleanExtra("verified", true);
+        darkmode = getIntent().getBooleanExtra("darkmode", false);
         quiz = getIntent().getParcelableExtra("quiz");
         user = getIntent().getParcelableExtra("user");
         newQuiz = getIntent().getBooleanExtra("newquiz", false);
@@ -164,6 +166,7 @@ public class AddQuestionActivity extends AppCompatActivity {
         intent.putExtra("location", location);
         intent.putExtra("newquiz", newQuiz);
         intent.putExtra("verified", verified);
+        intent.putExtra("darkmode", darkmode);
         startActivity(intent);
     }
 

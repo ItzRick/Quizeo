@@ -31,6 +31,7 @@ public class CreateQuizActivity2 extends AppCompatActivity {
     TextView locationAdded;
     boolean newQuiz;
     boolean verified;
+    boolean darkmode;
 
     TextView numberOfQuestions;
 
@@ -66,6 +67,7 @@ public class CreateQuizActivity2 extends AppCompatActivity {
 
         user = getIntent().getParcelableExtra("user");
         verified = getIntent().getBooleanExtra("verified", true);
+        darkmode = getIntent().getBooleanExtra("darkmode", false);
 
         location = getIntent().getParcelableExtra("location");
         database = Database.getInstance();
@@ -198,6 +200,7 @@ public class CreateQuizActivity2 extends AppCompatActivity {
     public void openCreateQuizActivity() {
         Intent intent = new Intent(this, CreateQuizActivity.class);
         intent.putExtra("verified", verified);
+        intent.putExtra("darkmode", darkmode);
         intent.putExtra("user", user);
         intent.putExtra("location", location);
         startActivity(intent);
@@ -207,6 +210,7 @@ public class CreateQuizActivity2 extends AppCompatActivity {
     public void openAddQuestion() {
         Intent intent = new Intent(this, AddQuestionActivity.class);
         intent.putExtra("verified", verified);
+        intent.putExtra("darkmode", darkmode);
         intent.putExtra("quiz", quiz);
         intent.putExtra("user", user);
         intent.putExtra("location", location);
