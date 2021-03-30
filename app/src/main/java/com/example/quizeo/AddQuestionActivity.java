@@ -186,7 +186,8 @@ public class AddQuestionActivity extends AppCompatActivity {
         tempButton.setTag(index);
         tempButton.setBackgroundColor(Color.WHITE);
 
-        LinearLayout.LayoutParams lparams1 = new LinearLayout.LayoutParams((int) 54, (int) 111);
+        LinearLayout.LayoutParams lparams1 = new LinearLayout.LayoutParams((int) (0.05*width), (int) (0.05*height));
+//        LinearLayout.LayoutParams lparams1 = new LinearLayout.LayoutParams((int) 54, (int) 111);
         lparams1.setMargins(20, 0, 20, 0);
         tempButton.setLayoutParams(lparams1);
         correctButtons.add(tempButton);
@@ -196,7 +197,8 @@ public class AddQuestionActivity extends AppCompatActivity {
 
 
         EditText tempEdit = new EditText(this);
-        LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams((int) 810, LinearLayout.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams((int) (0.75 * width), LinearLayout.LayoutParams.WRAP_CONTENT);
+//        LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams((int) 810, LinearLayout.LayoutParams.WRAP_CONTENT);
         tempEdit.setGravity(Gravity.CENTER);
         tempEdit.setLayoutParams(lparams);
         tempEdit.setBackgroundColor(Color.WHITE);
@@ -209,7 +211,8 @@ public class AddQuestionActivity extends AppCompatActivity {
         tempButton1.setTag(index);
         tempButton1.setBackgroundColor(Color.RED);
 
-        LinearLayout.LayoutParams lparams2 = new LinearLayout.LayoutParams((int) 54, (int) 111);
+        LinearLayout.LayoutParams lparams2 = new LinearLayout.LayoutParams((int) (0.05*width), (int) (0.05*height));
+//        LinearLayout.LayoutParams lparams2 = new LinearLayout.LayoutParams((int) 54, (int) 111);
         lparams2.setMargins(20, 0, 20, 0);
         tempButton1.setLayoutParams(lparams2);
         removeButtons.add(tempButton1);
@@ -217,6 +220,9 @@ public class AddQuestionActivity extends AppCompatActivity {
         layouts.add(tempLayout);
         answersLayout.addView(tempLayout, layoutParams);
         index++;
+//        System.out.println("INDEX" + index);
+
+        answersView.getLayoutParams().width = (int) (width*0.9);
 
         tempButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -244,6 +250,15 @@ public class AddQuestionActivity extends AppCompatActivity {
                 if (tag < correct) {
                     correct--;
                 }
+                for (int i = removeButtons.size() - 1; i >= tag; i--) {
+//                    System.out.println("HENK" + i);
+                    Button temp1 = removeButtons.get(i);
+                    int tag1 = (int) temp1.getTag();
+                    Button temp2 = correctButtons.get(i);
+                    temp1.setTag((tag1 - 1));
+                    temp2.setTag((tag1 - 1));
+                }
+                index--;
             }
         });
     }
