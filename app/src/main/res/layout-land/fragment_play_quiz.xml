@@ -15,10 +15,10 @@
         android:alpha="0.7"
         android:contentDescription="@string/globe"
         android:src="@drawable/globe2_removebg_preview"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/startQuiz"

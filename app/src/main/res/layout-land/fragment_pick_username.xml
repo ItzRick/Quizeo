@@ -15,9 +15,9 @@
         android:alpha="0.7"
         android:contentDescription="@string/globe"
         android:src="@drawable/globe2_removebg_preview"
-        app:layout_constraintBottom_toTopOf="@+id/toolbar2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar2"
@@ -36,7 +36,7 @@
         android:id="@+id/yourQuiz"
         android:layout_width="406dp"
         android:layout_height="152dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="15dp"
         android:gravity="center"
         android:text="@string/select_username"
         android:textAllCaps="false"
@@ -50,7 +50,7 @@
         android:id="@+id/Your_User_Name"
         android:layout_width="314dp"
         android:layout_height="68dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="40dp"
         android:autofillHints=""
         android:backgroundTint="@color/white"
         android:gravity="center"
