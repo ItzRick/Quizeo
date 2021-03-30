@@ -122,7 +122,7 @@ public class CreateQuizActivity extends AppCompatActivity {
                 verified1 = "not Verified";
             } else {
                 published1 = "Published";
-                if (tempQuiz.getNumberOfRatings() > 100 && tempQuiz.getRating() > 0.75) {
+                if (tempQuiz.getNumberOfRatings() >= 100 && tempQuiz.getRating() >= 7.5) {
                     verified1 = "Verified";
                 } else {
                     verified1 = "not Verified";

@@ -70,7 +70,7 @@ public class FinishQuizActivity extends AppCompatActivity {
         });
 
         // when the rating bar is touched, retrieve the rating and add it to the other ratings
-        ratingBar.setOnRatingBarChangeListener((ratingBar, rating, fromUser) -> quiz.setAdditionalRating(rating));
+//        ratingBar.setOnRatingBarChangeListener((ratingBar, rating, fromUser) -> quiz.setAdditionalRating(rating));
 
         // show the name of the quiz
         quizName.setText(quiz.getQuizName());
@@ -130,6 +130,10 @@ public class FinishQuizActivity extends AppCompatActivity {
     private class QuestionCallback implements Database.DownloadQuestionListCallback {
         @Override
         public void onCallback(ArrayList<Question> list) {
+            if (ratingBar.getRating() > 0) {
+                System.out.println(ratingBar.getRating());
+                quiz.setAdditionalRating(ratingBar.getRating());
+            }
             database.removeQuiz(quiz);
             quiz.addQuestions(list);
             database.uploadQuiz(quiz, true);
