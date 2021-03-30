@@ -110,6 +110,8 @@ public class AddQuestionActivity extends AppCompatActivity {
                 } else if (textQuestion.getText().toString().equals("")) {
                     showPopup(v, R.layout.popup_no_question);
                     return;
+                } else if (answers.size() < 2) {
+                    showPopup(v, R.layout.popup_not_enough_answers_added);
                 } else {
                     String[] answerss = new String[answers.size()];
                     int i = 0;
