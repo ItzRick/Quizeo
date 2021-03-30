@@ -37,15 +37,15 @@
         android:id="@+id/yourQuiz"
         android:layout_width="396dp"
         android:layout_height="63dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginBottom="10dp"
         android:gravity="center"
         android:text="@string/your_quizzes"
         android:textAllCaps="false"
         android:textColor="?attr/colorSecondary"
         android:textSize="55sp"
+        app:layout_constraintBottom_toTopOf="@+id/quizzes_scroll_create"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/buttonBack"
@@ -70,11 +70,10 @@
     <ScrollView
         android:id="@+id/quizzes_scroll_create"
         android:layout_width="350dp"
-        android:layout_height="490dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="200dp"
+        app:layout_constraintBottom_toTopOf="@+id/toolbar2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintStart_toStartOf="parent">
 
     </ScrollView>
 

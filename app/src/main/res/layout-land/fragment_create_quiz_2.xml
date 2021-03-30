@@ -143,7 +143,6 @@
         android:id="@+id/buttonRemoveQuestion"
         android:layout_width="154dp"
         android:layout_height="81dp"
-        android:layout_marginBottom="29dp"
         android:text="@string/remove_quiz"
         android:textColor="#F4EFEF"
         android:textColorHighlight="#F8EEEE"
@@ -151,10 +150,8 @@
         app:backgroundTint="#ED0909"
         app:iconTint="#F4EFEF"
         app:layout_constraintBottom_toTopOf="@+id/toolbar2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.176"
+        app:layout_constraintEnd_toStartOf="@+id/YourQuizInfo"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/YourQuizInfo"
-        app:layout_constraintVertical_bias="0.793" />
+        app:layout_constraintTop_toBottomOf="@+id/YourQuizName" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

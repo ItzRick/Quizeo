@@ -25,6 +25,7 @@
         android:layout_width="329dp"
         android:layout_height="35dp"
         android:layout_marginTop="30dp"
+        android:textSize="25sp"
         android:gravity="center"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
@@ -39,10 +40,10 @@
         android:background="@color/white"
         android:gravity="center"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toTopOf="@+id/main_menu"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.305" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/quizes_menu"
@@ -54,25 +55,24 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+
     <Button
         android:id="@+id/main_menu"
         android:layout_width="124dp"
         android:layout_height="57dp"
         android:layout_marginStart="20dp"
-        android:layout_marginBottom="20dp"
         android:text="@string/return_to_main_menu"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
+        app:layout_constraintBottom_toBottomOf="@+id/quizes_menu"
+        app:layout_constraintStart_toEndOf="@+id/finished_quiz_info" />
 
     <RatingBar
         android:id="@+id/rating_bar"
-        android:layout_width="457dp"
-        android:layout_height="74dp"
-        android:layout_marginBottom="50dp"
+        android:layout_width="476dp"
+        android:layout_height="76dp"
         android:numStars="10"
-        android:scaleX="0.8"
-        android:scaleY="0.8"
+        android:scaleX="0.6"
+        android:scaleY="0.6"
+        android:stepSize="1"
         app:layout_constraintBottom_toTopOf="@+id/quizes_menu"
         app:layout_constraintEnd_toEndOf="@+id/quiz_name"
         app:layout_constraintStart_toStartOf="@+id/quiz_name" />
