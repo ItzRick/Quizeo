@@ -74,20 +74,6 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="LabelFor" />
 
-    <EditText
-        android:id="@+id/YourUsername"
-        android:layout_width="121dp"
-        android:layout_height="41dp"
-        android:autofillHints=""
-        android:gravity="center"
-        android:hint="@string/your_username"
-        android:inputType="textShortMessage"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/YourQuizName"
-        app:layout_constraintStart_toStartOf="@+id/YourQuizName"
-        app:layout_constraintTop_toBottomOf="@+id/YourQuizName"
-        tools:ignore="LabelFor" />
-
     <TextView
         android:id="@+id/YourQuizInfo"
         android:layout_width="361dp"
@@ -144,7 +130,7 @@
         app:layout_constraintTop_toBottomOf="@+id/buttonAddQuestion" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/buttonAddLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/add_location"
@@ -152,5 +138,23 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/buttonAddQuestion"
         app:layout_constraintTop_toBottomOf="@+id/textLocation" />
+
+    <Button
+        android:id="@+id/buttonRemoveQuestion"
+        android:layout_width="154dp"
+        android:layout_height="81dp"
+        android:layout_marginBottom="29dp"
+        android:text="@string/remove_quiz"
+        android:textColor="#F4EFEF"
+        android:textColorHighlight="#F8EEEE"
+        android:textColorLink="#F1EFEF"
+        app:backgroundTint="#ED0909"
+        app:iconTint="#F4EFEF"
+        app:layout_constraintBottom_toTopOf="@+id/toolbar2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.176"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/YourQuizInfo"
+        app:layout_constraintVertical_bias="0.793" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

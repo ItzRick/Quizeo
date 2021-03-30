@@ -10,8 +10,8 @@
 
     <ImageView
         android:id="@+id/imageView4"
-        android:layout_width="528dp"
-        android:layout_height="528dp"
+        android:layout_width="488dp"
+        android:layout_height="249dp"
         android:layout_marginTop="50dp"
         android:alpha="0.7"
         android:contentDescription="@string/globe"
@@ -21,51 +21,79 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageUpload"
-        android:layout_width="215dp"
-        android:layout_height="204dp"
-        android:layout_gravity="center_horizontal"
-        android:contentDescription="@string/upload_image_here"
-        android:src="@drawable/image"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.489"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <EditText
         android:id="@+id/textQuestion"
         android:layout_width="371dp"
         android:layout_height="139dp"
         android:autofillHints=""
+        android:background="@drawable/edittext_background_blue"
         android:gravity="center_horizontal"
         android:hint="@string/add_a_question"
         android:inputType="textMultiLine"
-        android:textColor="@color/orange"
+        android:textColor="@color/black"
         android:textColorHint="@color/black"
         android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageUpload" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.069" />
+
 
     <Button
-        android:id="@+id/buttonUpload"
+        android:id="@+id/buttonAddOption"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:text="@string/upload"
+        android:layout_marginStart="10dp"
+        android:text="@string/add_option"
+        app:layout_constraintBottom_toTopOf="@+id/buttonSaveQuit"
+        app:layout_constraintEnd_toEndOf="@+id/buttonDeleteQuestion"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/buttonDeleteQuestion"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.852" />
+
+    <Button
+        android:id="@+id/buttonSaveQuit"
+        android:layout_width="150dp"
+        android:layout_height="88dp"
+        android:layout_marginTop="84dp"
+        android:text="@string/add_question"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.948"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.531" />
+
+    <ScrollView
+        android:id="@+id/answers_scroll"
+        android:layout_width="525dp"
+        android:layout_height="247dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.024"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textQuestion"
+        app:layout_constraintVertical_bias="0.164">
+
+    </ScrollView>
 
     <Button
-        android:id="@+id/buttonDone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="25dp"
-        android:text="@string/done"
+        android:id="@+id/buttonDeleteQuestion"
+        android:layout_width="150dp"
+        android:layout_height="88dp"
+        android:text="@string/delete_question"
+        android:textColor="#F4EFEF"
+        android:textColorHighlight="#F8EEEE"
+        android:textColorLink="#F1EFEF"
+        app:backgroundTint="#ED0909"
+        app:iconTint="#F4EFEF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.948"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonSaveQuit"
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

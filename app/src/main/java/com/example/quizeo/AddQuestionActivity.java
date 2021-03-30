@@ -186,7 +186,7 @@ public class AddQuestionActivity extends AppCompatActivity {
         tempButton.setTag(index);
         tempButton.setBackgroundColor(Color.WHITE);
 
-        LinearLayout.LayoutParams lparams1 = new LinearLayout.LayoutParams((int) (0.05*width), (int) (0.05*height));
+        LinearLayout.LayoutParams lparams1 = new LinearLayout.LayoutParams((int) 54, (int) 111);
         lparams1.setMargins(20, 0, 20, 0);
         tempButton.setLayoutParams(lparams1);
         correctButtons.add(tempButton);
@@ -196,7 +196,7 @@ public class AddQuestionActivity extends AppCompatActivity {
 
 
         EditText tempEdit = new EditText(this);
-        LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams((int) (0.75 * width), LinearLayout.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams((int) 810, LinearLayout.LayoutParams.WRAP_CONTENT);
         tempEdit.setGravity(Gravity.CENTER);
         tempEdit.setLayoutParams(lparams);
         tempEdit.setBackgroundColor(Color.WHITE);
@@ -209,7 +209,7 @@ public class AddQuestionActivity extends AppCompatActivity {
         tempButton1.setTag(index);
         tempButton1.setBackgroundColor(Color.RED);
 
-        LinearLayout.LayoutParams lparams2 = new LinearLayout.LayoutParams((int) (0.05*width), (int) (0.05*height));
+        LinearLayout.LayoutParams lparams2 = new LinearLayout.LayoutParams((int) 54, (int) 111);
         lparams2.setMargins(20, 0, 20, 0);
         tempButton1.setLayoutParams(lparams2);
         removeButtons.add(tempButton1);
