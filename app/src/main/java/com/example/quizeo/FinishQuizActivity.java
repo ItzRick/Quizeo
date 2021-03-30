@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class FinishQuizActivity extends AppCompatActivity {
 
     // variables
@@ -25,8 +27,10 @@ public class FinishQuizActivity extends AppCompatActivity {
     private RatingBar ratingBar;
 
     boolean verified;
-
+    boolean toMainMenu;
     LocationQuizeo location;
+
+    Database database;
 
 
     @SuppressLint("SetTextI18n")
@@ -48,14 +52,21 @@ public class FinishQuizActivity extends AppCompatActivity {
         quizInfo = findViewById(R.id.finished_quiz_info);
         quizName = findViewById(R.id.quiz_name);
         ratingBar = findViewById(R.id.rating_bar);
+        database = Database.getInstance();
 
 
         // when this button is pressed, go back to the main menu of the app
-        buttonMainMenu.setOnClickListener(v -> goToMainMenu());
+        buttonMainMenu.setOnClickListener(v -> {
+            toMainMenu = true;
+            database.getQuestions(quiz.getQuizId(), new QuestionCallback());
+//            goToMainMenu();
+        });
 
         // when this button is pressed, go back to the available quizzes menu of the app
         buttonQuizzesMenu.setOnClickListener(v -> {
-            goToQuizzesMenu();
+            toMainMenu = false;
+            database.getQuestions(quiz.getQuizId(), new QuestionCallback());
+//            goToQuizzesMenu();
         });
 
         // when the rating bar is touched, retrieve the rating and add it to the other ratings
@@ -83,10 +94,9 @@ public class FinishQuizActivity extends AppCompatActivity {
      * Transitions to the available quizzes menu, where the user can select a new quiz.
      */
     private void goToQuizzesMenu() {
-        Database database = Database.getInstance();
-        database.removeQuiz(quiz);
-//        System.out.println(quiz.getQuestions().length);
-        database.uploadQuiz(quiz, true);
+//        database.removeQuiz(quiz);
+////        System.out.println(quiz.getQuestions().length);
+//        database.uploadQuiz(quiz, true);
         Intent intent = new Intent(this, PlayQuizActivity.class);
         intent.putExtra("location", location);
         intent.putExtra("verified", verified);
@@ -99,9 +109,8 @@ public class FinishQuizActivity extends AppCompatActivity {
      * Transitions to the main menu screen
      */
     public void goToMainMenu() {
-        Database database = Database.getInstance();
-        database.removeQuiz(quiz);
-        database.uploadQuiz(quiz, true);
+//        database.removeQuiz(quiz);
+//        database.uploadQuiz(quiz, true);
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("location", location);
         intent.putExtra("verified", verified);
@@ -118,4 +127,18 @@ public class FinishQuizActivity extends AppCompatActivity {
 //    public double calculateScore (int num, int denom) {
 //        return ((double) num) / denom;
 //    }
+    private class QuestionCallback implements Database.DownloadQuestionListCallback {
+        @Override
+        public void onCallback(ArrayList<Question> list) {
+            database.removeQuiz(quiz);
+            quiz.addQuestions(list);
+            database.uploadQuiz(quiz, true);
+//            System.out.println("number of ratings: " + quiz.getNumberOfRatings());
+            if (toMainMenu) {
+                goToMainMenu();
+            } else {
+                goToQuizzesMenu();
+            }
+        }
+    }
 }
