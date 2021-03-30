@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
     boolean darkmode;
     boolean request;
 
+    //for fetching the location
     int PERMISSION_ID = 44;
     FusedLocationProviderClient mFusedLocationClient;
 
@@ -155,14 +156,8 @@ public class MainActivity extends AppCompatActivity {
         // check if needed permissions for location are granted
         if (ContextCompat.checkSelfPermission(MainActivity.this,
                 Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
-            if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this,
-                    Manifest.permission.ACCESS_FINE_LOCATION)){
-                ActivityCompat.requestPermissions(MainActivity.this,
-                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-            } else {
-                ActivityCompat.requestPermissions(MainActivity.this,
-                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-            }
+            ActivityCompat.requestPermissions(MainActivity.this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         }
 
         authentication = Authentication.getInstance();
@@ -283,7 +278,9 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-
+    /**
+     * Get the last know location of the device.
+     */
     @SuppressLint("MissingPermission")
     private void getLastLocation(){
         if (checkPermissions()) {
@@ -315,7 +312,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
+    /**
+     * Method for fetching location data for the case when the location value is null
+     */
     @SuppressLint("MissingPermission")
     private void requestNewLocationData(){
 
@@ -343,11 +342,18 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    /**
+     * Method for checking if the user has granted access to to the location services at runtime.
+     * @return true if he has granted access, false otherwise
+     */
     private boolean checkPermissions() {
         return ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
     }
 
+    /**
+     * Method for the case when the user has not granted location access, make him allow to use this access
+     */
     private void requestPermissions() {
         ActivityCompat.requestPermissions(
                 this,
@@ -356,6 +362,10 @@ public class MainActivity extends AppCompatActivity {
         );
     }
 
+    /**
+     * Method for the case when the location is turned off from the device itslef
+     * @return true if it is turned on, false otherwise
+     */
     private boolean isLocationEnabled() {
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
@@ -363,6 +373,13 @@ public class MainActivity extends AppCompatActivity {
         );
     }
 
+    /**
+     *  Method for detecting if the needed permissions are given, if they are, start detecting location immediately
+     *
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode,  String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
