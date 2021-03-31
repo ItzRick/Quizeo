@@ -2,6 +2,7 @@ package com.example.quizeo;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -124,6 +126,11 @@ public class CreateQuizActivity extends AppCompatActivity {
         for (int i = 0; i < quizzes.size(); i++) {
             // Create a new button for each quiz:
             buttons[i] = new Button(this);
+            // Set the right colors for darkmode
+            if (darkmode) {
+                buttons[i].getBackground().setColorFilter(buttons[i].getContext().getResources().getColor(R.color.darkgray2), PorterDuff.Mode.MULTIPLY);
+                buttons[i].setTextColor(ContextCompat.getColor(this, R.color.white2));
+            }
             Quiz tempQuiz = quizzes.get(i);
             String verified1;
             String published1;
@@ -167,7 +174,11 @@ public class CreateQuizActivity extends AppCompatActivity {
         if (quizzes.size() == 0) {
             TextView noQuizes = new TextView(this);
             noQuizes.setTextSize(38);
-            noQuizes.setTextColor(Color.WHITE);
+            if (darkmode) {
+                noQuizes.setTextColor(Color.parseColor("#FF121212"));
+            } else {
+                noQuizes.setTextColor(Color.WHITE);
+            }
             noQuizes.setText("No quizzes found!");
             noQuizes.setGravity(Gravity.CENTER);
             quizzesLayout.addView(noQuizes);

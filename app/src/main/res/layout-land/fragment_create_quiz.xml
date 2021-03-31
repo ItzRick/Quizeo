@@ -24,7 +24,7 @@
         android:id="@+id/toolbar2"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:background="#3F51B5"
+        android:background="?attr/colorAccent"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         android:visibility="visible"

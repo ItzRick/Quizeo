@@ -1,9 +1,11 @@
 package com.example.quizeo;
 
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.view.Gravity;
 import android.view.View;
@@ -163,7 +165,11 @@ public class PlayQuizActivity extends AppCompatActivity implements Database.Down
             System.out.println(quizzes.get(i).getRating());
             // Create a new button for each quiz:
             buttons[i] = new Button(this);
-
+            // Set the right colors for darkmode
+            if (darkmode) {
+                buttons[i].getBackground().setColorFilter(buttons[i].getContext().getResources().getColor(R.color.darkgray2), PorterDuff.Mode.MULTIPLY);
+                buttons[i].setTextColor(ContextCompat.getColor(this, R.color.white2));
+            }
             // Set the correct text for this quiz:
             String string = "Quiz: " + quizzes.get(i).getQuizName() + "\n" +
                     quizzes.get(i).getNumberOfQuestions() +
@@ -189,7 +195,11 @@ public class PlayQuizActivity extends AppCompatActivity implements Database.Down
         if (quizzes.size() == 0) {
             TextView noQuizes = new TextView(this);
             noQuizes.setTextSize(38);
-            noQuizes.setTextColor(Color.WHITE);
+            if (darkmode) {
+                noQuizes.setTextColor(Color.parseColor("#FF121212"));
+            } else {
+                noQuizes.setTextColor(Color.WHITE);
+            }
             noQuizes.setText("No quizzes found!");
             noQuizes.setGravity(Gravity.CENTER);
             quizzesLayout.addView(noQuizes);
