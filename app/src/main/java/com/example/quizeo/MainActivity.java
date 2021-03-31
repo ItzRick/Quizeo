@@ -126,10 +126,15 @@ public class MainActivity extends AppCompatActivity {
         buttonMakeQuiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getLastLocation();
-                Log.d("latitude", String.valueOf(latitude));
-                Log.d("longitude", String.valueOf(longitude));
-                openCreateQuizActivity();
+                if (location == null) {
+                    new AddQuestionActivity().showPopup(v, R.layout.popup_no_location_found);
+                } else {
+                    getLastLocation();
+                    Log.d("latitude", String.valueOf(latitude));
+                    Log.d("longitude", String.valueOf(longitude));
+                    openCreateQuizActivity();
+                }
+
             }
         });
 
@@ -137,10 +142,14 @@ public class MainActivity extends AppCompatActivity {
         buttonStartQuiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getLastLocation();
-                Log.d("latitude", String.valueOf(latitude));
-                Log.d("longitude", String.valueOf(longitude));
-                openPlayQuizActivity();
+                if (location == null) {
+                    new AddQuestionActivity().showPopup(v, R.layout.popup_no_location_found);
+                } else {
+                    getLastLocation();
+                    Log.d("latitude", String.valueOf(latitude));
+                    Log.d("longitude", String.valueOf(longitude));
+                    openPlayQuizActivity();
+                }
             }
         });
 
@@ -320,7 +329,7 @@ public class MainActivity extends AppCompatActivity {
 
         LocationRequest mLocationRequest = LocationRequest.create();
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        mLocationRequest.setInterval(0);
+        mLocationRequest.setInterval(5);
         mLocationRequest.setFastestInterval(0);
         mLocationRequest.setNumUpdates(1);
 

@@ -68,4 +68,5 @@
     <string name="remove_quiz">Remove quiz</string>
     <string name="not_enough_answers_added">Not enough answers added. Make sure to have at least two added answers!</string>
     <string name="location_no_found">The location has not been retrieved correctly! Please try again!</string>
+    <string name="no_location_detected_make_sure_that_the_device_has_opened_google_maps_before">No location detected! Make sure that the device has opened google maps before!</string>
 </resources>
