@@ -170,8 +170,16 @@ public class Quiz implements Parcelable {
     }
 
     public void addQuestions(ArrayList<Question> list) {
-        System.out.println("HENK");
-        questions = new ArrayList<>(list);
+        questions = new ArrayList<>();
+        for (int i = 1; i < list.size() + 1; i++) {
+            for (Question question : list) {
+                if (question.getId() == i) {
+                    questions.add(question);
+                    break;
+                }
+            }
+        }
+
     }
 
     /**

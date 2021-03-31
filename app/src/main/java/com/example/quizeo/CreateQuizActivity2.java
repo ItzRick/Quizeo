@@ -135,6 +135,7 @@ public class CreateQuizActivity2 extends AppCompatActivity {
                     return;
                 } else if (quizName.getText().toString().equals("")) {
                     showPopup(v, R.layout.popup_no_quizname);
+                    return;
                 } else if (quiz.getQuestions().length != quiz.getNumberOfQuestions()) {
                     publish = false;
                     quiz.setQuizName(quizName.getText().toString());

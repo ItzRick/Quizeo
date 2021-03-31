@@ -1,5 +1,6 @@
 package com.example.quizeo;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import java.util.UUID;
 
@@ -20,9 +22,13 @@ public class PickUsername extends AppCompatActivity {
     LocationQuizeo location;
     User user;
 
+    int PERMISSION_ID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        PERMISSION_ID = getIntent().getIntExtra("permission_id", 44);
+        requestPermissions();
         // Set the correct layout:
         setContentView(R.layout.fragment_pick_username);
 
@@ -63,5 +69,16 @@ public class PickUsername extends AppCompatActivity {
         editor.putString("nickname", user.getNickName());
         editor.putString("id", user.getUserId());
         editor.commit();
+    }
+
+    /**
+     * Method for the case when the user has not granted location access, make him allow to use this access
+     */
+    private void requestPermissions() {
+        ActivityCompat.requestPermissions(
+                this,
+                new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION},
+                PERMISSION_ID
+        );
     }
 }

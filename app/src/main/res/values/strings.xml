@@ -67,4 +67,5 @@
     <string name="select_username">Choose your username!</string>
     <string name="remove_quiz">Remove quiz</string>
     <string name="not_enough_answers_added">Not enough answers added. Make sure to have at least two added answers!</string>
+    <string name="location_no_found">The location has not been retrieved correctly! Please try again!</string>
 </resources>

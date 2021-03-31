@@ -88,7 +88,6 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-
         //fetch location on create
         getLastLocation();
 
@@ -167,6 +166,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        getLastLocation();
         verified = getIntent().getBooleanExtra("verified", true);
         authentication.loginAnonymously(MainActivity.this);
         user = getIntent().getParcelableExtra("user");
@@ -202,6 +202,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void pickUsername() {
         Intent intent = new Intent(this, PickUsername.class);
+        intent.putExtra("permission_id", PERMISSION_ID);
         intent.putExtra("location", location);
         startActivity(intent);
     }
@@ -281,8 +282,9 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("MissingPermission")
     private void getLastLocation(){
         if (checkPermissions()) {
-            if (isLocationEnabled()) {
 
+            if (isLocationEnabled()) {
+//                System.out.println("HENK");
                     Task<Location> task = mFusedLocationClient.getLastLocation();
 
                     task.addOnCompleteListener(
@@ -294,6 +296,7 @@ public class MainActivity extends AppCompatActivity {
                                     latitude = location.getLatitude();
                                     longitude = location.getLongitude();
                                     this.location = new LocationQuizeo(latitude, longitude);
+
                                 }
                             }
 

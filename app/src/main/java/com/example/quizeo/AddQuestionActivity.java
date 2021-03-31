@@ -126,7 +126,11 @@ public class AddQuestionActivity extends AppCompatActivity {
                             i++;
                         }
                     }
-                    Question question = new Question(textQuestion.getText().toString(), answerss,
+                    String questionString = textQuestion.getText().toString();
+                    if (!questionString.contains("?")) {
+                        questionString = questionString + "?";
+                    }
+                    Question question = new Question(questionString, answerss,
                             correct + 1, "", quiz.getNumberOfQuestions() + 1,
                             UUID.randomUUID());
                     quiz.addQuestion(question);

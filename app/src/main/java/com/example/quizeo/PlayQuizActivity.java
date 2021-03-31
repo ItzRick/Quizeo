@@ -1,7 +1,10 @@
 package com.example.quizeo;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -91,8 +94,17 @@ public class PlayQuizActivity extends AppCompatActivity implements Database.Down
         quizzesLayout = new LinearLayout(this);
         quizzesLayout.setOrientation(LinearLayout.VERTICAL);
 
-        database = Database.getInstance();
-        database.getQuizzes(location, new callBackQuizzes());
+        ConnectivityManager cm =
+                (ConnectivityManager)this.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        if (activeNetwork != null && activeNetwork.isConnectedOrConnecting()) {
+            database = Database.getInstance();
+            database.getQuizzes(location, new callBackQuizzes());
+        } else {
+            quizzes = new ArrayList<>();
+            updateDisplay();
+        }
+
 
         quizzesView.removeAllViews();
         // Add the linearLayout to the ScrollView:
