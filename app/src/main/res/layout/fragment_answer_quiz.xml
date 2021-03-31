@@ -9,7 +9,7 @@
     tools:context=".AnswerQuizActivity">
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/globeAnswer"
         android:layout_width="528dp"
         android:layout_height="528dp"
         android:layout_marginBottom="100dp"
@@ -21,13 +21,27 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <ImageView
+        android:id="@+id/globeAnswerDark"
+        android:layout_width="528dp"
+        android:layout_height="528dp"
+        android:layout_marginBottom="100dp"
+        android:alpha="0.7"
+        android:contentDescription="@string/globe"
+        android:src="@drawable/darker_globe"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <TextView
         android:id="@+id/score_answer"
         android:layout_width="110dp"
         android:layout_height="55dp"
-        android:background="@color/white"
+        android:background="?attr/colorPrimary"
         android:gravity="center"
-        android:textColor="@color/black"
+        android:textColor="?attr/colorOnPrimary"
         app:layout_constraintBottom_toTopOf="@+id/imageView4"
         app:layout_constraintStart_toStartOf="@+id/question_answer" />
 
@@ -35,9 +49,9 @@
         android:id="@+id/current_question_answer"
         android:layout_width="110dp"
         android:layout_height="55dp"
-        android:background="@color/white"
+        android:background="?attr/colorPrimary"
         android:gravity="center"
-        android:textColor="@color/black"
+        android:textColor="?attr/colorOnPrimary"
         app:layout_constraintBottom_toTopOf="@+id/imageView4"
         app:layout_constraintEnd_toEndOf="@+id/question_answer" />
 
@@ -46,9 +60,9 @@
         android:layout_width="340dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:background="@color/white"
+        android:background="?attr/colorPrimary"
         android:gravity="center"
-        android:textColor="@color/black"
+        android:textColor="?attr/colorOnPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/score_answer" />

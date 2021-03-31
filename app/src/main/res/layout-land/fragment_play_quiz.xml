@@ -9,12 +9,25 @@
     tools:context=".PlayQuizActivity">
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/globePlay"
         android:layout_width="528dp"
         android:layout_height="528dp"
         android:alpha="0.7"
         android:contentDescription="@string/globe"
         android:src="@drawable/globe2_removebg_preview"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/globePlayDark"
+        android:layout_width="528dp"
+        android:layout_height="528dp"
+        android:alpha="0.7"
+        android:contentDescription="@string/globe"
+        android:src="@drawable/darker_globe"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"

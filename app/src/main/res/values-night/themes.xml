@@ -18,6 +18,12 @@
         <item name="colorControlActivated">@color/redd</item>
     </style>
 
+    <style name="ratingBar" parent = "Theme.AppCompat.NoActionBar">
+        <item name="colorControlNormal">@color/yellowd</item>
+        <item name="colorControlActivated">@color/yellowd</item>
+        <item name="colorControlHighlight">@color/yellowd</item>
+    </style>
+
     <style name="SplashScreenTheme" parent = "Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@drawable/splash_screen_background_night</item>
     </style>

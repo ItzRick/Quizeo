@@ -9,7 +9,7 @@
     tools:context=".PickUsername">
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/globeUser"
         android:layout_width="528dp"
         android:layout_height="528dp"
         android:alpha="0.7"
@@ -19,11 +19,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/globeUserDark"
+        android:layout_width="528dp"
+        android:layout_height="528dp"
+        android:alpha="0.7"
+        android:contentDescription="@string/globe"
+        android:src="@drawable/darker_globe"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar2"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:background="#3F51B5"
+        android:background="?attr/colorAccent"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         android:visibility="visible"
@@ -40,7 +52,7 @@
         android:gravity="center"
         android:text="@string/select_username"
         android:textAllCaps="false"
-        android:textColor="@color/white"
+        android:textColor="?attr/colorPrimary"
         android:textSize="55sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

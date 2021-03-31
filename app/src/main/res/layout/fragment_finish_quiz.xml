@@ -9,13 +9,27 @@
 
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/globeFinish"
         android:layout_width="528dp"
         android:layout_height="528dp"
         android:layout_marginBottom="100dp"
         android:alpha="0.7"
         android:contentDescription="@string/globe"
         android:src="@drawable/globe2_removebg_preview"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/globeFinishDark"
+        android:layout_width="528dp"
+        android:layout_height="528dp"
+        android:layout_marginBottom="100dp"
+        android:alpha="0.7"
+        android:contentDescription="@string/globe"
+        android:src="@drawable/darker_globe"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -38,9 +52,9 @@
         android:layout_width="319dp"
         android:layout_height="338dp"
         android:layout_marginTop="30dp"
-        android:background="@color/white"
+        android:background="?attr/colorPrimary"
         android:gravity="center"
-        android:textColor="@color/black"
+        android:textColor="?attr/colorOnPrimary"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="@+id/quiz_name"
         app:layout_constraintStart_toStartOf="@+id/quiz_name"
@@ -75,6 +89,7 @@
         android:scaleX="0.6"
         android:scaleY="0.6"
         android:stepSize="1"
+        android:theme="@style/ratingBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rate_quiz_text" />
@@ -87,6 +102,7 @@
         android:gravity="center"
         android:text="@string/rate_this_quiz"
         android:textSize="20sp"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="@+id/finished_quiz_info"
         app:layout_constraintStart_toStartOf="@+id/finished_quiz_info"
         app:layout_constraintTop_toBottomOf="@+id/finished_quiz_info" />

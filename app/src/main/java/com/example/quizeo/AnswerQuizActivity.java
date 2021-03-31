@@ -3,6 +3,7 @@ package com.example.quizeo;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import org.w3c.dom.Text;
 
@@ -50,13 +52,21 @@ public class AnswerQuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         // Set the correct layout:
         setContentView(R.layout.fragment_answer_quiz);
+
+        darkmode = getIntent().getBooleanExtra("darkmode", false);
+        if (darkmode) {
+            findViewById(R.id.globeAnswer).setVisibility(View.INVISIBLE);
+            findViewById(R.id.globeAnswerDark).setVisibility(View.VISIBLE);
+        } else {
+            findViewById(R.id.globeAnswerDark).setVisibility(View.INVISIBLE);
+            findViewById(R.id.globeAnswer).setVisibility(View.VISIBLE);
+        }
     }
     @Override
     protected void onStart() {
         super.onStart();
         // Retrieve all passed objects:
         verified = getIntent().getBooleanExtra("verified", true);
-        darkmode = getIntent().getBooleanExtra("darkmode", false);
         location = getIntent().getParcelableExtra("location");
         quiz = getIntent().getParcelableExtra("quiz");
 //        System.out.println(quiz.getNumberOfQuestions());
@@ -111,6 +121,11 @@ public class AnswerQuizActivity extends AppCompatActivity {
         for (int i = 0; i < currentQuestion.getNumberOfAnswers(); i++) {
             // Create a new button and set the text, which is the specific answer:
             buttons[i] = new Button(this);
+            // Set the right color for darkmode
+            if (darkmode) {
+                buttons[i].getBackground().setColorFilter(buttons[i].getContext().getResources().getColor(R.color.darkgray2), PorterDuff.Mode.MULTIPLY);
+                buttons[i].setTextColor(ContextCompat.getColor(this, R.color.white2));
+            }
             String string = answers[i];
             buttons[i].setText(string);
             buttons[i].setTag(i);
@@ -126,14 +141,23 @@ public class AnswerQuizActivity extends AppCompatActivity {
                         // If the answer is correct, set the color of this button to green and
                         // update the score:
                         if (currentQuestion.getCorrect(tag + 1)) {
-                            buttons[tag].setBackgroundColor(Color.GREEN);
+                            if (darkmode) {
+                                buttons[tag].setBackgroundColor(getResources().getColor(R.color.darkgreen));
+                            } else {
+                                buttons[tag].setBackgroundColor(Color.GREEN);
+                            }
                             answerQuiz.updateScore(true);
                         // If the answer is incorrect, set the color of this button to red,
                         // set the correct question to green and update the score:
                         } else {
-                            buttons[tag].setBackgroundColor(Color.RED);
                             int correct = currentQuestion.getCorrectInt();
-                            buttons[correct - 1].setBackgroundColor(Color.GREEN);
+                            if (darkmode) {
+                                buttons[tag].setBackgroundColor(getResources().getColor(R.color.redd));
+                                buttons[correct - 1].setBackgroundColor(getResources().getColor(R.color.darkgreen));
+                            } else {
+                                buttons[tag].setBackgroundColor(Color.RED);
+                                buttons[correct - 1].setBackgroundColor(Color.GREEN);
+                            }
                             answerQuiz.updateScore(false);
                         }
                         // The question has been answered:

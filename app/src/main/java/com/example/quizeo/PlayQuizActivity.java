@@ -52,6 +52,16 @@ public class PlayQuizActivity extends AppCompatActivity implements Database.Down
         // Set the xml file and retrieve the UI elements and the database instance, also retrieve
         // which user is going to answer this quiz:
         setContentView(R.layout.fragment_play_quiz);
+
+        darkmode = getIntent().getBooleanExtra("darkmode", false);
+        if (darkmode) {
+            findViewById(R.id.globePlay).setVisibility(View.INVISIBLE);
+            findViewById(R.id.globePlayDark).setVisibility(View.VISIBLE);
+        } else {
+            findViewById(R.id.globePlayDark).setVisibility(View.INVISIBLE);
+            findViewById(R.id.globePlay).setVisibility(View.VISIBLE);
+        }
+
         buttonBack = (Button) findViewById(R.id.buttonBack);
         quizzesView = (ScrollView) findViewById(R.id.quizzes_scroll);
         user = getIntent().getParcelableExtra("userAnswered");
@@ -89,7 +99,6 @@ public class PlayQuizActivity extends AppCompatActivity implements Database.Down
         // Retrieve all objects that were pushed from the previous class:
         location = getIntent().getParcelableExtra("location");
         verified = getIntent().getBooleanExtra("verified", false);
-        darkmode = getIntent().getBooleanExtra("darkmode", false);
 
         quizzesLayout = new LinearLayout(this);
         quizzesLayout.setOrientation(LinearLayout.VERTICAL);

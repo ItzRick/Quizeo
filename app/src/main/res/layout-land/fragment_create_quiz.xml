@@ -9,13 +9,24 @@
     tools:context=".CreateQuizFragment">
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/globeCreate1"
         android:layout_width="528dp"
         android:layout_height="528dp"
         android:alpha="0.7"
         android:contentDescription="@string/globe"
         android:src="@drawable/globe2_removebg_preview"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/yourQuiz" />
 
+    <ImageView
+        android:id="@+id/globeCreate1Dark"
+        android:layout_width="528dp"
+        android:layout_height="528dp"
+        android:alpha="0.7"
+        android:contentDescription="@string/globe"
+        android:src="@drawable/darker_globe"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/yourQuiz" />

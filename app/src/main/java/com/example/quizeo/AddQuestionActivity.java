@@ -62,6 +62,14 @@ public class AddQuestionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_add_question);
 
+        darkmode = getIntent().getBooleanExtra("darkmode", false);
+        if (darkmode) {
+            findViewById(R.id.globeQuestion).setVisibility(View.INVISIBLE);
+            findViewById(R.id.globeQuestionDark).setVisibility(View.VISIBLE);
+        } else {
+            findViewById(R.id.globeQuestionDark).setVisibility(View.INVISIBLE);
+            findViewById(R.id.globeQuestion).setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -78,7 +86,6 @@ public class AddQuestionActivity extends AppCompatActivity {
 
         location = getIntent().getParcelableExtra("location");
         verified = getIntent().getBooleanExtra("verified", true);
-        darkmode = getIntent().getBooleanExtra("darkmode", false);
         quiz = getIntent().getParcelableExtra("quiz");
         user = getIntent().getParcelableExtra("user");
         newQuiz = getIntent().getBooleanExtra("newquiz", false);

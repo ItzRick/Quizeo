@@ -8,7 +8,7 @@
     tools:context=".MainActivity">
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/globeHome"
         android:layout_width="528dp"
         android:layout_height="528dp"
         android:contentDescription="@string/globe"
@@ -20,7 +20,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/globeHomeDark"
         android:layout_width="528dp"
         android:layout_height="528dp"
         android:alpha="0.7"

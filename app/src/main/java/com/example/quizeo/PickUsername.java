@@ -32,6 +32,15 @@ public class PickUsername extends AppCompatActivity {
         // Set the correct layout:
         setContentView(R.layout.fragment_pick_username);
 
+        // Set the right globe in the background
+        if (getIntent().getBooleanExtra("darkmode", false)) {
+            findViewById(R.id.globeUser).setVisibility(View.INVISIBLE);
+            findViewById(R.id.globeUserDark).setVisibility(View.VISIBLE);
+        } else {
+            findViewById(R.id.globeUserDark).setVisibility(View.INVISIBLE);
+            findViewById(R.id.globeUser).setVisibility(View.VISIBLE);
+        }
+
         location = getIntent().getParcelableExtra("location");
 
 

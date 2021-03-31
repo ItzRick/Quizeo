@@ -48,6 +48,15 @@ public class CreateQuizActivity2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_create_quiz_2);
+
+        darkmode = getIntent().getBooleanExtra("darkmode", false);
+        if (darkmode) {
+            findViewById(R.id.globeCreate2).setVisibility(View.INVISIBLE);
+            findViewById(R.id.globeCreate2Dark).setVisibility(View.VISIBLE);
+        } else {
+            findViewById(R.id.globeCreate2Dark).setVisibility(View.INVISIBLE);
+            findViewById(R.id.globeCreate2).setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -68,7 +77,6 @@ public class CreateQuizActivity2 extends AppCompatActivity {
 
         user = getIntent().getParcelableExtra("user");
         verified = getIntent().getBooleanExtra("verified", true);
-        darkmode = getIntent().getBooleanExtra("darkmode", false);
 
         location = getIntent().getParcelableExtra("location");
         database = Database.getInstance();

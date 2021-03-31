@@ -94,8 +94,8 @@ public class MainActivity extends AppCompatActivity {
         // get options from options activity
         getOptions(intent);
         // find the globes in the background
-        ImageView lightGlobe = findViewById(R.id.imageView4);
-        ImageView darkGlobe = findViewById(R.id.imageView5);
+        ImageView lightGlobe = findViewById(R.id.globeHome);
+        ImageView darkGlobe = findViewById(R.id.globeHomeDark);
         if (darkmode) {     // if dark mode is turned on
             // show the dark globe
             lightGlobe.setVisibility(View.INVISIBLE);
@@ -213,6 +213,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, PickUsername.class);
         intent.putExtra("permission_id", PERMISSION_ID);
         intent.putExtra("location", location);
+        intent.putExtra("darkmode", darkmode);
         startActivity(intent);
     }
 

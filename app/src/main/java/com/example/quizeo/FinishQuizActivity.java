@@ -40,9 +40,17 @@ public class FinishQuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_finish_quiz);
 
+        darkmode = getIntent().getBooleanExtra("darkmode", false);
+        if (darkmode) {
+            findViewById(R.id.globeFinish).setVisibility(View.INVISIBLE);
+            findViewById(R.id.globeFinishDark).setVisibility(View.VISIBLE);
+        } else {
+            findViewById(R.id.globeFinishDark).setVisibility(View.INVISIBLE);
+            findViewById(R.id.globeFinish).setVisibility(View.VISIBLE);
+        }
+
         // get the same instances of classes as the previous activity
         verified = getIntent().getBooleanExtra("verified", true);
-        darkmode = getIntent().getBooleanExtra("darkmode", false);
         quiz = getIntent().getParcelableExtra("quiz");
         currentUser = getIntent().getParcelableExtra("user");
         answerQuiz = getIntent().getParcelableExtra("answerQuiz");
@@ -82,13 +90,20 @@ public class FinishQuizActivity extends AppCompatActivity {
         if (answerQuiz.getScore() >= quiz.getScoreToPass()) {
             quizInfo.setText("Congratulations!\n You passed this quiz!\n You got "
                     + answerQuiz.getScore() + " out of " + quiz.getNumberOfQuestions() + " correct.");
-            quizInfo.setBackgroundColor(Color.GREEN);
+            if (darkmode) {
+                quizInfo.setBackgroundColor(getResources().getColor(R.color.darkgreen));
+            } else {
+                quizInfo.setBackgroundColor(Color.GREEN);
+            }
         } else {
             quizInfo.setText("Better luck next time!\n You failed this quiz..\n You got "
                     + answerQuiz.getScore() + " out of " + quiz.getNumberOfQuestions() + " correct.");
-            quizInfo.setBackgroundColor(Color.RED);
+            if (darkmode) {
+                quizInfo.setBackgroundColor(getResources().getColor(R.color.redd));
+            } else {
+                quizInfo.setBackgroundColor(Color.RED);
+            }
         }
-
 
     }
 
