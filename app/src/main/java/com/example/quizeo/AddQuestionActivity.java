@@ -2,6 +2,7 @@ package com.example.quizeo;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -188,8 +189,11 @@ public class AddQuestionActivity extends AppCompatActivity {
         tempLayout.setOrientation(LinearLayout.HORIZONTAL);
         Button tempButton = new Button(this);
         tempButton.setTag(index);
-        tempButton.setBackgroundColor(Color.WHITE);
-
+        if (darkmode) {
+            tempButton.setBackgroundColor(getResources().getColor(R.color.darkgray));
+        } else {
+            tempButton.setBackgroundColor(getResources().getColor(R.color.white));
+        }
         LinearLayout.LayoutParams lparams1 = new LinearLayout.LayoutParams((int) (0.05*width), (int) (0.05*height));
 //        LinearLayout.LayoutParams lparams1 = new LinearLayout.LayoutParams((int) 54, (int) 111);
         lparams1.setMargins(20, 0, 20, 0);
@@ -205,16 +209,24 @@ public class AddQuestionActivity extends AppCompatActivity {
 //        LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams((int) 810, LinearLayout.LayoutParams.WRAP_CONTENT);
         tempEdit.setGravity(Gravity.CENTER);
         tempEdit.setLayoutParams(lparams);
-        tempEdit.setBackgroundColor(Color.WHITE);
-        tempEdit.setTextColor(Color.BLACK);
+        if (darkmode) {
+            tempEdit.setBackgroundColor(getResources().getColor(R.color.darkgray));
+            tempEdit.setTextColor(getResources().getColor(R.color.white2));
+        } else {
+            tempEdit.setBackgroundColor(getResources().getColor(R.color.white));
+            tempEdit.setTextColor(getResources().getColor(R.color.black));
+        }
         tempEdit.setHint("Enter answer text");
         tempLayout.addView(tempEdit);
         answers.add(tempEdit);
 
         Button tempButton1 = new Button(this);
         tempButton1.setTag(index);
-        tempButton1.setBackgroundColor(Color.RED);
-
+        if (darkmode) {
+            tempButton1.setBackgroundColor(getResources().getColor(R.color.redd));
+        } else {
+            tempButton1.setBackgroundColor(getResources().getColor(R.color.brightred));
+        }
         LinearLayout.LayoutParams lparams2 = new LinearLayout.LayoutParams((int) (0.05*width), (int) (0.05*height));
 //        LinearLayout.LayoutParams lparams2 = new LinearLayout.LayoutParams((int) 54, (int) 111);
         lparams2.setMargins(20, 0, 20, 0);
@@ -235,10 +247,18 @@ public class AddQuestionActivity extends AppCompatActivity {
                 int tag = (int) v.getTag();
                 correct = tag;
                 for (Button button : correctButtons) {
-                    button.setBackgroundColor(Color.WHITE);
+                    if (darkmode) {
+                        button.setBackgroundColor(getResources().getColor(R.color.darkgray));
+                    } else {
+                        button.setBackgroundColor(getResources().getColor(R.color.white));
+                    }
                 }
                 Button tempButton = correctButtons.get(tag);
-                tempButton.setBackgroundColor(Color.GREEN);
+                if (darkmode) {
+                    tempButton.setBackgroundColor(getResources().getColor(R.color.darkgreen));
+                } else {
+                    tempButton.setBackgroundColor(Color.GREEN);
+                }
             }
         });
 
