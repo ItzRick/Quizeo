@@ -20,5 +20,7 @@
     <color name="popupOrangeDark">#FF5C01</color>
     <color name="purple">#3F51B5</color>
     <color name="purple2">#35148A</color>
+    <color name="green">#00CC00</color>
+    <color name="darkgreen">#006600</color>
 
 </resources>

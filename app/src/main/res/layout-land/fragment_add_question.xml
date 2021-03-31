@@ -25,17 +25,17 @@
         android:id="@+id/textQuestion"
         android:layout_width="371dp"
         android:layout_height="139dp"
-        android:layout_marginStart="40dp"
         android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
         android:autofillHints=""
         android:background="@drawable/edittext_background_blue"
         android:gravity="center_horizontal"
         android:hint="@string/add_a_question"
         android:inputType="textMultiLine"
-        android:textColor="@color/black"
-        android:textColorHint="@color/black"
+        android:textColor="?attr/colorOnPrimary"
+        android:textColorHint="?attr/colorOnPrimary"
         android:textSize="25sp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/buttonAddOption"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
@@ -43,7 +43,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/add_option"
-        app:layout_constraintBottom_toBottomOf="@+id/buttonDeleteQuestion"
+        app:layout_constraintBottom_toBottomOf="@+id/textQuestion"
         app:layout_constraintEnd_toEndOf="@+id/answers_scroll" />
 
     <Button
@@ -73,10 +73,10 @@
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
         android:text="@string/delete_question"
-        android:textColor="#F4EFEF"
+        android:textColor="?attr/colorBackgroundFloating"
         android:textColorHighlight="#F8EEEE"
         android:textColorLink="#F1EFEF"
-        app:backgroundTint="#ED0909"
+        app:backgroundTint="?attr/colorControlActivated"
         app:iconTint="#F4EFEF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
