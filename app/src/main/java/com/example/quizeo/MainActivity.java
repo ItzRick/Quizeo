@@ -126,14 +126,14 @@ public class MainActivity extends AppCompatActivity {
         buttonMakeQuiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (location == null) {
-                    new AddQuestionActivity().showPopup(v, R.layout.popup_no_location_found);
-                } else {
+//                if (location == null) {
+//                    new AddQuestionActivity().showPopup(v, R.layout.popup_no_location_found);
+//                } else {
                     getLastLocation();
-                    Log.d("latitude", String.valueOf(latitude));
-                    Log.d("longitude", String.valueOf(longitude));
+//                    Log.d("latitude", String.valueOf(latitude));
+//                    Log.d("longitude", String.valueOf(longitude));
                     openCreateQuizActivity();
-                }
+//                }
 
             }
         });

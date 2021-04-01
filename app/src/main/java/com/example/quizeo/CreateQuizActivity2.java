@@ -174,13 +174,18 @@ public class CreateQuizActivity2 extends AppCompatActivity {
         buttonAddLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                quiz.setQuizName(quizName.getText().toString());
-                quiz.setLocation(location);
-                String text = "Location has been added!";
-                Log.d("lat", String.valueOf(location.getLatitude()));
-                Log.d("lon", String.valueOf(location.getLongitude()));
-                locationAdded.setText(text);
-                newQuiz = false;
+                try {
+                    quiz.setQuizName(quizName.getText().toString());
+                    quiz.setLocation(location);
+                    String text = "Location has been added!";
+                    Log.d("lat", String.valueOf(location.getLatitude()));
+                    Log.d("lon", String.valueOf(location.getLongitude()));
+                    locationAdded.setText(text);
+                    newQuiz = false;
+                } catch (Exception e) {
+                    showPopup(v, R.layout.popup_no_location_found);
+                }
+
             }
         });
 
