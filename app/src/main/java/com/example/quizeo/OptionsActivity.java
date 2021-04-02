@@ -180,6 +180,9 @@ public class OptionsActivity extends AppCompatActivity {
             audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_LOWER, 1);
         }*/
         // Store this option
+        if (Music.isPlaying()) {
+            Music.stop(this);
+        }
         tempOptionSave("soundNow", false);
     }
 
@@ -203,6 +206,11 @@ public class OptionsActivity extends AppCompatActivity {
             audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_RAISE, 1);
         }*/
         // Store this option
+        if (!Music.isPlaying()) {
+            Music.play(this);
+            Music m = new Music();
+            m.start(this);
+        }
         tempOptionSave("soundNow", true);
     }
 
@@ -272,6 +280,9 @@ public class OptionsActivity extends AppCompatActivity {
 
     // Toggles whether friend requests are on or off
     public void toggleFriendRequests(View v) {
+        Music.next(this);
+        Music m = new Music();
+        m.start(this);
         // find the corresponding check mark
         ImageView i = this.findViewById(R.id.friendRequestCheck);
         // call method that turns this options on or off based on the check mark

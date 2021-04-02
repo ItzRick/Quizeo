@@ -141,6 +141,7 @@ public class AnswerQuizActivity extends AppCompatActivity {
                         // If the answer is correct, set the color of this button to green and
                         // update the score:
                         if (currentQuestion.getCorrect(tag + 1)) {
+                            Music.correctSound(AnswerQuizActivity.this);
                             if (darkmode) {
                                 buttons[tag].setBackgroundColor(getResources().getColor(R.color.darkgreen));
                             } else {
@@ -151,6 +152,7 @@ public class AnswerQuizActivity extends AppCompatActivity {
                         // set the correct question to green and update the score:
                         } else {
                             int correct = currentQuestion.getCorrectInt();
+                            Music.wrongSound(AnswerQuizActivity.this);
                             if (darkmode) {
                                 buttons[tag].setBackgroundColor(getResources().getColor(R.color.redd));
                                 buttons[correct - 1].setBackgroundColor(getResources().getColor(R.color.darkgreen));

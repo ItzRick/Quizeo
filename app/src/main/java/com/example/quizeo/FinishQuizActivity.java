@@ -88,6 +88,7 @@ public class FinishQuizActivity extends AppCompatActivity {
 
         // if score is sufficient (>= 75% correct), print a corresponding message, else print diff message
         if (answerQuiz.getScore() >= quiz.getScoreToPass()) {
+            Music.passedSound(this);
             quizInfo.setText("Congratulations!\n You passed this quiz!\n You got "
                     + answerQuiz.getScore() + " out of " + quiz.getNumberOfQuestions() + " correct.");
             if (darkmode) {
@@ -96,6 +97,7 @@ public class FinishQuizActivity extends AppCompatActivity {
                 quizInfo.setBackgroundColor(Color.GREEN);
             }
         } else {
+            Music.failedSound(this);
             quizInfo.setText("Better luck next time!\n You failed this quiz..\n You got "
                     + answerQuiz.getScore() + " out of " + quiz.getNumberOfQuestions() + " correct.");
             if (darkmode) {
