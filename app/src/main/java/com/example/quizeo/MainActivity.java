@@ -275,6 +275,8 @@ public class MainActivity extends AppCompatActivity {
         public void onClick(DialogInterface dialog, int which) {
             switch (which){
                 case DialogInterface.BUTTON_POSITIVE:       // quit button clicked
+                    // Stop music
+                    Music.stop(MainActivity.this);
                     // close the application
                     finishAffinity();
                     break;
@@ -401,8 +403,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        // Stop the music
+        Music.stop(this);
+    }
+
+    @Override
     public void onResume(){
         super.onResume();
+        // Resume music
+        if (!Music.isPlaying() && sound) {
+            Music.play(this);
+        }
+
         if (checkPermissions()) {
             getLastLocation();
         }

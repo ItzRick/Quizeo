@@ -335,4 +335,20 @@ public class OptionsActivity extends AppCompatActivity {
         }
     };
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        // Stop the music
+        Music.stop(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Resume music
+        if (!Music.isPlaying() && (findViewById(R.id.soundIcon).getVisibility() == View.VISIBLE)) {
+            Music.play(this);
+        }
+    }
+
 }
