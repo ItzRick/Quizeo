@@ -14,7 +14,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
 import java.util.ArrayList;
-import java.util.UUID;
 
 //Authentication singleton class
 //Used to authenticate the user
@@ -124,12 +123,13 @@ public class Authentication {
 
     /**
      * Removes all data of the current user form the database
-     * INCLUDING Questions and Quizzes they made.
+     * INCLUDING Questions and Quizzes they made and their play history!
      */
     public void removeCurrentUserData() {
         Database database = Database.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
+            database.removeHistory(user.getUid());
             database.getQuizzes(user.getUid(), true, new Database.DownloadQuizzesCallback() {
                 @Override
                 public void onCallback(ArrayList<Quiz> list) {

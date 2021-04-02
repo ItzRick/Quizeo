@@ -8,8 +8,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -46,6 +44,7 @@ public final class Database {
     final private CollectionReference questionRef;
     final private CollectionReference quizRef;
     final private CollectionReference notPublishedRef;
+    final private CollectionReference historyRef;
 
     /** Constructor, should only be called by getInstance method */
     private Database() {
@@ -53,6 +52,7 @@ public final class Database {
         questionRef = firestore.collection("Questions");
         quizRef = firestore.collection("Quizzes");
         notPublishedRef = firestore.collection("Not-Published");
+        historyRef = firestore.collection("User-History");
     }
 
     /**
@@ -78,13 +78,16 @@ public final class Database {
         double longitude = location.getLongitude();
         double latitude = location.getLatitude();
 
+        // minimum and maximum longitude we want to query
         double minLong = (longitude - (RANGE_IN_DEGREES / 2)) % 360;
         double maxLong = (longitude + (RANGE_IN_DEGREES / 2)) % 360;
 
+        // minimum and maximum latitude we want to query
         double minLat = (latitude - (RANGE_IN_DEGREES / 2)) % 360;
         double maxLat = (latitude + (RANGE_IN_DEGREES / 2)) % 360;
 
-        quizRef.whereGreaterThanOrEqualTo("Longitude", minLong).whereLessThanOrEqualTo("Longitude", maxLong)
+        quizRef.whereGreaterThanOrEqualTo("Longitude", minLong)
+                .whereLessThanOrEqualTo("Longitude", maxLong)
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -134,21 +137,24 @@ public final class Database {
                 if (task.isSuccessful()) {
                     QuerySnapshot snapshot = task.getResult();
                     ArrayList<Quiz> list = new ArrayList<>();
+                    //convert the documents to quiz objects and add them to the list
                     for (DocumentSnapshot doc: snapshot.getDocuments()) {
                         list.add(new Quiz());
                         docToQuiz(doc, list.get(list.size()-1));
                     }
                     if (nonPublished) { //Query non published quizzes aswell
                         notPublishedRef.whereEqualTo("UserId", userID)
-                                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                 if (task.isSuccessful()) {
                                     QuerySnapshot snapshot = task.getResult();
+                                    //convert the documents to quiz objects and add them to the list
                                     for (DocumentSnapshot doc : snapshot.getDocuments()) {
                                         list.add(new Quiz());
                                         docToQuiz(doc, list.get(list.size() - 1));
                                     }
+                                    //return the result via the callback object
                                     callback.onCallback(list);
                                 } else {
                                     Log.d("QuizDownOnUser", "Query failed");
@@ -156,6 +162,7 @@ public final class Database {
                             }
                         });
                     } else {
+                        //return the result via the callback object
                         callback.onCallback(list);
                     }
                 } else {
@@ -187,10 +194,12 @@ public final class Database {
                     QuerySnapshot snapshot = task.getResult();
                     ArrayList<Question> list = new ArrayList<>();
 
+                    //convert documents to questions and them to the list
                     for (DocumentSnapshot doc: snapshot.getDocuments()) {
                         list.add(new Question());
                         docToQuestion(doc, list.get(list.size()-1));
                     }
+                    //return the result via the callback object
                     callback.onCallback(list);
                 } else {
                     Log.d(TAG, "getting question failed");
@@ -211,9 +220,11 @@ public final class Database {
      * @param callback callback object to which the question object will be send
      * @throws NoSuchElementException if question with questionId is not found
      */
-    private void getQuestion(UUID questionID, DownloadQuestionCallback callback) throws NoSuchElementException {
+    private void getQuestion(UUID questionID, DownloadQuestionCallback callback)
+            throws NoSuchElementException {
 
-        DocumentReference docRef = firestore.collection("Questions").document(questionID.toString());
+        DocumentReference docRef = firestore.collection("Questions")
+                .document(questionID.toString());
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -223,7 +234,7 @@ public final class Database {
                         Log.d(TAG, "DocumentSnapshot data: " + document.getData());
                         Question result = new Question();
                         docToQuestion(document, result);
-                        callback.onCallback(result);
+                        callback.onCallback(result); //return the result via the callback object
                     } else {
                         Log.d(TAG, "No such document");
                         throw new NoSuchElementException("Question not found");
@@ -238,6 +249,54 @@ public final class Database {
     /** Callback interface for downloading questions */
     public interface DownloadQuestionCallback {
         void onCallback(Question question);
+    }
+
+    /**
+     * Gets the user play history from the database
+     *
+     * @param user The user object of the user
+     * @param callback callback object
+     */
+    public void getUserHistory(User user, DownloadHistoryCallback callback) {
+        getUserHistory(user.getUserId(), callback);
+    }
+
+    /**
+     * Gets the user play history from the database
+     *
+     * @param userId The id of the user
+     * @param callback callback object
+     */
+    public void getUserHistory(String userId, DownloadHistoryCallback callback) {
+        historyRef.document(userId).collection("Quizzes").get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    QuerySnapshot snapshot = task.getResult();
+                    ArrayList<HashMap<String, Object>> result = new ArrayList<>();
+
+                    //Convert the docs to hashmaps and add them to the list
+                    for (DocumentSnapshot doc: snapshot.getDocuments()) {
+                        HashMap<String, Object> map = new HashMap<>();
+                        map.put("QuizID", (UUID) UUID.fromString((String) doc.get("QuizID")));
+                        map.put("QuizName", (String) doc.get("QuizName"));
+                        Boolean temp = Boolean.valueOf((String) doc.get("Passed?"));
+                        map.put("Passed", temp);
+                        result.add(map);
+                    }
+                    //return the result via the callback object
+                    callback.onCallback(result);
+                } else {
+                    Log.d(TAG, "getting question failed");
+                }
+            }
+        });
+    }
+
+    /** Callback interface for downloading questions */
+    public interface DownloadHistoryCallback {
+        void onCallback(ArrayList<HashMap<String, Object>> result);
     }
 
 
@@ -283,8 +342,10 @@ public final class Database {
      * @param q the quiz object which will hold the new values
      */
     private void docToQuiz(DocumentSnapshot doc, Quiz q) {
+        //getting values
         UUID GlobalID = UUID.fromString((String) doc.get("GlobalID"));
-        LocationQuizeo location = new LocationQuizeo((double) doc.get("Latitude"), (double) doc.get("Longitude"));
+        LocationQuizeo location = new LocationQuizeo((double) doc.get("Latitude"),
+                (double) doc.get("Longitude"));
         String name = (String) doc.get("Name");
         int nrOfQuestions = ((Long) doc.get("Number of Questions")).intValue();
         int nrOfRatings = ((Long) doc.get("Number of Ratings")).intValue();
@@ -296,6 +357,7 @@ public final class Database {
 
         User user = new User(username, userId);
 
+        //setting values
         q.setLocation(location);
         q.setQuizId(GlobalID);
         q.setQuizName(name);
@@ -376,7 +438,7 @@ public final class Database {
 
         System.out.println("Starting upload");
         //upload to FireStore
-        firestore.collection("Questions").document(question.getGlobalId().toString())
+        questionRef.document(question.getGlobalId().toString())
                 .set(data)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -413,6 +475,51 @@ public final class Database {
 
         return data;
     }
+
+    /**
+     * Upload a quiz result to the database
+     *
+     * @param user the user object of the user that made the quiz
+     * @param quiz the quiz object of the quiz they made
+     * @param passed whether they passed the quiz
+     */
+    public void addQuizToHistory(User user, Quiz quiz, Boolean passed) {
+        addQuizToHistory(user.getUserId(), quiz.getQuizId(), quiz.getQuizName(), passed);
+    }
+
+    /**
+     * Upload a quiz result to the database
+     *
+     * @param userId the id of the user that played the quiz
+     * @param quizId the id of the quiz they made
+     * @param quizName the name of the quiz they made
+     * @param passed whether they passed the quiz
+     */
+    public void addQuizToHistory(String userId, UUID quizId, String quizName, Boolean passed) {
+        HashMap<String, String> data = new HashMap<>();
+
+        data.put("QuizID", quizId.toString());
+        data.put("QuizName", quizName);
+        data.put("Passed?", passed.toString());
+
+        historyRef.document(userId).collection("Quizzes")
+                .document(UUID.randomUUID().toString())
+                .set(data)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("","Upload Success");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("", "Upload failure");
+                    }
+                });
+    }
+
+
     //endregion
 
     //region -- DELETE --
@@ -468,6 +575,23 @@ public final class Database {
         questionRef.document(uuidOfQuestion.toString()).delete();
     }
 
+    /**
+     * Removes the complete play history of a specific user
+     *
+     * @param user the user whose history is to be removed
+     */
+    public void removeHistory(User user) {
+        removeHistory(user.getUserId());
+    }
+
+    /**
+     * Removes the complete play history of a specific user
+     *
+     * @param userId the id of the user whose history is to be removed
+     */
+    public void removeHistory(String userId) {
+        historyRef.document(userId).delete();
+    }
     //endregion
 
     //region -- NEW ID --
