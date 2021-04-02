@@ -65,6 +65,8 @@ public class MainActivity extends AppCompatActivity {
     boolean darkmode;
     boolean request;
 
+    boolean active = false;
+
     //for fetching the location
     int PERMISSION_ID = 44;
     FusedLocationProviderClient mFusedLocationClient;
@@ -233,6 +235,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Method to open the CreateQuizActivity
     public void openCreateQuizActivity(){
+        active = true;
         Intent intent = new Intent(this, CreateQuizActivity.class);
         intent.putExtra("verified", verified);
         intent.putExtra("darkmode", darkmode);
@@ -243,6 +246,7 @@ public class MainActivity extends AppCompatActivity {
 
     //Method to open the PlayQuizActivity
     public void openPlayQuizActivity(){
+        active = true;
         Intent intent = new Intent(this, PlayQuizActivity.class);
         intent.putExtra("user", user);
         intent.putExtra("verified", verified);
@@ -253,6 +257,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Opens the options activity
     public void openOptionsActivity(){
+        active = true;
         Intent intent = new Intent(this, OptionsActivity.class);
         // put the values for options in the intent
         intent.putExtra("sound", sound);
@@ -404,9 +409,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onPause() {
-        super.onPause();
         // Stop the music
-        Music.stop(this);
+        if (!active) {
+            Music.stop(this);
+        }
+        super.onPause();
     }
 
     @Override
@@ -420,7 +427,6 @@ public class MainActivity extends AppCompatActivity {
         if (checkPermissions()) {
             getLastLocation();
         }
-
     }
 
 }

@@ -27,6 +27,9 @@ public class OptionsActivity extends AppCompatActivity {
     boolean darkmode;
     boolean request;
 
+    // Variable used for music
+    boolean active = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -139,6 +142,7 @@ public class OptionsActivity extends AppCompatActivity {
 
     // Reads the input options and sends them to the home activity
     public void openHome(boolean sound, boolean verified, boolean darkmode, boolean request) {
+        active = true;
         Intent i = new Intent(this, MainActivity.class);
         i.putExtra("sound", sound);
         i.putExtra("verified", verified);
@@ -263,6 +267,7 @@ public class OptionsActivity extends AppCompatActivity {
             findViewById(R.id.globeOptionsDark).setVisibility(View.VISIBLE);
             // if dark mode is not on, turn dark mode on
             if (AppCompatDelegate.getDefaultNightMode() != AppCompatDelegate.MODE_NIGHT_YES) {
+                active = true;
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             }
         } else {            // if the option should be turned off
@@ -273,6 +278,7 @@ public class OptionsActivity extends AppCompatActivity {
             findViewById(R.id.globeOptions).setVisibility(View.VISIBLE);
             // if dark mode is turned on, turn dark mode off
             if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+                active = true;
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             }
         }
@@ -337,9 +343,11 @@ public class OptionsActivity extends AppCompatActivity {
 
     @Override
     public void onPause() {
-        super.onPause();
         // Stop the music
-        Music.stop(this);
+        if (!active) {
+            Music.stop(this);
+        }
+        super.onPause();
     }
 
     @Override
