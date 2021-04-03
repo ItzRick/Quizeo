@@ -9,6 +9,8 @@ import java.util.Random;
 
 public class Music {
 
+    // TURN SOUND OFF FOR TEST PURPOSES
+    private static final boolean sound = false;
     // List of soundtracks
     private static final List<Integer> music = new ArrayList<>();
     // Variables used for selecting and playing music
@@ -16,7 +18,7 @@ public class Music {
     private static int size = 0;
     private static int pos = 0;
     private Context c;
-    private static Boolean play;
+    private static boolean play;
     // MediaPlayer for music
     private static MediaPlayer mp = null;
     // MediaPlayer for sound effects
@@ -91,11 +93,13 @@ public class Music {
 
     // Plays music that is provided in parameter resource
     private static void playNext(Context context, int resource) {
-        mp = MediaPlayer.create(context, resource);
-        mp.setVolume(volume, volume);
-        //mp.setLooping(true);
-        mp.start();
-        mp.seekTo(pos);
+        if (sound) {
+            mp = MediaPlayer.create(context, resource);
+            mp.setVolume(volume, volume);
+            //mp.setLooping(true);
+            mp.start();
+            mp.seekTo(pos);
+        }
     }
 
     // Stops music that is playing
@@ -179,13 +183,15 @@ public class Music {
 
     // Plays the sound that is currently stored
     private static void playSound(float volumeSet) {
-        setsfxVolume(volumeSet);
-        effects.setVolume(sfxVolume, sfxVolume);
-        effects.start();
+        if (sound) {
+            setSfxVolume(volumeSet);
+            effects.setVolume(sfxVolume, sfxVolume);
+            effects.start();
+        }
     }
 
     // Sets the volume to the input integer
-    public static void setsfxVolume(float newVolume) {
+    public static void setSfxVolume(float newVolume) {
         if (newVolume >= 0 && newVolume <= 100) {
             sfxVolume = (float) (1 - (Math.log(MAX_VOLUME - newVolume) / Math.log(MAX_VOLUME)));
         }

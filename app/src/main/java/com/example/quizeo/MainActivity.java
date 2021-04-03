@@ -239,6 +239,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, CreateQuizActivity.class);
         intent.putExtra("verified", verified);
         intent.putExtra("darkmode", darkmode);
+        intent.putExtra("sound", sound);
         intent.putExtra("location", location);
         intent.putExtra("user", user);
         startActivity(intent);
@@ -251,6 +252,7 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("user", user);
         intent.putExtra("verified", verified);
         intent.putExtra("darkmode", darkmode);
+        intent.putExtra("sound", sound);
         intent.putExtra("location", location);
         startActivity(intent);
     }
@@ -263,6 +265,7 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("sound", sound);
         intent.putExtra("verified", verified);
         intent.putExtra("darkmode", darkmode);
+        intent.putExtra("sound", sound);
         intent.putExtra("request", request);
         startActivity(intent);
     }
