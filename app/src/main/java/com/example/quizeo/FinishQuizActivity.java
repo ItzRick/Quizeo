@@ -28,6 +28,8 @@ public class FinishQuizActivity extends AppCompatActivity {
 
     boolean verified;
     boolean darkmode;
+    boolean sound;
+    boolean active = false;
     boolean toMainMenu;
     LocationQuizeo location;
 
@@ -51,6 +53,7 @@ public class FinishQuizActivity extends AppCompatActivity {
 
         // get the same instances of classes as the previous activity
         verified = getIntent().getBooleanExtra("verified", true);
+        sound = getIntent().getBooleanExtra("sound", true);
         quiz = getIntent().getParcelableExtra("quiz");
         currentUser = getIntent().getParcelableExtra("user");
         answerQuiz = getIntent().getParcelableExtra("answerQuiz");
@@ -123,10 +126,12 @@ public class FinishQuizActivity extends AppCompatActivity {
 //        database.removeQuiz(quiz);
 ////        System.out.println(quiz.getQuestions().length);
 //        database.uploadQuiz(quiz, true);
+        active = true;
         Intent intent = new Intent(this, PlayQuizActivity.class);
         intent.putExtra("location", location);
         intent.putExtra("verified", verified);
         intent.putExtra("darkmode", darkmode);
+        intent.putExtra("sound", sound);
         intent.putExtra("user", currentUser);
         startActivity(intent);
     }
@@ -138,10 +143,12 @@ public class FinishQuizActivity extends AppCompatActivity {
     public void goToMainMenu() {
 //        database.removeQuiz(quiz);
 //        database.uploadQuiz(quiz, true);
+        active = true;
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("location", location);
         intent.putExtra("verified", verified);
         intent.putExtra("darkmode", darkmode);
+        intent.putExtra("sound", sound);
         intent.putExtra("user", currentUser);
         startActivity(intent);
     }
@@ -173,4 +180,23 @@ public class FinishQuizActivity extends AppCompatActivity {
             }
         }
     }
+
+    @Override
+    public void onPause() {
+        // Stop the music
+        if (!active) {
+            Music.stop(this);
+        }
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Resume music
+        if (!Music.isPlaying() && sound) {
+            Music.play(this);
+        }
+    }
+
 }

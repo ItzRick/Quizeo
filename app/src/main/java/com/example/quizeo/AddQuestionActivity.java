@@ -50,6 +50,9 @@ public class AddQuestionActivity extends AppCompatActivity {
     boolean newQuiz;
     boolean verified;
     boolean darkmode;
+    boolean sound;
+
+    boolean active = false;
 
     LocationQuizeo location;
     Quiz quiz;
@@ -86,6 +89,7 @@ public class AddQuestionActivity extends AppCompatActivity {
 
         location = getIntent().getParcelableExtra("location");
         verified = getIntent().getBooleanExtra("verified", true);
+        sound = getIntent().getBooleanExtra("sound", true);
         quiz = getIntent().getParcelableExtra("quiz");
         user = getIntent().getParcelableExtra("user");
         newQuiz = getIntent().getBooleanExtra("newquiz", false);
@@ -172,6 +176,7 @@ public class AddQuestionActivity extends AppCompatActivity {
     }
 
     void createQuiz() {
+        active = true;
         Intent intent = new Intent(this, CreateQuizActivity2.class);
         intent.putExtra("user", user);
         intent.putExtra("quiz", quiz);
@@ -179,6 +184,7 @@ public class AddQuestionActivity extends AppCompatActivity {
         intent.putExtra("newquiz", newQuiz);
         intent.putExtra("verified", verified);
         intent.putExtra("darkmode", darkmode);
+        intent.putExtra("sound", sound);
         startActivity(intent);
     }
 
@@ -328,4 +334,23 @@ public class AddQuestionActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onPause() {
+        // Stop the music
+        if (!active) {
+            Music.stop(this);
+        }
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Resume music
+        if (!Music.isPlaying() && sound) {
+            Music.play(this);
+        }
+    }
+
 }

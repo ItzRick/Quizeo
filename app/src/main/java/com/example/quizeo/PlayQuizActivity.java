@@ -44,7 +44,9 @@ public class PlayQuizActivity extends AppCompatActivity implements Database.Down
     // Local variable
     boolean verified;
     boolean darkmode;
+    boolean sound;
 
+    boolean active = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,9 +80,11 @@ public class PlayQuizActivity extends AppCompatActivity implements Database.Down
     }
 
         public void openMainActivity() {
+            active = true;
             Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra("verified", verified);
             intent.putExtra("darkmode", darkmode);
+            intent.putExtra("sound", sound);
             intent.putExtra("location", location);
             intent.putExtra("user", user);
             startActivity(intent);
@@ -99,6 +103,7 @@ public class PlayQuizActivity extends AppCompatActivity implements Database.Down
         // Retrieve all objects that were pushed from the previous class:
         location = getIntent().getParcelableExtra("location");
         verified = getIntent().getBooleanExtra("verified", false);
+        sound = getIntent().getBooleanExtra("sound", true);
 
         quizzesLayout = new LinearLayout(this);
         quizzesLayout.setOrientation(LinearLayout.VERTICAL);
@@ -152,9 +157,11 @@ public class PlayQuizActivity extends AppCompatActivity implements Database.Down
 
     /** To invoke the AnswerQuizActivity class and play the quiz. */
     public void playQuiz() {
+            active = true;
             Intent intent = new Intent(this, AnswerQuizActivity.class);
             intent.putExtra("verified", verified);
             intent.putExtra("darkmode", darkmode);
+            intent.putExtra("sound", sound);
             intent.putExtra("location", location);
             intent.putExtra("quiz", quiz);
             intent.putExtra("user", user);
@@ -246,4 +253,23 @@ public class PlayQuizActivity extends AppCompatActivity implements Database.Down
             playQuiz();
         }
     }
+
+    @Override
+    public void onPause() {
+        // Stop the music
+        if (!active) {
+            Music.stop(this);
+        }
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Resume music
+        if (!Music.isPlaying() && sound) {
+            Music.play(this);
+        }
+    }
+
 }

@@ -33,6 +33,9 @@ public class CreateQuizActivity2 extends AppCompatActivity {
     boolean newQuiz;
     boolean verified;
     boolean darkmode;
+    boolean sound;
+
+    boolean active = false;
 
     TextView numberOfQuestions;
 
@@ -69,6 +72,7 @@ public class CreateQuizActivity2 extends AppCompatActivity {
 
         user = getIntent().getParcelableExtra("user");
         verified = getIntent().getBooleanExtra("verified", true);
+        sound = getIntent().getBooleanExtra("sound", true);
 
         location = getIntent().getParcelableExtra("location");
         database = Database.getInstance();
@@ -214,9 +218,11 @@ public class CreateQuizActivity2 extends AppCompatActivity {
 
     // Method to open the home screen
     public void openCreateQuizActivity() {
+        active = true;
         Intent intent = new Intent(this, CreateQuizActivity.class);
         intent.putExtra("verified", verified);
         intent.putExtra("darkmode", darkmode);
+        intent.putExtra("sound", sound);
         intent.putExtra("user", user);
         intent.putExtra("location", location);
         startActivity(intent);
@@ -224,9 +230,11 @@ public class CreateQuizActivity2 extends AppCompatActivity {
 
     // Method to open the AddQuestionActivity
     public void openAddQuestion() {
+        active = true;
         Intent intent = new Intent(this, AddQuestionActivity.class);
         intent.putExtra("verified", verified);
         intent.putExtra("darkmode", darkmode);
+        intent.putExtra("sound", sound);
         intent.putExtra("quiz", quiz);
         intent.putExtra("user", user);
         intent.putExtra("location", location);
@@ -275,4 +283,23 @@ public class CreateQuizActivity2 extends AppCompatActivity {
             openCreateQuizActivity();
         }
     }
+
+    @Override
+    public void onPause() {
+        // Stop the music
+        if (!active) {
+            Music.stop(this);
+        }
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Resume music
+        if (!Music.isPlaying() && sound) {
+            Music.play(this);
+        }
+    }
+
 }

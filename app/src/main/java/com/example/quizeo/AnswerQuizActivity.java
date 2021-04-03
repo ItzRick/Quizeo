@@ -46,6 +46,9 @@ public class AnswerQuizActivity extends AppCompatActivity {
     boolean isAnswered;
     boolean verified;
     boolean darkmode;
+    boolean sound;
+
+    boolean active = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +70,7 @@ public class AnswerQuizActivity extends AppCompatActivity {
         super.onStart();
         // Retrieve all passed objects:
         verified = getIntent().getBooleanExtra("verified", true);
+        sound = getIntent().getBooleanExtra("sound", true);
         location = getIntent().getParcelableExtra("location");
         quiz = getIntent().getParcelableExtra("quiz");
 //        System.out.println(quiz.getNumberOfQuestions());
@@ -212,9 +216,11 @@ public class AnswerQuizActivity extends AppCompatActivity {
      * Go to the next question and push all required objects.
      */
     public void answerNext() {
+        active = true;
         Intent intent = new Intent(this, AnswerQuizActivity.class);
         intent.putExtra("verified", verified);
         intent.putExtra("darkmode", darkmode);
+        intent.putExtra("sound", sound);
         intent.putExtra("location", location);
         intent.putExtra("quiz", quiz);
         intent.putExtra("answerQuiz", answerQuiz);
@@ -227,9 +233,11 @@ public class AnswerQuizActivity extends AppCompatActivity {
      */
     public void quit() {
         quiz.quitQuiz();
+        active = true;
         Intent intent = new Intent(this, PlayQuizActivity.class);
         intent.putExtra("verified", verified);
         intent.putExtra("darkmode", darkmode);
+        intent.putExtra("sound", sound);
         intent.putExtra("location", location);
         intent.putExtra("user", userAnswered);
         startActivity(intent);
@@ -239,9 +247,11 @@ public class AnswerQuizActivity extends AppCompatActivity {
      * Method for transition to the finished quiz screen.
      */
     public void finishQuiz () {
+        active = true;
         Intent intent = new Intent(this, FinishQuizActivity.class);
         intent.putExtra("verified", verified);
         intent.putExtra("darkmode", darkmode);
+        intent.putExtra("sound", sound);
         intent.putExtra("location", location);
         intent.putExtra("answerQuiz", answerQuiz);
         intent.putExtra("quiz", quiz);
@@ -278,4 +288,23 @@ public class AnswerQuizActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onPause() {
+        // Stop the music
+        if (!active) {
+            Music.stop(this);
+        }
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Resume music
+        if (!Music.isPlaying() && sound) {
+            Music.play(this);
+        }
+    }
+
 }

@@ -21,12 +21,14 @@ public class Music {
     private static MediaPlayer mp = null;
     // MediaPlayer for sound effects
     private static MediaPlayer effects = null;
-    // Maximum volume for the music, do not change
+    // Maximum volume for the music and sound effects, do not change
     private final static int MAX_VOLUME = 100;
-    // Set volume for the music, can change
+    // Set volume for the music and sound effects, can change
     public static int soundVolume = 50;
+    public static int effectsVolume = 100;
     // Converted volume
     private static float volume = (float) (1 - (Math.log(MAX_VOLUME - soundVolume) / Math.log(MAX_VOLUME)));
+    private static float sfxVolume = (float) (1 - (Math.log(MAX_VOLUME - soundVolume) / Math.log(MAX_VOLUME)));
 
     private final Runnable r = new Runnable() {
 
@@ -141,7 +143,7 @@ public class Music {
     }
 
     // Sets the volume to the input integer
-    public static void setVolume(int newVolume) {
+    public static void setVolume(float newVolume) {
         if (newVolume >= 0 && newVolume <= 100) {
             volume = (float) (1 - (Math.log(MAX_VOLUME - newVolume) / Math.log(MAX_VOLUME)));
         }
@@ -151,35 +153,41 @@ public class Music {
     public static void correctSound(Context context) {
         effects = MediaPlayer.create(context, R.raw.soundeffect02);
         // Play the sound
-        playSound();
+        playSound(95);
     }
 
     // Stores the sound that plays when a user incorrectly answers a question
     public static void wrongSound(Context context) {
         effects = MediaPlayer.create(context, R.raw.soundeffect01);
         // Play the sound
-        playSound();;
+        playSound(100);;
     }
 
     // Stores the sound that plays when a user passed a quiz
     public static void passedSound(Context context) {
         effects = MediaPlayer.create(context, R.raw.soundeffect03);
         // Play the sound
-        playSound();
+        playSound(100);
     }
 
     // Stores the sound that plays when a user failed a quiz
     public static void failedSound(Context context) {
         effects = MediaPlayer.create(context, R.raw.soundeffect04);
         // Play the sound
-        playSound();
+        playSound(100);
     }
 
     // Plays the sound that is currently stored
-    private static void playSound() {
-        setVolume(100);
-        effects.setVolume(volume, volume);
+    private static void playSound(float volumeSet) {
+        setsfxVolume(volumeSet);
+        effects.setVolume(sfxVolume, sfxVolume);
         effects.start();
     }
 
+    // Sets the volume to the input integer
+    public static void setsfxVolume(float newVolume) {
+        if (newVolume >= 0 && newVolume <= 100) {
+            sfxVolume = (float) (1 - (Math.log(MAX_VOLUME - newVolume) / Math.log(MAX_VOLUME)));
+        }
+    }
 }
