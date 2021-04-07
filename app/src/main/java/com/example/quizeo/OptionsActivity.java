@@ -179,14 +179,11 @@ public class OptionsActivity extends AppCompatActivity {
         // change button text
         ((Button) this.findViewById(R.id.muteButton)).setText(R.string.play_sounds);
         // add code to actually mutes the app
-        /*AudioManager audioManager = (AudioManager)OptionsActivity.this.getSystemService(Context.AUDIO_SERVICE);
-        while (audioManager.getStreamVolume(AudioManager.STREAM_MUSIC) > 0) {
-            audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_LOWER, 1);
-        }*/
+        Music.sfx = false;
+//        if (Music.isPlaying()) {
+//            Music.stop(this);
+//        }
         // Store this option
-        if (Music.isPlaying()) {
-            Music.stop(this);
-        }
         tempOptionSave("soundNow", false);
     }
 
@@ -205,16 +202,13 @@ public class OptionsActivity extends AppCompatActivity {
         // change button text
         ((Button) this.findViewById(R.id.muteButton)).setText(R.string.mute_sounds);
         // add code to actually unmutes the app
-        /*AudioManager audioManager = (AudioManager)OptionsActivity.this.getSystemService(Context.AUDIO_SERVICE);
-        while (audioManager.getStreamVolume(AudioManager.STREAM_MUSIC) < audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)) {
-            audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_RAISE, 1);
-        }*/
+        Music.sfx = true;
+//        if (!Music.isPlaying()) {
+//            Music.play(this);
+//            Music m = new Music();
+//            m.start(this);
+//        }
         // Store this option
-        if (!Music.isPlaying()) {
-            Music.play(this);
-            Music m = new Music();
-            m.start(this);
-        }
         tempOptionSave("soundNow", true);
     }
 
@@ -286,9 +280,6 @@ public class OptionsActivity extends AppCompatActivity {
 
     // Toggles whether friend requests are on or off
     public void toggleFriendRequests(View v) {
-        Music.next(this);
-        Music m = new Music();
-        m.start(this);
         // find the corresponding check mark
         ImageView i = this.findViewById(R.id.friendRequestCheck);
         // call method that turns this options on or off based on the check mark
