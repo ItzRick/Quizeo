@@ -33,11 +33,12 @@ public class AddQuestionActivity extends AppCompatActivity {
     private static final int RESULT_LOAD_IMAGE = 1;
 
     // Declare local variables
-    ImageView imageUpload;
+//    ImageView imageUpload;
 
     Button buttonSaveQuit;
     Button buttonDeleteQuestion;
     Button buttonAddOption;
+    Button buttonAddExplanation;
     ScrollView answersView;
     LinearLayout answersLayout;
 
@@ -51,11 +52,13 @@ public class AddQuestionActivity extends AppCompatActivity {
     boolean verified;
     boolean darkmode;
     boolean sound;
+    String explanation;
 
     boolean active = false;
 
     LocationQuizeo location;
     Quiz quiz;
+    Question question;
     User user;
     int correct;
     int index;
@@ -81,11 +84,12 @@ public class AddQuestionActivity extends AppCompatActivity {
         buttonSaveQuit = (Button) findViewById(R.id.buttonSaveQuit);
         buttonDeleteQuestion = (Button) findViewById(R.id.buttonDeleteQuestion);
         buttonAddOption = (Button) findViewById(R.id.buttonAddOption);
+        buttonAddExplanation = (Button) findViewById(R.id.buttonAddExplanation);
 
-        answersView = (ScrollView) findViewById(R.id.answers_scroll);
+        question = getIntent().getParcelableExtra("question");
+
         textQuestion = (EditText) findViewById(R.id.textQuestion);
-        answersLayout = new LinearLayout(this);
-        answersLayout.setOrientation(LinearLayout.VERTICAL);
+
 
         location = getIntent().getParcelableExtra("location");
         verified = getIntent().getBooleanExtra("verified", true);
@@ -93,6 +97,11 @@ public class AddQuestionActivity extends AppCompatActivity {
         quiz = getIntent().getParcelableExtra("quiz");
         user = getIntent().getParcelableExtra("user");
         newQuiz = getIntent().getBooleanExtra("newquiz", false);
+        explanation = getIntent().getStringExtra("explanation");
+        if (explanation == null) {
+            explanation = "";
+        }
+
         answers = new ArrayList<>();
         removeButtons = new ArrayList<>();
         correctButtons = new ArrayList<>();
@@ -102,11 +111,32 @@ public class AddQuestionActivity extends AppCompatActivity {
         correct = -1;
         index = 0;
 
-        for (int i = 0; i < 2; i++) {
-            addOption();
-
+        if (answersView == null) {
+            answersView = (ScrollView) findViewById(R.id.answers_scroll);
+            answersLayout = new LinearLayout(this);
+            answersLayout.setOrientation(LinearLayout.VERTICAL);
+            answersView.addView(answersLayout);
         }
-        answersView.addView(answersLayout);
+
+        if (!(question == null)) {
+            textQuestion.setText(question.getQuestion());
+            String[] answerss = question.getAnswers();
+            for (int i = 0; i < answerss.length; i++) {
+                addOption();
+                answers.get(i).setText(answerss[i]);
+            }
+//            System.out.println(question.getCorrectInt());
+            if (question.getCorrectInt() > -1) {
+                correct = question.getCorrectInt();
+                correctButtons.get(correct).setBackgroundColor(Color.GREEN);
+            }
+        } else {
+            for (int i = 0; i < 2; i++) {
+                addOption();
+            }
+        }
+
+
         // Open next activity with add option button
         buttonAddOption.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,7 +173,7 @@ public class AddQuestionActivity extends AppCompatActivity {
                         questionString = questionString + "?";
                     }
                     Question question = new Question(questionString, answerss,
-                            correct + 1, "", quiz.getNumberOfQuestions() + 1,
+                            correct + 1, explanation, quiz.getNumberOfQuestions() + 1,
                             UUID.randomUUID());
                     quiz.addQuestion(question);
                     createQuiz();
@@ -156,6 +186,13 @@ public class AddQuestionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 createQuiz();
+            }
+        });
+
+        buttonAddExplanation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addExplanation();
             }
         });
     }
@@ -199,7 +236,7 @@ public class AddQuestionActivity extends AppCompatActivity {
         int width = displayMetrics.widthPixels;
         if (width > height) {
             width = (int) (0.8 * width);
-            System.out.println(width);
+//            System.out.println(width);
         }
 
         LinearLayout tempLayout = new LinearLayout(this);
@@ -333,6 +370,32 @@ public class AddQuestionActivity extends AppCompatActivity {
                 return true;
             }
         });
+    }
+
+    void addExplanation() {
+        Question question1 = new Question();
+        String[] answerss = new String[answers.size()];
+        int i = 0;
+        for (EditText answer : answers) {
+            answerss[i] = answer.getText().toString();
+            i++;
+        }
+        if (!(explanation.equals("")) && !(explanation == null)) {
+            question1.setExplanation(explanation);
+        }
+        question1.setAnswers(answerss);
+        question1.setQuestion(textQuestion.getText().toString());
+        question1.setCorrectInt(correct);
+        Intent intent = new Intent(this, PickExplanation.class);
+        intent.putExtra("user", user);
+        intent.putExtra("quiz", quiz);
+        intent.putExtra("location", location);
+        intent.putExtra("newquiz", newQuiz);
+        intent.putExtra("verified", verified);
+        intent.putExtra("darkmode", darkmode);
+        intent.putExtra("sound", sound);
+        intent.putExtra("question", question1);
+        startActivity(intent);
     }
 
     @Override

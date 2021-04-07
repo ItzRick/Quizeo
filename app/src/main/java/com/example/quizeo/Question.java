@@ -192,6 +192,16 @@ public class Question implements Parcelable {
     }
 
     /**
+     * Set the correct answer by giving the index of this answer.
+     *
+     * @param correctInt Index of the ArrayList for the correct answer, counting starts at 1.
+     */
+    public void setCorrectInt(int correctInt) {
+        // Save the correctInt value:
+        this.correctInt = correctInt;
+    }
+
+    /**
      * Set the explanation for this question.
      *
      * @param explanation The explanation for this question in a String.

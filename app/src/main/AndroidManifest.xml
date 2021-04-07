@@ -28,6 +28,7 @@
         <activity android:name=".AddQuestionActivity"/>
         <activity android:name=".AnswerQuizActivity"/>
         <activity android:name=".PickUsername"/>
+        <activity android:name=".PickExplanation"/>
         <activity
             android:name=".SplashScreen"
             android:label="@string/app_name"

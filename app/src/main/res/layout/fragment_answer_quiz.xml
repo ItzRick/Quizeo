@@ -39,21 +39,27 @@
         android:id="@+id/score_answer"
         android:layout_width="110dp"
         android:layout_height="55dp"
+        android:layout_marginTop="24dp"
         android:background="?attr/colorPrimary"
         android:gravity="center"
         android:textColor="?attr/colorOnPrimary"
         app:layout_constraintBottom_toTopOf="@+id/imageView4"
-        app:layout_constraintStart_toStartOf="@+id/question_answer" />
+        app:layout_constraintStart_toStartOf="@+id/question_answer"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/current_question_answer"
         android:layout_width="110dp"
         android:layout_height="55dp"
+        android:layout_marginTop="24dp"
         android:background="?attr/colorPrimary"
         android:gravity="center"
         android:textColor="?attr/colorOnPrimary"
         app:layout_constraintBottom_toTopOf="@+id/imageView4"
-        app:layout_constraintEnd_toEndOf="@+id/question_answer" />
+        app:layout_constraintEnd_toEndOf="@+id/question_answer"
+        app:layout_constraintHorizontal_bias="0.941"
+        app:layout_constraintStart_toEndOf="@+id/score_answer"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/question_answer"

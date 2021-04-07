@@ -74,14 +74,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="67dp"
             android:text="@string/add_option"
             app:layout_constraintBottom_toTopOf="@+id/buttonDeleteQuestion"
             app:layout_constraintEnd_toEndOf="@+id/buttonDeleteQuestion"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/buttonDeleteQuestion"
-            app:layout_constraintTop_toBottomOf="@id/textQuestion"
-            app:layout_constraintVertical_bias="0.929" />
+            app:layout_constraintTop_toBottomOf="@+id/answers_scroll"
+            app:layout_constraintVertical_bias="0.8" />
 
         <Button
             android:id="@+id/buttonSaveQuit"
@@ -89,9 +88,11 @@
             android:layout_height="88dp"
             android:layout_marginStart="200dp"
             android:layout_marginTop="100dp"
+            android:layout_marginBottom="12dp"
             android:text="@string/add_question"
-            app:layout_constraintBottom_toTopOf="@+id/toolbar2"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/toolbar2"
+            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView4" />
 
@@ -109,20 +110,33 @@
         </ScrollView>
 
         <Button
+            android:id="@+id/buttonAddExplanation"
+            android:layout_width="152dp"
+            android:layout_height="68dp"
+            android:text="@string/add_explanation"
+            app:layout_constraintBottom_toTopOf="@+id/buttonSaveQuit"
+            app:layout_constraintEnd_toEndOf="@+id/buttonSaveQuit"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/buttonSaveQuit"
+            app:layout_constraintTop_toBottomOf="@+id/answers_scroll"
+            app:layout_constraintVertical_bias="0.666" />
+
+        <Button
             android:id="@+id/buttonDeleteQuestion"
             android:layout_width="150dp"
             android:layout_height="88dp"
-            android:layout_marginStart="630dp"
             android:layout_marginTop="100dp"
+            android:layout_marginBottom="12dp"
             android:text="@string/delete_question"
             android:textColor="?attr/colorBackgroundFloating"
             android:textColorHighlight="#F8EEEE"
             android:textColorLink="#F1EFEF"
             app:backgroundTint="?attr/colorControlActivated"
             app:iconTint="#F4EFEF"
-            app:layout_constraintBottom_toTopOf="@+id/toolbar2"
-            app:layout_constraintEnd_toStartOf="@+id/toolbar2"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/toolbar2"
+            app:layout_constraintHorizontal_bias="0.811"
+            app:layout_constraintStart_toEndOf="@+id/buttonSaveQuit"
             app:layout_constraintTop_toBottomOf="@+id/imageView4" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -42,6 +42,7 @@
     <string name="add_an_answer">Add an Answer…</string>
     <string name="delete_question">Delete Question</string>
     <string name="add_option">Add Option</string>
+    <string name="add_explanation">Add Explanation</string>
     <string name="remove_option">Remove Option</string>
     <string name="not_answered">"Answer the question first!"</string>
     <string name="quit">Quit</string>
@@ -69,4 +70,7 @@
     <string name="not_enough_answers_added">Not enough answers added. Make sure to have at least two added answers!</string>
     <string name="location_no_found">The location has not been retrieved correctly! Please try again!</string>
     <string name="no_location_detected_make_sure_that_the_device_has_opened_google_maps_before">No location detected! Make sure that the device has opened google maps before!</string>
+    <string name="enter_explanation">Pick your explanation!</string>
+    <string name="save_explanation">Save explanation</string>
+    <string name="remove_explanation">Remove explanation</string>
 </resources>
