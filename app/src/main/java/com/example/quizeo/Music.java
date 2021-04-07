@@ -11,6 +11,7 @@ public class Music {
 
     // TURN SOUND OFF FOR TEST PURPOSES
     private static final boolean sound = false;
+    public static boolean sfx = true;
     // List of soundtracks
     private static final List<Integer> music = new ArrayList<>();
     // Variables used for selecting and playing music
@@ -183,7 +184,7 @@ public class Music {
 
     // Plays the sound that is currently stored
     private static void playSound(float volumeSet) {
-        if (sound) {
+        if (sfx) {
             setSfxVolume(volumeSet);
             effects.setVolume(sfxVolume, sfxVolume);
             effects.start();
