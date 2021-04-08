@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,6 +48,7 @@ public class AnswerQuizActivity extends AppCompatActivity {
     boolean verified;
     boolean darkmode;
     boolean sound;
+    boolean correctt;
 
     boolean active = false;
 
@@ -153,8 +155,9 @@ public class AnswerQuizActivity extends AppCompatActivity {
                             }
                             answerQuiz.updateScore(true);
                             if (!currentQuestion.getExplanation().equals("")) {
-                                String explanation = "The correct answer indeed is: " + currentQuestion.getCorrect() + ", this is the correct answer because " +
+                                String explanation = "The correct answer indeed is: " + currentQuestion.getCorrect() + ", this is the correct answer because: " +
                                         currentQuestion.getExplanation();
+                                correctt = true;
                                 showPopup(v, R.layout.popup_explanation, explanation);
                             }
 
@@ -173,15 +176,16 @@ public class AnswerQuizActivity extends AppCompatActivity {
                             }
                             answerQuiz.updateScore(false);
                             if (!currentQuestion.getExplanation().equals("")) {
-                                String explanation = "The correct answer indeed is: " + currentQuestion.getCorrect() + ", this is the correct answer because " +
+                                String explanation = "This answer is unfortunately wrong. The correct answer is: " + currentQuestion.getCorrect() + ", this is the correct answer because: " +
                                         currentQuestion.getExplanation();
+                                correctt = false;
                                 showPopup(v, R.layout.popup_explanation, explanation);
                             }
                         }
                         // The question has been answered:
                         isAnswered = true;
                     } else {
-                        showPopup(v, R.layout.popup_already_answered);
+                        showPopup(v, R.layout.popup_already_answered, null);
                     }
                 }
             });
@@ -212,7 +216,7 @@ public class AnswerQuizActivity extends AppCompatActivity {
                         answerNext();
                     }
                 } else {
-                    showPopup(v, R.layout.popup_not_answered);
+                    showPopup(v, R.layout.popup_not_answered, null);
                 }
             }
         });
@@ -271,35 +275,6 @@ public class AnswerQuizActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    void showPopup (View v, int popup) {
-        // Create a pop up that the question has already been answered:
-        // inflate the layout of the popup window
-        LayoutInflater inflater = (LayoutInflater)
-                v.getContext().getSystemService
-                        (v.getContext().LAYOUT_INFLATER_SERVICE);
-        View popupView =
-                inflater.inflate(popup, null);
-
-        // create the popup window
-        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-        // Makes sure you can also press outside the popup to dismiss it:
-        boolean focusable = true;
-        PopupWindow popupWindow =
-                new PopupWindow(popupView, width, height, focusable);
-
-        // show the popup window
-        popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
-
-        // dismiss the popup window when touched
-        popupView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                popupWindow.dismiss();
-                return true;
-            }
-        });
-    }
 
     void showPopup (View v, int popup, String explanation) {
         // Create a pop up that the question has already been answered:
@@ -318,8 +293,16 @@ public class AnswerQuizActivity extends AppCompatActivity {
         PopupWindow popupWindow =
                 new PopupWindow(popupView, width, height, focusable);
 
-        TextView explanationText = (TextView) popupWindow.getContentView().findViewById(R.id.explanation_text);
-        explanationText.setText(explanation);
+        if (explanation != null) {
+            TextView explanationText = (TextView) popupWindow.getContentView().findViewById(R.id.explanation_text);
+            RelativeLayout explanationLayout = (RelativeLayout) popupWindow.getContentView().findViewById(R.id.explanation);
+            if (correctt) {
+                explanationLayout.setBackgroundColor(Color.GREEN);
+            } else {
+                explanationLayout.setBackgroundColor(Color.RED);
+            }
+            explanationText.setText(explanation);
+        }
 
         // show the popup window
         popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);

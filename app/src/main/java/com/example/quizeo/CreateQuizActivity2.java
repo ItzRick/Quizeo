@@ -133,6 +133,10 @@ public class CreateQuizActivity2 extends AppCompatActivity {
                     if (quiz.getNumberOfRatings() == - 1) {
                         quiz.setNrOfRatings(0);
                     }
+//                    quiz.setNrOfRatings(150);
+//                    quiz.setRating(10);
+//                    System.out.println(quiz.getRating());
+//                    System.out.println(quiz.getNumberOfRatings());
                     database.uploadQuiz(quiz, true);
                     openCreateQuizActivity();
                 }
