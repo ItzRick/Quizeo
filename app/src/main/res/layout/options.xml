@@ -123,6 +123,7 @@
         android:layout_marginTop="5dp"
         android:onClick="toggleFriendRequests"
         android:text="@string/friend_requests"
+        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/darkModeButton" />
 
@@ -163,6 +164,7 @@
         android:focusable="true"
         android:onClick="toggleFriendRequests"
         android:contentDescription="@string/box"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/friendRequestButton"
         app:layout_constraintTop_toBottomOf="@+id/darkModeBox"

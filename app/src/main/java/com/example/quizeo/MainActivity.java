@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
     boolean sound;
     boolean verified;
     boolean darkmode;
-    boolean request;
+    //boolean request;
 
     boolean active = false;
 
@@ -230,7 +230,7 @@ public class MainActivity extends AppCompatActivity {
         sound = i.getBooleanExtra("sound", true);
         verified = i.getBooleanExtra("verified", true);
         darkmode = i.getBooleanExtra("darkmode", false);
-        request = i.getBooleanExtra("request", false);
+        //request = i.getBooleanExtra("request", false);
     }
 
     // Method to open the CreateQuizActivity
@@ -266,7 +266,7 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("verified", verified);
         intent.putExtra("darkmode", darkmode);
         intent.putExtra("sound", sound);
-        intent.putExtra("request", request);
+        //intent.putExtra("request", request);
         startActivity(intent);
     }
 

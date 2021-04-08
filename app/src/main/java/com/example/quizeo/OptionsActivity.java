@@ -25,7 +25,7 @@ public class OptionsActivity extends AppCompatActivity {
     boolean sound;
     boolean verified;
     boolean darkmode;
-    boolean request;
+    //boolean request;
 
     // Variable used for music
     boolean active = false;
@@ -46,7 +46,7 @@ public class OptionsActivity extends AppCompatActivity {
                 mute(findViewById(R.id.soundIcon));
             }
             verifiedQuizzes(verified);
-            friendRequests(request);
+            //friendRequests(request);
             darkMode(darkmode);
         } else {                                // if the activity is reopened
             // set the options to the stored options
@@ -56,7 +56,7 @@ public class OptionsActivity extends AppCompatActivity {
                 mute(findViewById(R.id.soundIcon));
             }
             verifiedQuizzes(i.getBooleanExtra("verifiedNow", verified));
-            friendRequests(i.getBooleanExtra("requestNow", request));
+            //friendRequests(i.getBooleanExtra("requestNow", request));
             darkMode(i.getBooleanExtra("darkmodeNow", darkmode));
         }
     }
@@ -71,7 +71,7 @@ public class OptionsActivity extends AppCompatActivity {
     public void getOptions(Intent i) {
         sound = i.getBooleanExtra("sound", true);
         verified = i.getBooleanExtra("verified", true);
-        request = i.getBooleanExtra("request", false);
+        //request = i.getBooleanExtra("request", false);
         darkmode = i.getBooleanExtra("darkmode", false);
     }
 
@@ -80,14 +80,16 @@ public class OptionsActivity extends AppCompatActivity {
         // check if any options changed
         boolean soundchange = (findViewById(R.id.soundIcon).getVisibility() == View.VISIBLE) != sound;
         boolean verifiedchange = (findViewById(R.id.verifiedCheck).getVisibility() == View.VISIBLE) != verified;
-        boolean requestchange = (findViewById(R.id.friendRequestCheck).getVisibility() == View.VISIBLE) != request;
+        //boolean requestchange = (findViewById(R.id.friendRequestCheck).getVisibility() == View.VISIBLE) != request;
         boolean darkmodechange = (findViewById(R.id.darkModeCheck).getVisibility() == View.VISIBLE) != darkmode;
         // if any option changed
-        if (soundchange || verifiedchange || requestchange || darkmodechange) {
+        //if (soundchange || verifiedchange || requestchange || darkmodechange) {
+        if (soundchange || verifiedchange || darkmodechange) {
             // warn user that changes are not saved
             alertUser(v);
         } else {    // if no options changed, return to home
-            openHome(sound, verified, darkmode, request);
+            //openHome(sound, verified, darkmode, request);
+            openHome(sound, verified, darkmode);
         }
     }
 
@@ -100,14 +102,15 @@ public class OptionsActivity extends AppCompatActivity {
         if ((findViewById(R.id.verifiedCheck).getVisibility() == View.VISIBLE) != verified) {
             toggleVerified(findViewById(R.id.verifiedButton));
         }
-        if ((findViewById(R.id.friendRequestCheck).getVisibility() == View.VISIBLE) != request) {
-            toggleFriendRequests(findViewById(R.id.friendRequestButton));
-        }
+        //if ((findViewById(R.id.friendRequestCheck).getVisibility() == View.VISIBLE) != request) {
+        //    toggleFriendRequests(findViewById(R.id.friendRequestButton));
+        //}
         if ((findViewById(R.id.darkModeCheck).getVisibility() == View.VISIBLE) != darkmode) {
             toggleDarkMode(findViewById(R.id.darkModeButton));
         }
         // return to home activity
-        openHome(sound, verified, darkmode, request);
+        //openHome(sound, verified, darkmode, request);
+        openHome(sound, verified, darkmode);
     }
 
     // Alerts user that the changes are not saved
@@ -135,19 +138,21 @@ public class OptionsActivity extends AppCompatActivity {
         boolean newSound = findViewById(R.id.soundIcon).getVisibility() == View.VISIBLE;
         boolean newVerified = findViewById(R.id.verifiedCheck).getVisibility() == View.VISIBLE;
         boolean newDarkmode = findViewById(R.id.darkModeCheck).getVisibility() == View.VISIBLE;
-        boolean newRequest = findViewById(R.id.friendRequestCheck).getVisibility() == View.VISIBLE;
+        //boolean newRequest = findViewById(R.id.friendRequestCheck).getVisibility() == View.VISIBLE;
         // return to home activity
-        openHome(newSound, newVerified, newDarkmode, newRequest);
+        //openHome(newSound, newVerified, newDarkmode, newRequest);
+        openHome(newSound, newVerified, newDarkmode);
     }
 
     // Reads the input options and sends them to the home activity
-    public void openHome(boolean sound, boolean verified, boolean darkmode, boolean request) {
+    //public void openHome(boolean sound, boolean verified, boolean darkmode, boolean request) {
+    public void openHome(boolean sound, boolean verified, boolean darkmode) {
         active = true;
         Intent i = new Intent(this, MainActivity.class);
         i.putExtra("sound", sound);
         i.putExtra("verified", verified);
         i.putExtra("darkmode", darkmode);
-        i.putExtra("request", request);
+        //i.putExtra("request", request);
         startActivity(i);
     }
 
@@ -278,32 +283,32 @@ public class OptionsActivity extends AppCompatActivity {
         }
     }
 
-    // Toggles whether friend requests are on or off
-    public void toggleFriendRequests(View v) {
-        // find the corresponding check mark
-        ImageView i = this.findViewById(R.id.friendRequestCheck);
-        // call method that turns this options on or off based on the check mark
-        friendRequests(!(i.getVisibility() == View.VISIBLE));
-    }
-
-    // Turns friend requests on or off
-    public void friendRequests(boolean enable) {
-        // find the right check mark
-        ImageView i = this.findViewById(R.id.friendRequestCheck);
-        if (enable) {       // if the option should be turned on
-            // make the check mark visible
-            i.setVisibility(View.VISIBLE);
-            //add code to enable
-
-        } else {            // if the option should be turned off
-            // make the check mark invisible
-            i.setVisibility(View.INVISIBLE);
-            // add code to disable
-
-        }
-        // Store this option
-        tempOptionSave("requestNow", enable);
-    }
+//    // Toggles whether friend requests are on or off
+//    public void toggleFriendRequests(View v) {
+//        // find the corresponding check mark
+//        ImageView i = this.findViewById(R.id.friendRequestCheck);
+//        // call method that turns this options on or off based on the check mark
+//        friendRequests(!(i.getVisibility() == View.VISIBLE));
+//    }
+//
+//    // Turns friend requests on or off
+//    public void friendRequests(boolean enable) {
+//        // find the right check mark
+//        ImageView i = this.findViewById(R.id.friendRequestCheck);
+//        if (enable) {       // if the option should be turned on
+//            // make the check mark visible
+//            i.setVisibility(View.VISIBLE);
+//            //add code to enable
+//
+//        } else {            // if the option should be turned off
+//            // make the check mark invisible
+//            i.setVisibility(View.INVISIBLE);
+//            // add code to disable
+//
+//        }
+//        // Store this option
+//        tempOptionSave("requestNow", enable);
+//    }
 
     // Stores an option that has been changed in the intent
     public void tempOptionSave(String string, boolean enabled) {
