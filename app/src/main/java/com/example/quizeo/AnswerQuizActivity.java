@@ -297,9 +297,17 @@ public class AnswerQuizActivity extends AppCompatActivity {
             TextView explanationText = (TextView) popupWindow.getContentView().findViewById(R.id.explanation_text);
             RelativeLayout explanationLayout = (RelativeLayout) popupWindow.getContentView().findViewById(R.id.explanation);
             if (correctt) {
-                explanationLayout.setBackgroundColor(Color.GREEN);
+                if (darkmode) {
+                    explanationLayout.setBackgroundColor(getResources().getColor(R.color.darkgreen));
+                } else {
+                    explanationLayout.setBackgroundColor(Color.GREEN);
+                }
             } else {
-                explanationLayout.setBackgroundColor(Color.RED);
+                if (darkmode) {
+                    explanationLayout.setBackgroundColor(getResources().getColor(R.color.redd));
+                } else {
+                    explanationLayout.setBackgroundColor(Color.RED);
+                }
             }
             explanationText.setText(explanation);
         }
