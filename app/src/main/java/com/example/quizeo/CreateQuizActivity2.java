@@ -21,59 +21,56 @@ import java.util.UUID;
 
 public class CreateQuizActivity2 extends AppCompatActivity {
 
-    // Declare local variables
+    // Declare local variables for UI elements:
     Button buttonSaveQuit;
     Button buttonAddQuestion;
     Button buttonAddLocation;
     Button buttonSubmitQuiz;
     Button buttonRemoveQuestion;
-    boolean publish;
-
     TextView locationAdded;
+    TextView numberOfQuestions;
+    EditText quizName;
+
+    // Local variables:
+    boolean publish;
     boolean newQuiz;
     boolean verified;
     boolean darkmode;
     boolean sound;
-
     boolean active = false;
 
-    TextView numberOfQuestions;
-
-    EditText quizName;
-
+    // Variables for the quiz elements:
     Database database;
-
     Quiz quiz;
     LocationQuizeo location;
     User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Set the correct layout:
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_create_quiz_2);
-
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+
+        // Retrieve the UI elements:
         setContentView(R.layout.fragment_create_quiz_2);
         buttonSaveQuit = (Button) findViewById(R.id.buttonSaveQuit);
         quizName = (EditText) findViewById(R.id.YourQuizName);
         buttonAddQuestion = (Button) findViewById(R.id.buttonAddQuestion);
         numberOfQuestions = (TextView) findViewById(R.id.NumberOfQuestions);
-
         buttonSubmitQuiz = (Button) findViewById(R.id.buttonSubmitQuiz);
-
         locationAdded = (TextView) findViewById(R.id.textLocation);
         buttonAddLocation = (Button) findViewById(R.id.buttonAddLocation);
-
         buttonRemoveQuestion = (Button) findViewById(R.id.buttonRemoveQuestion);
 
+        // Get the parcelables from the previous class:
         user = getIntent().getParcelableExtra("user");
         verified = getIntent().getBooleanExtra("verified", true);
         sound = getIntent().getBooleanExtra("sound", true);
-
         location = getIntent().getParcelableExtra("location");
         database = Database.getInstance();
 
@@ -81,7 +78,7 @@ public class CreateQuizActivity2 extends AppCompatActivity {
         // Retrieve passed quiz element if it exists:
         quiz = getIntent().getParcelableExtra("quiz");
 
-        // Set new if it does not exist:
+        // Set new if the quiz does not exist:
         if (quiz == null) {
             quiz = new Quiz();
             quiz.setQuizId(UUID.randomUUID());
@@ -90,16 +87,18 @@ public class CreateQuizActivity2 extends AppCompatActivity {
             quizName.setText(quiz.getQuizName());
         }
 
+        // If the quiz was not new, set the location to the previous value:
         if (!newQuiz) {
             quiz.setLocation(location);
             String text = "Location has been added!";
             locationAdded.setText(text);
         }
 
-
+        // Set the number of questions text:
         String textToSet = "Number of questions: " + quiz.getNumberOfQuestions();
         numberOfQuestions.setText(textToSet);
 
+        // If darkmode, change colors appropriately:
         darkmode = getIntent().getBooleanExtra("darkmode", false);
         if (darkmode) {
             findViewById(R.id.globeCreate2).setVisibility(View.INVISIBLE);
@@ -109,9 +108,14 @@ public class CreateQuizActivity2 extends AppCompatActivity {
             findViewById(R.id.globeCreate2).setVisibility(View.VISIBLE);
         }
 
+        // Add a clicklistener to the submit quiz button:
         buttonSubmitQuiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // If the question is not correct, so there are too little questions,
+                // or no quizname has been added, or there is no location, show the popup for this
+                // error, otherwise submit quiz, if necessary with retrieving the questions
+                // from the database.
                 if (quiz.getNumberOfQuestions() < 5) {
                     showPopup(v, R.layout.popup_little_questions);
                     return;
@@ -133,10 +137,6 @@ public class CreateQuizActivity2 extends AppCompatActivity {
                     if (quiz.getNumberOfRatings() == - 1) {
                         quiz.setNrOfRatings(0);
                     }
-//                    quiz.setNrOfRatings(150);
-//                    quiz.setRating(10);
-//                    System.out.println(quiz.getRating());
-//                    System.out.println(quiz.getNumberOfRatings());
                     database.uploadQuiz(quiz, true);
                     openCreateQuizActivity();
                 }
@@ -147,6 +147,7 @@ public class CreateQuizActivity2 extends AppCompatActivity {
         buttonSaveQuit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Save the quiz, while showing the pop up if there is an error:
                 if (quiz.getLocation() ==  null) {
                     showPopup(v, R.layout.popup_no_location);
                     return;
@@ -162,8 +163,6 @@ public class CreateQuizActivity2 extends AppCompatActivity {
                 quiz.setQuizName(quizName.getText().toString());
                 quiz.setNrOfRatings(-1);
                 database.removeQuiz(quiz);
-//                System.out.println("GlobalID" + quiz.getQuestions()[0].getGlobalId());
-//                System.out.println("USER" + quiz.getUserCreated().getUserId());
                 database.uploadQuiz(quiz, false);
                 openCreateQuizActivity();
             }
@@ -179,6 +178,7 @@ public class CreateQuizActivity2 extends AppCompatActivity {
             }
         });
 
+        // Add the location with the buttonAddLocation, if no location can be found, show popup:
         buttonAddLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -197,6 +197,7 @@ public class CreateQuizActivity2 extends AppCompatActivity {
             }
         });
 
+        // Remove a question if the button to remove a question is pressed:
         buttonRemoveQuestion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -246,6 +247,12 @@ public class CreateQuizActivity2 extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * Shows a popup.
+     *
+     * @param v view to show the popup in.
+     * @param popup Int of the popup layout file.
+     */
     void showPopup (View v, int popup) {
         // Create a pop up that the question has already been answered:
         // inflate the layout of the popup window
@@ -276,13 +283,15 @@ public class CreateQuizActivity2 extends AppCompatActivity {
         });
     }
 
+    /**
+     * Callback to download the questions from the database, used while uploading an existing quiz.
+     */
     private class QuestionsCallback implements Database.DownloadQuestionListCallback {
 
         @Override
         public void onCallback(ArrayList<Question> list) {
             quiz.addQuestions(list);
             database.removeQuiz(quiz);
-//                System.out.println("GlobalID" + quiz.getQuestions()[0].getGlobalId());
             database.uploadQuiz(quiz, publish);
             openCreateQuizActivity();
         }

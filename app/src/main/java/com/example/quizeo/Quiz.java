@@ -169,10 +169,19 @@ public class Quiz implements Parcelable {
         scoreToPass = (int) Math.ceil(temp);
     }
 
+    /**
+     * Add a list of questions to the current quiz, used when one retrieves quizzes from the
+     * database. In the correct order.
+     * 
+     * @param list of questions to add to the current quiz.
+     */
     public void addQuestions(ArrayList<Question> list) {
+        // Make new ArrayList:
         questions = new ArrayList<>();
+        // Loop over all questions in the list:
         for (int i = 1; i < list.size() + 1; i++) {
             for (Question question : list) {
+                // If this is the correct position for this question, continue with the next:
                 if (question.getId() == i) {
                     questions.add(question);
                     break;
@@ -188,10 +197,13 @@ public class Quiz implements Parcelable {
      * @return Array of questions with all questions in the current quiz.
      */
     public Question[] getQuestions() {
+        // Create an array to save the questiosn in:
         Question[] toReturn = new Question[questions.size()];
+        // Add the questions to the array:
         for (int i = 0; i < questions.size(); i++) {
             toReturn[i] = questions.get(i);
         }
+        // Return the array:
         return toReturn;
     }
 
@@ -376,11 +388,6 @@ public class Quiz implements Parcelable {
         return (index < questions.size());
     }
 
-//    public Question getCurrent() {
-//        System.out.println("index" + index);
-//        return questions.get(index);
-//    }
-
     /**
      * Set the number of questions of this quiz
      *
@@ -425,5 +432,4 @@ public class Quiz implements Parcelable {
     public float getPercentageToPass() {
         return percentageToPass;
     }
-
 }

@@ -30,22 +30,34 @@ public class User implements Parcelable {
     public User() {
     }
 
+    /**
+     * Method for the parcelable, required to pass this object between classes.
+     */
     protected User(Parcel in) {
         nickName = in.readString();
         userId = in.readString();
     }
 
+    /**
+     * Method for the parcelable, required to pass this object between classes.
+     */
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(nickName);
         dest.writeString(userId);
     }
 
+    /**
+     * Method for the parcelable, required to pass this object between classes.
+     */
     @Override
     public int describeContents() {
         return 0;
     }
 
+    /**
+     * Creator for the parcelable, required to pass this object between classes.
+     */
     public static final Creator<User> CREATOR = new Creator<User>() {
         @Override
         public User createFromParcel(Parcel in) {

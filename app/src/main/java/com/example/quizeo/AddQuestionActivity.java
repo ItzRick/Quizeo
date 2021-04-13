@@ -30,32 +30,29 @@ import java.util.UUID;
 
 public class AddQuestionActivity extends AppCompatActivity {
 
-    private static final int RESULT_LOAD_IMAGE = 1;
-
-    // Declare local variables
-//    ImageView imageUpload;
-
+    // Declare local variables for the layout elements:
     Button buttonSaveQuit;
     Button buttonDeleteQuestion;
     Button buttonAddOption;
     Button buttonAddExplanation;
     ScrollView answersView;
     LinearLayout answersLayout;
-
     EditText textQuestion;
+    // ArrayLists to save the editText, buttons and the LinearLayout for the various answer options:
     ArrayList<EditText> answers;
     ArrayList<Button> removeButtons;
     ArrayList<Button> correctButtons;
     ArrayList<LinearLayout> layouts;
-
+    // Local variables, to determine if this quiz is verified, new, if the darkmode and sound is
+    // enabled and the String for the explanation from this question, lastly a variable for if the
+    // sound is active:
     boolean newQuiz;
     boolean verified;
     boolean darkmode;
     boolean sound;
     String explanation;
-
     boolean active = false;
-
+    // Local variables for the location, quiz, questions, user, the correct answer and the index:
     LocationQuizeo location;
     Quiz quiz;
     Question question;
@@ -65,9 +62,11 @@ public class AddQuestionActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Set the correct fragment:
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_add_question);
 
+        // If the darkmode is enabled, make sure the buttons are darker:
         darkmode = getIntent().getBooleanExtra("darkmode", false);
         if (darkmode) {
             findViewById(R.id.globeQuestion).setVisibility(View.INVISIBLE);
@@ -81,16 +80,15 @@ public class AddQuestionActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        // Retrieve all UI elements:
         buttonSaveQuit = (Button) findViewById(R.id.buttonSaveQuit);
         buttonDeleteQuestion = (Button) findViewById(R.id.buttonDeleteQuestion);
         buttonAddOption = (Button) findViewById(R.id.buttonAddOption);
         buttonAddExplanation = (Button) findViewById(R.id.buttonAddExplanation);
-
-        question = getIntent().getParcelableExtra("question");
-
         textQuestion = (EditText) findViewById(R.id.textQuestion);
 
-
+        // Retrieve all parcelable variables:
+        question = getIntent().getParcelableExtra("question");
         location = getIntent().getParcelableExtra("location");
         verified = getIntent().getBooleanExtra("verified", true);
         sound = getIntent().getBooleanExtra("sound", true);
@@ -98,26 +96,26 @@ public class AddQuestionActivity extends AppCompatActivity {
         user = getIntent().getParcelableExtra("user");
         newQuiz = getIntent().getBooleanExtra("newquiz", false);
         explanation = getIntent().getStringExtra("explanation");
+        // If there is no explanation, set this approriately:
         if (explanation == null) {
             explanation = "";
         }
-
+        // Create new ArrayList for all ArrayList variables:
         answers = new ArrayList<>();
         removeButtons = new ArrayList<>();
         correctButtons = new ArrayList<>();
         layouts = new ArrayList<>();
-
-
+        // Set the index to 0 and indicate there is no correct answer yet:
         correct = -1;
         index = 0;
-
+        // If there is no answersView yet, set this appropriately:
         if (answersView == null) {
             answersView = (ScrollView) findViewById(R.id.answers_scroll);
             answersLayout = new LinearLayout(this);
             answersLayout.setOrientation(LinearLayout.VERTICAL);
             answersView.addView(answersLayout);
         }
-
+        // If there was a question here previously, set everything appropriately:
         if (!(question == null)) {
             textQuestion.setText(question.getQuestion());
             String[] answerss = question.getAnswers();
@@ -125,17 +123,16 @@ public class AddQuestionActivity extends AppCompatActivity {
                 addOption();
                 answers.get(i).setText(answerss[i]);
             }
-//            System.out.println(question.getCorrectInt());
             if (question.getCorrectInt() > -1) {
                 correct = question.getCorrectInt();
                 correctButtons.get(correct).setBackgroundColor(Color.GREEN);
             }
         } else {
+            // Else: add 2 options:
             for (int i = 0; i < 2; i++) {
                 addOption();
             }
         }
-
 
         // Open next activity with add option button
         buttonAddOption.setOnClickListener(new View.OnClickListener() {
@@ -189,6 +186,7 @@ public class AddQuestionActivity extends AppCompatActivity {
             }
         });
 
+        // OPen the explanation when required:
         buttonAddExplanation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -197,16 +195,7 @@ public class AddQuestionActivity extends AppCompatActivity {
         });
     }
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null) {
-//            Uri selectedImage = data.getData();
-//            imageUpload.setImageURI(selectedImage);
-//        }
-//    }
-
-// Back button does the same thing as delete question button
+    // Back button does the same thing as delete question button
     @Override
     public void onBackPressed() {
         createQuiz();
@@ -226,19 +215,19 @@ public class AddQuestionActivity extends AppCompatActivity {
     }
 
     void addOption() {
+        // Create new layout params and set the correct margin:
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         layoutParams.setMargins(0, 30, 0, 0);
-
+        // Retrieve the length and width of the current screen:
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int height = displayMetrics.heightPixels;
         int width = displayMetrics.widthPixels;
         if (width > height) {
             width = (int) (0.8 * width);
-//            System.out.println(width);
         }
-
+        // Add a new button to indicate if this is the correct question, set darkmode appropriately:
         LinearLayout tempLayout = new LinearLayout(this);
         tempLayout.setOrientation(LinearLayout.HORIZONTAL);
         Button tempButton = new Button(this);
@@ -249,18 +238,13 @@ public class AddQuestionActivity extends AppCompatActivity {
             tempButton.setBackgroundColor(getResources().getColor(R.color.white));
         }
         LinearLayout.LayoutParams lparams1 = new LinearLayout.LayoutParams((int) (0.05*width), (int) (0.05*height));
-//        LinearLayout.LayoutParams lparams1 = new LinearLayout.LayoutParams((int) 54, (int) 111);
         lparams1.setMargins(20, 0, 20, 0);
         tempButton.setLayoutParams(lparams1);
         correctButtons.add(tempButton);
         tempLayout.addView(tempButton);
-
-
-
-
+        // Add an EditText to add this question text:
         EditText tempEdit = new EditText(this);
         LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams((int) (0.75 * width), LinearLayout.LayoutParams.WRAP_CONTENT);
-//        LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams((int) 810, LinearLayout.LayoutParams.WRAP_CONTENT);
         tempEdit.setGravity(Gravity.CENTER);
         tempEdit.setLayoutParams(lparams);
         if (darkmode) {
@@ -273,7 +257,7 @@ public class AddQuestionActivity extends AppCompatActivity {
         tempEdit.setHint("Enter answer text");
         tempLayout.addView(tempEdit);
         answers.add(tempEdit);
-
+        // Add buttons with which it's possible to delete a certain option:
         Button tempButton1 = new Button(this);
         tempButton1.setTag(index);
         if (darkmode) {
@@ -282,7 +266,6 @@ public class AddQuestionActivity extends AppCompatActivity {
             tempButton1.setBackgroundColor(getResources().getColor(R.color.brightred));
         }
         LinearLayout.LayoutParams lparams2 = new LinearLayout.LayoutParams((int) (0.05*width), (int) (0.05*height));
-//        LinearLayout.LayoutParams lparams2 = new LinearLayout.LayoutParams((int) 54, (int) 111);
         lparams2.setMargins(20, 0, 20, 0);
         tempButton1.setLayoutParams(lparams2);
         removeButtons.add(tempButton1);
@@ -290,11 +273,9 @@ public class AddQuestionActivity extends AppCompatActivity {
         layouts.add(tempLayout);
         answersLayout.addView(tempLayout, layoutParams);
         index++;
-//        System.out.println("INDEX" + index);
-
         answersView.getLayoutParams().width = (int) (width*0.9);
 
-
+        // Add clicklistener for the correct answer button, which sets the correct answer:
         tempButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -316,6 +297,7 @@ public class AddQuestionActivity extends AppCompatActivity {
             }
         });
 
+        // Sets the clicklistener for the remove answer button, removes the current answer:
         tempButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -330,7 +312,6 @@ public class AddQuestionActivity extends AppCompatActivity {
                     correct--;
                 }
                 for (int i = removeButtons.size() - 1; i >= tag; i--) {
-//                    System.out.println("HENK" + i);
                     Button temp1 = removeButtons.get(i);
                     int tag1 = (int) temp1.getTag();
                     Button temp2 = correctButtons.get(i);
@@ -415,5 +396,4 @@ public class AddQuestionActivity extends AppCompatActivity {
             Music.play(this);
         }
     }
-
 }

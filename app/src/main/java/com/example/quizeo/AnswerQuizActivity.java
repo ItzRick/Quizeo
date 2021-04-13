@@ -49,7 +49,6 @@ public class AnswerQuizActivity extends AppCompatActivity {
     boolean darkmode;
     boolean sound;
     boolean correctt;
-
     boolean active = false;
 
     @Override
@@ -57,7 +56,7 @@ public class AnswerQuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         // Set the correct layout:
         setContentView(R.layout.fragment_answer_quiz);
-
+        // Retrieves the darkmode and sets the correct collors:
         darkmode = getIntent().getBooleanExtra("darkmode", false);
         if (darkmode) {
             findViewById(R.id.globeAnswer).setVisibility(View.INVISIBLE);
@@ -75,7 +74,6 @@ public class AnswerQuizActivity extends AppCompatActivity {
         sound = getIntent().getBooleanExtra("sound", true);
         location = getIntent().getParcelableExtra("location");
         quiz = getIntent().getParcelableExtra("quiz");
-//        System.out.println(quiz.getNumberOfQuestions());
         answerQuiz = getIntent().getParcelableExtra("answerQuiz");
         userAnswered = getIntent().getParcelableExtra("user");
 
@@ -132,6 +130,7 @@ public class AnswerQuizActivity extends AppCompatActivity {
                 buttons[i].getBackground().setColorFilter(buttons[i].getContext().getResources().getColor(R.color.darkgray2), PorterDuff.Mode.MULTIPLY);
                 buttons[i].setTextColor(ContextCompat.getColor(this, R.color.white2));
             }
+            // Set the correct string to each button:
             String string = answers[i];
             buttons[i].setText(string);
             buttons[i].setTag(i);
@@ -149,13 +148,17 @@ public class AnswerQuizActivity extends AppCompatActivity {
                         if (currentQuestion.getCorrect(tag + 1)) {
                             Music.correctSound(AnswerQuizActivity.this);
                             if (darkmode) {
-                                buttons[tag].setBackgroundColor(getResources().getColor(R.color.darkgreen));
+                                buttons[tag].setBackgroundColor(
+                                        getResources().getColor(R.color.darkgreen));
                             } else {
                                 buttons[tag].setBackgroundColor(Color.GREEN);
                             }
                             answerQuiz.updateScore(true);
+                            // Set the explanation string if there is one and show popup:
                             if (!currentQuestion.getExplanation().equals("")) {
-                                String explanation = "The correct answer indeed is: " + currentQuestion.getCorrect() + ", this is the correct answer because: " +
+                                String explanation = "The correct answer indeed is: " +
+                                        currentQuestion.getCorrect() +
+                                        ", this is the correct answer because: " +
                                         currentQuestion.getExplanation();
                                 correctt = true;
                                 showPopup(v, R.layout.popup_explanation, explanation);
@@ -175,8 +178,11 @@ public class AnswerQuizActivity extends AppCompatActivity {
                                 buttons[correct - 1].setBackgroundColor(Color.GREEN);
                             }
                             answerQuiz.updateScore(false);
+                            // If there is an explanation, set the explanation text and show popup:
                             if (!currentQuestion.getExplanation().equals("")) {
-                                String explanation = "This answer is unfortunately wrong. The correct answer is: " + currentQuestion.getCorrect() + ", this is the correct answer because: " +
+                                String explanation = "This answer is unfortunately wrong. " +
+                                        "The correct answer is: " + currentQuestion.getCorrect()
+                                        + ", this is the correct answer because: " +
                                         currentQuestion.getExplanation();
                                 correctt = false;
                                 showPopup(v, R.layout.popup_explanation, explanation);
@@ -275,7 +281,13 @@ public class AnswerQuizActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-
+    /**
+     * Show the popup which is given by the int popup.
+     *
+     * @param v view to show the popup on.
+     * @param popup The popup fragment that needs to be shown.
+     * @param explanation explanation text that needs to be shown:
+     */
     void showPopup (View v, int popup, String explanation) {
         // Create a pop up that the question has already been answered:
         // inflate the layout of the popup window
@@ -293,12 +305,17 @@ public class AnswerQuizActivity extends AppCompatActivity {
         PopupWindow popupWindow =
                 new PopupWindow(popupView, width, height, focusable);
 
+        // If there is an explanation, retrieve the textview and layout for the explanation
+        // and set the color and text correctly:
         if (explanation != null) {
-            TextView explanationText = (TextView) popupWindow.getContentView().findViewById(R.id.explanation_text);
-            RelativeLayout explanationLayout = (RelativeLayout) popupWindow.getContentView().findViewById(R.id.explanation);
+            TextView explanationText = (TextView)
+                    popupWindow.getContentView().findViewById(R.id.explanation_text);
+            RelativeLayout explanationLayout = (RelativeLayout)
+                    popupWindow.getContentView().findViewById(R.id.explanation);
             if (correctt) {
                 if (darkmode) {
-                    explanationLayout.setBackgroundColor(getResources().getColor(R.color.darkgreen));
+                    explanationLayout.setBackgroundColor(
+                            getResources().getColor(R.color.darkgreen));
                 } else {
                     explanationLayout.setBackgroundColor(Color.GREEN);
                 }
@@ -342,5 +359,4 @@ public class AnswerQuizActivity extends AppCompatActivity {
             Music.play(this);
         }
     }
-
 }

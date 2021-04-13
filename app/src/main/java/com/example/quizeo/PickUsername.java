@@ -17,11 +17,13 @@ import java.util.UUID;
 
 public class PickUsername extends AppCompatActivity {
 
+    // Retrieve variables for the UI elements:
     Button pickUsername;
     EditText userName;
+
+    // Local variables:
     LocationQuizeo location;
     User user;
-
     int PERMISSION_ID;
 
     @Override
@@ -41,12 +43,14 @@ public class PickUsername extends AppCompatActivity {
             findViewById(R.id.globeUser).setVisibility(View.VISIBLE);
         }
 
+        // Retrieve the location:
         location = getIntent().getParcelableExtra("location");
 
-
+        // Retrieve the UI elements:
         userName = (EditText) findViewById(R.id.Your_User_Name);
         pickUsername = (Button) findViewById(R.id.button_save_username);
 
+        // If you press the button, collect username and create new user:
         pickUsername.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,6 +67,7 @@ public class PickUsername extends AppCompatActivity {
         finishAffinity();
     }
 
+    // To main menu:
     public void toMain() {
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("user", user);
@@ -70,6 +75,7 @@ public class PickUsername extends AppCompatActivity {
         startActivity(intent);
     }
 
+    // Saves the data for the current user to the disk:
     private void saveData() {
         SharedPreferences sp =
                 getSharedPreferences("MyPrefs",
@@ -86,7 +92,8 @@ public class PickUsername extends AppCompatActivity {
     private void requestPermissions() {
         ActivityCompat.requestPermissions(
                 this,
-                new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION},
+                new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,
+                        Manifest.permission.ACCESS_FINE_LOCATION},
                 PERMISSION_ID
         );
     }

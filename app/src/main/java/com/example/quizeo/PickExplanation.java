@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class PickExplanation extends AppCompatActivity {
 
+    // Local variables:
     String explanation;
     User user;
     Quiz quiz;
@@ -20,6 +21,7 @@ public class PickExplanation extends AppCompatActivity {
     boolean sound;
     Question question;
 
+    // UI elements:
     EditText explanationText;
     Button remove;
     Button add;
@@ -29,6 +31,7 @@ public class PickExplanation extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_add_explanation);
 
+        // Apply the darkmode as required:
         darkmode = getIntent().getBooleanExtra("darkmode", false);
         if (darkmode) {
             findViewById(R.id.globeExplanation).setVisibility(View.INVISIBLE);
@@ -42,6 +45,8 @@ public class PickExplanation extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
+        // Retrieve all passed variables:
         question = getIntent().getParcelableExtra("question");
         location = getIntent().getParcelableExtra("location");
         verified = getIntent().getBooleanExtra("verified", true);
@@ -50,14 +55,17 @@ public class PickExplanation extends AppCompatActivity {
         user = getIntent().getParcelableExtra("user");
         newQuiz = getIntent().getBooleanExtra("newquiz", false);
 
+        // Retrieve all UI elements:
         add = (Button) findViewById(R.id.button_save_explanation);
         remove = (Button) findViewById(R.id.button_remove_explanation);
         explanationText = (EditText) findViewById(R.id.explanationText);
-        System.out.println(question.getExplanation());
+        // If there is no explanation, set the explanation to the previous one:
         if (!(question.getExplanation() == null)) {
             explanationText.setText(question.getExplanation());
         }
 
+        // When the user decides to add the explanation, retrieve the explanation and go to the
+        // correct class:
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,6 +74,7 @@ public class PickExplanation extends AppCompatActivity {
             }
         });
 
+        // Remove the explanation and continue editing the question:
         remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,6 +85,9 @@ public class PickExplanation extends AppCompatActivity {
 
     }
 
+    /**
+     * Go to the add question class and pass all required variables.
+     */
     void addQuestion() {
         Intent intent = new Intent(this, AddQuestionActivity.class);
         intent.putExtra("user", user);

@@ -19,31 +19,35 @@ import java.util.UUID;
 
 public class CreateQuizActivity extends AppCompatActivity {
 
-    // Declare local variables
+    // Declare local variables for the UI elements:
     Button buttonBack;
     Button buttonNew;
     ScrollView quizesView;
     LinearLayout quizzesLayout;
+
+    // Local variables for thw quiz, user and a boolean to determine if the quiz was new,
+    // which is used in CreateQuizActivity2:
     Quiz quiz;
     User user;
     boolean newQuiz;
 
+    // Local variables for the locaiton, if the quiz is verified or not, whether the darkmode
+    // and sound are enabled:
     LocationQuizeo location;
     boolean verified;
     boolean darkmode;
     boolean sound;
-
     boolean active = false;
 
+    // ArrayList to contain the quizzes:
     ArrayList<Quiz> quizzes;
-
-    boolean published;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_create_quiz);
 
+        // If the darkmode is enabled, set the colors appropriately, likewise if it isn't enabled:
         darkmode = getIntent().getBooleanExtra("darkmode", false);
         if (darkmode) {
             findViewById(R.id.globeCreate1).setVisibility(View.INVISIBLE);
@@ -57,7 +61,6 @@ public class CreateQuizActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
         // Define variables with corresponding button
         buttonBack = (Button) findViewById(R.id.buttonBack);
         buttonNew = (Button) findViewById(R.id.buttonNew);
@@ -73,10 +76,10 @@ public class CreateQuizActivity extends AppCompatActivity {
         Database database = Database.getInstance();
         database.getQuizzes(user, true, new quizzesCallback());
 
+        // Remove everything that currently might be in the quizesView:
         quizesView.removeAllViews();
         // Add the linearLayout to the ScrollView:
         quizesView.addView(quizzesLayout);
-
 
         // Open the home screen with back button
         buttonBack.setOnClickListener(new View.OnClickListener() {
@@ -114,7 +117,7 @@ public class CreateQuizActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-
+    // Method to open CreateQuizActivity2
     public void editQuiz() {
         active = true;
         Intent intent = new Intent(this, CreateQuizActivity2.class);
@@ -134,10 +137,8 @@ public class CreateQuizActivity extends AppCompatActivity {
             quizzes = new ArrayList<>();
         }
 
-
         // Create an array of buttons with the same length as the quizzes arraylist:
         Button[] buttons = new Button[quizzes.size()];
-//        System.out.println(quizzes.size());
         for (int i = 0; i < quizzes.size(); i++) {
             // Create a new button for each quiz:
             buttons[i] = new Button(this);
@@ -146,6 +147,7 @@ public class CreateQuizActivity extends AppCompatActivity {
                 buttons[i].getBackground().setColorFilter(buttons[i].getContext().getResources().getColor(R.color.darkgray2), PorterDuff.Mode.MULTIPLY);
                 buttons[i].setTextColor(ContextCompat.getColor(this, R.color.white2));
             }
+            // Get all quizzes, set correctly if the quiz is verified and/or published:
             Quiz tempQuiz = quizzes.get(i);
             String verified1;
             String published1;
@@ -161,7 +163,6 @@ public class CreateQuizActivity extends AppCompatActivity {
                 }
             }
 
-
             // Set the correct text for this quiz:
             String string = "Quiz: " + quizzes.get(i).getQuizName() + "\n" +
                     quizzes.get(i).getNumberOfQuestions() +
@@ -171,21 +172,20 @@ public class CreateQuizActivity extends AppCompatActivity {
             buttons[i].setTag(i);
             // Add the button to the linearlayout:
             quizzesLayout.addView(buttons[i]);
-            // Set a clicklistener which makes sure you can play that quiz:
+            // Set a clicklistener which makes sure you can open that quiz:
             buttons[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int tag = (int) v.getTag();
                     quiz = quizzes.get(tag);
                     newQuiz = false;
-//                    System.out.println("ID:" + quiz.getQuizId());
                     editQuiz();
                 }
             });
 
         }
 
-        // If there are no quizzes: display this:
+        // If there are no quizzes, display that there are no quizzes:
         if (quizzes.size() == 0) {
             TextView noQuizes = new TextView(this);
             noQuizes.setTextSize(38);
@@ -200,8 +200,10 @@ public class CreateQuizActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Class which can be used to download all quizzes from the database, updates the display.
+     */
     private class quizzesCallback implements Database.DownloadQuizzesCallback {
-
         @Override
         public void onCallback(ArrayList<Quiz> list) {
             quizzes = new ArrayList<>(list);
