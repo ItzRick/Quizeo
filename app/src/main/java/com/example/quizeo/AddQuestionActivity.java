@@ -96,18 +96,22 @@ public class AddQuestionActivity extends AppCompatActivity {
         user = getIntent().getParcelableExtra("user");
         newQuiz = getIntent().getBooleanExtra("newquiz", false);
         explanation = getIntent().getStringExtra("explanation");
+
         // If there is no explanation, set this approriately:
         if (explanation == null) {
             explanation = "";
         }
+
         // Create new ArrayList for all ArrayList variables:
         answers = new ArrayList<>();
         removeButtons = new ArrayList<>();
         correctButtons = new ArrayList<>();
         layouts = new ArrayList<>();
+
         // Set the index to 0 and indicate there is no correct answer yet:
         correct = -1;
         index = 0;
+
         // If there is no answersView yet, set this appropriately:
         if (answersView == null) {
             answersView = (ScrollView) findViewById(R.id.answers_scroll);
@@ -115,6 +119,7 @@ public class AddQuestionActivity extends AppCompatActivity {
             answersLayout.setOrientation(LinearLayout.VERTICAL);
             answersView.addView(answersLayout);
         }
+
         // If there was a question here previously, set everything appropriately:
         if (!(question == null)) {
             textQuestion.setText(question.getQuestion());
@@ -146,6 +151,8 @@ public class AddQuestionActivity extends AppCompatActivity {
         buttonSaveQuit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // If there is no correct answer or no question text or not enough answers,
+                // show a popup to display this:
                 if (correct == -1 ) {
                     showPopup(v, R.layout.popup_no_correct);
                 } else if (textQuestion.getText().toString().equals("")) {
@@ -154,6 +161,7 @@ public class AddQuestionActivity extends AppCompatActivity {
                 } else if (answers.size() < 2) {
                     showPopup(v, R.layout.popup_not_enough_answers_added);
                 } else {
+                    // Else: create a question and add this to a quiz:
                     String[] answerss = new String[answers.size()];
                     int i = 0;
                     for (EditText answer : answers) {
@@ -166,9 +174,13 @@ public class AddQuestionActivity extends AppCompatActivity {
                         }
                     }
                     String questionString = textQuestion.getText().toString();
+
+                    // If there is no question mark add this:
                     if (!questionString.contains("?")) {
                         questionString = questionString + "?";
                     }
+
+                    // Create the question and add this to the quiz:
                     Question question = new Question(questionString, answerss,
                             correct + 1, explanation, quiz.getNumberOfQuestions() + 1,
                             UUID.randomUUID());
@@ -186,7 +198,7 @@ public class AddQuestionActivity extends AppCompatActivity {
             }
         });
 
-        // OPen the explanation when required:
+        // Open the explanation when required:
         buttonAddExplanation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -214,11 +226,15 @@ public class AddQuestionActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * Add an answer option to this quiz.
+     */
     void addOption() {
         // Create new layout params and set the correct margin:
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         layoutParams.setMargins(0, 30, 0, 0);
+
         // Retrieve the length and width of the current screen:
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
@@ -227,6 +243,7 @@ public class AddQuestionActivity extends AppCompatActivity {
         if (width > height) {
             width = (int) (0.8 * width);
         }
+
         // Add a new button to indicate if this is the correct question, set darkmode appropriately:
         LinearLayout tempLayout = new LinearLayout(this);
         tempLayout.setOrientation(LinearLayout.HORIZONTAL);
@@ -242,6 +259,7 @@ public class AddQuestionActivity extends AppCompatActivity {
         tempButton.setLayoutParams(lparams1);
         correctButtons.add(tempButton);
         tempLayout.addView(tempButton);
+
         // Add an EditText to add this question text:
         EditText tempEdit = new EditText(this);
         LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams((int) (0.75 * width), LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -257,6 +275,7 @@ public class AddQuestionActivity extends AppCompatActivity {
         tempEdit.setHint("Enter answer text");
         tempLayout.addView(tempEdit);
         answers.add(tempEdit);
+
         // Add buttons with which it's possible to delete a certain option:
         Button tempButton1 = new Button(this);
         tempButton1.setTag(index);
@@ -323,6 +342,12 @@ public class AddQuestionActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Show an popup.
+     *
+     * @param v view to show the popup on.
+     * @param popup fragment ID of the specific popup.
+     */
     void showPopup (View v, int popup) {
         // Create a pop up that the question has already been answered:
         // inflate the layout of the popup window
@@ -353,6 +378,9 @@ public class AddQuestionActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Method to go to the PickExplanation class, first saves the current quiz. 
+     */
     void addExplanation() {
         Question question1 = new Question();
         String[] answerss = new String[answers.size()];
